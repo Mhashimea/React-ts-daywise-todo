@@ -1,0 +1,30 @@
+/* Navbar Starts */
+.navbar {
+  height: 60px;
+  background-color: #1a73e8;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navbar ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navbar ul a {
+  margin-right: 20px;
+  font-size: 15px;
+  padding: 3px 15px;
+  border-radius: 5px;
+}
+.navbar ul a:hover {
+  background: #245da8;
+}
+.navbar ul a a {
+  color: #ededed;
+}
+
+.navbar-active {
+  background: #245da8;
+}

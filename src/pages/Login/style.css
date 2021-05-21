@@ -1,0 +1,35 @@
+.login {
+  background-color: #eeeeee96;
+}
+.login-brand h1 {
+  font-family: 'Lobster', cursive;
+  margin-bottom: 50px;
+  font-weight: 600;
+  font-size: 26px;
+}
+.login-wrapper {
+  max-width: 350px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+.login-form {
+  border: 1px solid #66666638;
+  background: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.login-signup {
+  background: #fff;
+  width: 100%;
+  border: 1px solid #66666638;
+  margin-top: 20px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}

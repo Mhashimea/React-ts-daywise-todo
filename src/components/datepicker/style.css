@@ -1,0 +1,41 @@
+.date-picker__date {
+  margin-right: 15px;
+}
+.date-picker__date h1 {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #1a73e8;
+  border: 2px solid #1a73e8;
+}
+.date-picker__date h1:hover,
+.date-picker__date--active {
+  background-color: #1a73e8 !important;
+  color: #fff !important;
+}
+/* .date-picker__data .slick-slider {
+  display: flex;
+  align-items: center;
+} */
+.date-picker__data .slick-slider .slick-arrow {
+  background-color: #fff;
+  border: 2px solid #eee;
+  width: 30px;
+  height: 30px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border-radius: 50px;
+  position: absolute;
+  top: 0;
+}
+.date-picker__data .slick-slider .slick-arrow svg {
+  width: 18px;
+  height: 18px;
+  fill: #333;
+}
