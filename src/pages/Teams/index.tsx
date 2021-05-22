@@ -1,10 +1,10 @@
 import React from 'react'
 import Default from '../../components/layouts/Default'
 
-export default function Feeds({ className }: any) {
+export default function Teams({ className }: any) {
   return (
     <Default className="todos">
-      <h1>Todos</h1>
+      <h1>Teams</h1>
     </Default>
   )
 }

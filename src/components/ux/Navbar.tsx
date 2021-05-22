@@ -1,8 +1,10 @@
 import {
   AreaChartOutlined,
   CheckCircleOutlined,
-  MessageOutlined,
-  UnorderedListOutlined
+  FileTextOutlined,
+
+  UnorderedListOutlined,
+  UsergroupAddOutlined
 } from '@ant-design/icons';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -31,11 +33,19 @@ export default function Navbar() {
         </Link>
 
         <Link
-          to="/feeds"
+          to="/projects"
           className="flex items-center text-sm hover:text-white"
         >
-          <MessageOutlined className="mr-2 text-sm" />
-          <li>Feed</li>
+          <FileTextOutlined className="mr-2 text-sm" />
+          <li>Projects</li>
+        </Link>
+
+        <Link
+          to="/teams"
+          className="flex items-center text-sm hover:text-white"
+        >
+          <UsergroupAddOutlined className="mr-2 text-sm" />
+          <li>Teams</li>
         </Link>
 
         <Link
@@ -45,9 +55,6 @@ export default function Navbar() {
           <AreaChartOutlined className="text-sm mr-2" />
           <li>Report</li>
         </Link>
-        <li>
-          <a>Logout</a>
-        </li>
       </ul>
     </div>
   );
