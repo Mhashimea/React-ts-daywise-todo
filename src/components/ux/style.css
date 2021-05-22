@@ -28,3 +28,13 @@
 .navbar-active {
   background: #245da8;
 }
+/* Navbar Ends */
+
+/* Todo Card Starts */
+.todo-card {
+  box-shadow: 0px ​3px 5px -2px #eee;
+}
+/* .todo-card * {
+  text-decoration: line-through;
+} */
+/* Todo Card Ends */
