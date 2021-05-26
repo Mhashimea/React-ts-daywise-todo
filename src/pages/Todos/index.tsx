@@ -74,6 +74,7 @@ export default function Todos() {
           overlay={buttonMenu}
           type="primary"
           trigger={['click']}
+          className="rounded-md"
         >
           Add New Item
         </Dropdown.Button>

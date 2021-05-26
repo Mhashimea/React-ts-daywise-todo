@@ -6,7 +6,7 @@ interface HeaderProps {
   title: string;
   buttonText?: string;
   onClick?: () => void;
-  children: any
+  children?: any
 }
 
 export default function Header({ title, buttonText, onClick, children }: HeaderProps) {
