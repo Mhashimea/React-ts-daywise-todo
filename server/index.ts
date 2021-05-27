@@ -2,7 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { sequelize } from './options'
-
+import createEndPoints from "./endpoints/index";
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -10,8 +10,6 @@ const port = process.env.PORT || 8080
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors());
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.text());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -28,6 +26,9 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.send("nodejs done!");
 });
+
+createEndPoints(app)
+
 app.listen(port, () => {
   sequelize.authenticate().then(async () => {
     await sequelize.sync()

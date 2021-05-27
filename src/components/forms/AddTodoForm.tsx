@@ -32,7 +32,7 @@ export default function AddTodoForm({
       >
         <Form.Item
           label="Task Name"
-          name="taskname"
+          name="name"
           rules={[{ required: true, message: 'Please input your task!' }]}
         >
           <Input placeholder="Enter your task Name" />
@@ -67,7 +67,7 @@ export default function AddTodoForm({
             className="w-1/2 mr-2"
             label="Project"
             rules={[{ required: true }]}
-            name="project"
+            name="projectId"
           >
             <Select placeholder="Select project" allowClear>
               <Option value="project1">Project 1</Option>
@@ -92,6 +92,7 @@ export default function AddTodoForm({
           className="w-full"
           label="Description"
           rules={[{ required: true }]}
+          name="description"
         >
           <TextArea placeholder="Enter your task description" allowClear />
         </Form.Item>
