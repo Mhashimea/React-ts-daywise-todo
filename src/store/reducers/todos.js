@@ -8,10 +8,11 @@ export const TodosReducer = (state = initailState, action) => {
     case "GET_TODOS":
       return {
         ...state,
-        obje: action.payload
+        todos: action.payload
       }
     default:
       return state
+
   }
 }
 
