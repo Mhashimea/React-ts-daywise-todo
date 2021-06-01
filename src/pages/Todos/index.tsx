@@ -181,7 +181,7 @@ export default function Todos() {
                       <span className="text-xs text-gray-500 mr-2">
                         Google Meet:
                       </span>
-                      <a className="primary-color">https:googlemeet.com</a>
+                      <a className="primary-color" href="#">https:googlemeet.com</a>
                     </div>
                     <Tag className="rounded-md">10 am</Tag>
                   </div>
