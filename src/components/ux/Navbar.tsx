@@ -2,12 +2,12 @@ import {
   AreaChartOutlined,
   CheckCircleOutlined,
   FileTextOutlined,
-
   UnorderedListOutlined,
   UsergroupAddOutlined
 } from '@ant-design/icons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { post } from '../../services/http-request';
 import './style.css';
 
 export default function Navbar() {
@@ -18,7 +18,11 @@ export default function Navbar() {
       <ul>
         <Link
           to="/dashboard"
-          className="flex items-center text-sm hover:text-white"
+          className={
+            location.pathname === '/dashboard'
+              ? 'flex items-center text-sm hover:text-white navbar-active'
+              : 'flex items-center text-sm hover:text-white'
+          }
         >
           <UnorderedListOutlined className="mr-2 text-sm" />
           <li>Dashboard</li>
@@ -26,7 +30,11 @@ export default function Navbar() {
 
         <Link
           to="/todos"
-          className="flex items-center text-sm hover:text-white"
+          className={
+            location.pathname === '/todos'
+              ? 'flex items-center text-sm hover:text-white navbar-active'
+              : 'flex items-center text-sm hover:text-white'
+          }
         >
           <CheckCircleOutlined className="mr-2 text-sm" />
           <li>Todos</li>
@@ -34,7 +42,11 @@ export default function Navbar() {
 
         <Link
           to="/projects"
-          className="flex items-center text-sm hover:text-white"
+          className={
+            location.pathname === '/projects'
+              ? 'flex items-center text-sm hover:text-white navbar-active'
+              : 'flex items-center text-sm hover:text-white'
+          }
         >
           <FileTextOutlined className="mr-2 text-sm" />
           <li>Projects</li>
@@ -42,7 +54,11 @@ export default function Navbar() {
 
         <Link
           to="/teams"
-          className="flex items-center text-sm hover:text-white"
+          className={
+            location.pathname === '/teams'
+              ? 'flex items-center text-sm hover:text-white navbar-active'
+              : 'flex items-center text-sm hover:text-white'
+          }
         >
           <UsergroupAddOutlined className="mr-2 text-sm" />
           <li>Teams</li>
@@ -50,7 +66,11 @@ export default function Navbar() {
 
         <Link
           to="/reports"
-          className="flex items-center text-sm hover:text-white"
+          className={
+            location.pathname === '/report'
+              ? 'flex items-center text-sm hover:text-white navbar-active'
+              : 'flex items-center text-sm hover:text-white'
+          }
         >
           <AreaChartOutlined className="text-sm mr-2" />
           <li>Report</li>

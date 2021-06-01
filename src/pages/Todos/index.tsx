@@ -1,6 +1,6 @@
 import { FilterOutlined } from '@ant-design/icons';
 import { Button, Card, Dropdown, Menu, Modal, Tag } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodaysPerfomaceChart from '../../components/charts/TodaysPerfomaceChart';
 import DatePicker from '../../components/datepicker';
 import AddMeetingForm from '../../components/forms/AddMeetingForm';
@@ -8,6 +8,7 @@ import AddTodoForm from '../../components/forms/AddTodoForm';
 import Default from '../../components/layouts/Default';
 import Header from '../../components/ux/Header';
 import TodoCard from '../../components/ux/TodoCard';
+import { post } from '../../services/http-request';
 
 export default function Todos() {
   const [priority, setPriority] = useState<any>('Priority');
@@ -66,6 +67,15 @@ export default function Todos() {
       </Menu.Item>
     </Menu>
   );
+
+  const getTodos = async () => {
+    const response = await post('todos')
+    console.log(response)
+  }
+
+  useEffect(() => {
+    getTodos()
+  }, [])
 
   return (
     <Default className="todos app-container m-auto w-full">
@@ -134,7 +144,7 @@ export default function Todos() {
               <h1 className="text-base font-semibold flex-1">
                 Today's Perfomance <span className="text-xs">(22/05/2021)</span>
               </h1>
-              <a className="primary-color">View More</a>
+              <a className="primary-color" href="#">View More</a>
             </div>
             <p className="text-xs text-gray-500">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis

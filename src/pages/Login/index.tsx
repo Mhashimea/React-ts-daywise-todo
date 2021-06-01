@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { post } from '../../services/http-request';
@@ -7,11 +7,21 @@ import './style.css';
 export default function Login() {
   const history = useHistory();
   const [model, setModel] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false)
 
   const onFinish = async (values: any) => {
-    console.log(values);
+    setLoading(true)
     const response = await post('login', values)
-    console.log(response)
+    if (response.success) {
+      localStorage.setItem('token', response.data.token)
+      // Todo
+      // Store values in redx store
+      history.push('dashboard')
+    }
+    else {
+      message.error(response.message)
+    }
+    setLoading(false)
   };
   return (
     <div className="login fit">
@@ -48,6 +58,7 @@ export default function Login() {
                 type="primary"
                 htmlType="submit"
                 className="rounded-md mr-2 w-full"
+                loading={loading}
               >
                 Login
             </Button>
