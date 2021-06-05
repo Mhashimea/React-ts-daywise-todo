@@ -5,13 +5,15 @@ import {
   UnorderedListOutlined,
   UsergroupAddOutlined
 } from '@ant-design/icons';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { post } from '../../services/http-request';
 import './style.css';
 
 export default function Navbar() {
   const location = useLocation();
+  const data = useSelector((state: any) => state.AuthReducer.currentUser)
+  console.log(data, "navbar")
 
   return (
     <div className="navbar mb-5">

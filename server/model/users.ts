@@ -6,14 +6,19 @@ import {
   Column,
   AllowNull,
   NotEmpty,
+  ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
+import Organization from './organiZation';
 
 export interface UserI {
   id: number | null;
+  organizationId: number;
   fullName: string;
   phone: string;
   email: string;
   password: string;
+  isAdmin: boolean;
   avatar: string;
   active: boolean;
 }
@@ -27,6 +32,11 @@ export default class User extends Model implements UserI {
   @PrimaryKey
   @Column
   id: number;
+
+  @ForeignKey(() => Organization)
+  @AllowNull(false)
+  @Column
+  organizationId: number
 
   @AllowNull(false)
   @NotEmpty
@@ -43,6 +53,11 @@ export default class User extends Model implements UserI {
   @Column
   password!: string;
 
+  @AllowNull(false)
+  @NotEmpty
+  @Column
+  isAdmin!: boolean;
+
   @AllowNull(true)
   @NotEmpty
   @Column
@@ -57,4 +72,7 @@ export default class User extends Model implements UserI {
   @NotEmpty
   @Column
   active!: boolean;
+
+  @BelongsTo(() => Organization)
+  organization: Organization
 }

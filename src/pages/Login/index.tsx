@@ -14,8 +14,6 @@ export default function Login() {
     const response = await post('login', values)
     if (response.success) {
       localStorage.setItem('token', response.data.token)
-      // Todo
-      // Store values in redx store
       history.push('dashboard')
     }
     else {

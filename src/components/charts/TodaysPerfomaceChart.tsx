@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { Liquid } from '@ant-design/charts';
+import React from 'react';
 
 const TodaysPerfomaceChart: React.FC = () => {
   var config = {

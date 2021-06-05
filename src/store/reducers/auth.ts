@@ -4,7 +4,7 @@ const initialState = {
 
 export const AuthReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case 'LOGIN':
+    case 'SET_PROFILE':
       return {
         ...state,
         currentUser: action.payload,

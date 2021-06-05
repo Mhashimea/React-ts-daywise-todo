@@ -1,8 +1,10 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import Organization from './organiZation';
 import User from './users';
 
-export interface TodosI {
+interface TodosI {
   id: number;
+  organizationId: number;
   name: string;
   date: Date;
   priority: string;
@@ -24,6 +26,11 @@ export default class Todos extends Model implements TodosI {
   @PrimaryKey
   @Column
   id: number
+
+  @ForeignKey(() => Organization)
+  @AllowNull(false)
+  @Column
+  organizationId: number
 
   @AllowNull(false)
   @Column
@@ -65,4 +72,7 @@ export default class Todos extends Model implements TodosI {
 
   @BelongsTo(() => User)
   user: User
+
+  @BelongsTo(() => Organization)
+  organization: Organization;
 }

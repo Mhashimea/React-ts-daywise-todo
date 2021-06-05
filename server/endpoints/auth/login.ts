@@ -7,7 +7,6 @@ import bcrypt from 'bcrypt'
 export default async (req, res) => {
   let { email, password } = req.body;
   try {
-    let payload = { email, password };
 
     const user: any = await User.findOne({ where: { email: email } })
     if (!user) errorResponse(res, "Email does not exist")

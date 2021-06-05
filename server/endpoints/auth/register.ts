@@ -1,6 +1,8 @@
 import User from '../../model/users';
 import { errorResponse, successResponse } from '../../util/response';
 import bcrypt from 'bcrypt';
+import Organization from '../../model/organiZation';
+import sendEmail from '../../util/nodemailer/sendEmail';
 
 export default async (req, res) => {
   const { fullName, email, password, phone, avatar } = req.body;
@@ -10,6 +12,11 @@ export default async (req, res) => {
 
     const hashPwd = await bcrypt.hash(password, 10);
 
+    const organization = await Organization.create({
+      email: email,
+      active: true
+    })
+
     const payload = {
       fullName,
       email,
@@ -17,8 +24,11 @@ export default async (req, res) => {
       phone,
       avatar,
       active: true,
+      isAdmin: true,
+      organizationId: organization.id
     };
     const response = await User.create(payload);
+    const emailResponse = await sendEmail('hashimea@outlook.com')
     successResponse(res, response);
 
   } catch (error) {
