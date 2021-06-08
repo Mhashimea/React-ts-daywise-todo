@@ -1,11 +1,23 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import { sequelize } from './options'
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
 import createEndPoints from "./endpoints/index";
+import { sequelize } from './options';
+const http = require('http');
 
 const app = express()
 const port = process.env.PORT || 8080
+
+//Socket IO
+const server = http.createServer(app);
+const { Server } = require("socket.io")
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  socket.on('test-socket', (msg) => {
+    io.emit("emit-test-socket", msg)
+  });
+})
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
@@ -29,7 +41,7 @@ app.get("/", (req, res) => {
 
 createEndPoints(app)
 
-app.listen(port, () => {
+server.listen(port, () => {
   sequelize.authenticate().then(async () => {
     await sequelize.sync()
     console.log("Nodejs Connected on port", port)

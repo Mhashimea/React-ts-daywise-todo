@@ -9,6 +9,9 @@ import Default from '../../components/layouts/Default';
 import Header from '../../components/ux/Header';
 import TodoCard from '../../components/ux/TodoCard';
 import { post } from '../../services/http-request';
+import io from 'socket.io-client'
+
+const socket = io('http://localhost:8080', { forceNew: true, transports: ['websocket'] });
 
 export default function Todos() {
   const [priority, setPriority] = useState<any>('Priority');
@@ -70,11 +73,19 @@ export default function Todos() {
 
   const getTodos = async () => {
     const response = await post('todos')
-    console.log(response)
   }
+
+  const testSocket = () => {
+    socket.emit('test-socket', { user: 'Muhammed Hashim' })
+  }
+
+
 
   useEffect(() => {
     getTodos()
+    socket.on('emit-test-socket', (data) => {
+      console.log(data)
+    })
   }, [])
 
   return (
@@ -191,6 +202,8 @@ export default function Todos() {
           </Card>
         </div>
       </div>
+
+      <Button onClick={() => testSocket()}>Click on Socket</Button>
 
       <Modal
         visible={modalState !== null}

@@ -1,19 +1,25 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd'
+import { Button, DatePicker, Form, Input, Select } from 'antd';
 import moment from 'moment';
-import React from 'react'
+import React from 'react';
 
 interface formProps {
   onSave?: (values: any) => void;
   onCancel?: (values: any) => void;
   initialValues?: any;
+  teams?: string[];
 }
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-export default function ProjectForm({ onSave, initialValues, onCancel }: formProps) {
+export default function ProjectForm({
+  onSave,
+  initialValues,
+  onCancel,
+  teams,
+}: formProps) {
   const onFinish = (values: any) => {
-    if (onSave) onSave(values)
+    if (onSave) onSave(values);
   };
   return (
     <div className="project-form">
@@ -37,7 +43,11 @@ export default function ProjectForm({ onSave, initialValues, onCancel }: formPro
             name="startDate"
             rules={[{ required: true, message: 'Please input your date!' }]}
           >
-            <DatePicker placeholder="Enter the date" className="w-full" defaultValue={moment()} />
+            <DatePicker
+              placeholder="Enter the date"
+              className="w-full"
+              defaultValue={moment()}
+            />
           </Form.Item>
           <Form.Item
             className="w-1/2 ml-2"
@@ -46,9 +56,8 @@ export default function ProjectForm({ onSave, initialValues, onCancel }: formPro
             name="status"
           >
             <Select placeholder="Select status" allowClear>
-              <Option value="inprogress">InProgress</Option>
+              <Option value="inprogress">In Progress</Option>
               <Option value="upcoming">Upcoming</Option>
-              <Option value="hold">On Hold</Option>
               <Option value="completed">Completed</Option>
             </Select>
           </Form.Item>
@@ -60,16 +69,16 @@ export default function ProjectForm({ onSave, initialValues, onCancel }: formPro
           name="team"
         >
           <Select placeholder="Select your team" mode="multiple" allowClear>
-            <Option value="inprogress">John doe</Option>
-            <Option value="upcoming">Peter</Option>
-            <Option value="hold">Steve</Option>
-            <Option value="completed">Jeff</Option>
+            {teams?.map((team: any) => {
+              return <Option value={team.userId}>{team.user?.fullName}</Option>;
+            })}
           </Select>
         </Form.Item>
         <Form.Item
           className="w-full"
           label="Description"
           rules={[{ required: false }]}
+          name="description"
         >
           <TextArea placeholder="Enter your project description" allowClear />
         </Form.Item>
@@ -94,5 +103,5 @@ export default function ProjectForm({ onSave, initialValues, onCancel }: formPro
         </div>
       </Form>
     </div>
-  )
+  );
 }

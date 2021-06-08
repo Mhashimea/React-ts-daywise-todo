@@ -1,14 +1,40 @@
 import { FilterOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Input, Menu, Modal } from 'antd';
-import React, { useState } from 'react';
+import { Button, Dropdown, Input, Menu, message, Modal } from 'antd';
+import React, { useEffect, useState } from 'react';
 import ProjectForm from '../../components/forms/ProjectForm';
 import Default from '../../components/layouts/Default';
 import Header from '../../components/ux/Header';
 import ProjectCard from '../../components/ux/ProjectCard';
+import { post } from '../../services/http-request';
 
 export default function Projects({ className }: any) {
   const [status, setStatus] = useState<any>("All")
   const [modalState, setModalState] = useState(false)
+  const [teams, setTeams] = useState([])
+  const [projects, setProjects] = useState([])
+
+  const getTeams = async () => {
+    const response = await post('teams');
+    if (response.success) {
+      setTeams(response.data);
+    }
+  };
+
+  const saveData = async (e: Object) => {
+    const response = await post('add-project', { payload: e });
+    if (response.success) {
+      message.success("Project addedd successfully")
+      setModalState(false)
+    } else {
+      message.error(response.message)
+    }
+  }
+
+  const getProjects = async () => {
+    const response = await post('projects')
+    setProjects(response.data)
+    console.log(response)
+  }
 
   const statusMenu = (
     <Menu onClick={(e) => setStatus(e.key)}>
@@ -26,6 +52,11 @@ export default function Projects({ className }: any) {
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    getTeams()
+    getProjects()
+  }, [])
   return (
     <Default className="projects app-container m-auto w-full">
       <Header title="Projects" buttonText="Add New Project" onClick={() => setModalState(true)} />
@@ -39,8 +70,10 @@ export default function Projects({ className }: any) {
         </Dropdown>
       </div>
       <div className="mt-5 flex items-center flex-wrap">
-        {Array.from(Array(10), (e, i) => {
-          return <ProjectCard />;
+        {projects.map((proj, i) => {
+          return (
+            <ProjectCard data={proj} />
+          )
         })}
       </div>
       <div className="text-center">
@@ -52,7 +85,7 @@ export default function Projects({ className }: any) {
         footer={null}
         onCancel={() => setModalState(false)}
       >
-        <ProjectForm onCancel={() => setModalState(false)} />
+        <ProjectForm onCancel={() => setModalState(false)} teams={teams} onSave={saveData} />
       </Modal>
     </Default>
   );

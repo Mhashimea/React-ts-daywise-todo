@@ -12,13 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
-const options_1 = require("./options");
+const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./endpoints/index"));
+const options_1 = require("./options");
+const http = require('http');
 const app = express_1.default();
 const port = process.env.PORT || 8080;
+//Socket IO
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('test-socket', (msg) => {
+        console.log('message: ' + msg);
+        io.emit("emit-test-socket", msg);
+    });
+});
 app.use(body_parser_1.default.json({ limit: '50mb' }));
 app.use(body_parser_1.default.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors_1.default());
@@ -32,7 +44,7 @@ app.get("/", (req, res) => {
     res.send("nodejs done!");
 });
 index_1.default(app);
-app.listen(port, () => {
+server.listen(port, () => {
     options_1.sequelize.authenticate().then(() => __awaiter(void 0, void 0, void 0, function* () {
         yield options_1.sequelize.sync();
         console.log("Nodejs Connected on port", port);

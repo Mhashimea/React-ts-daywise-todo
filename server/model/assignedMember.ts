@@ -32,7 +32,7 @@ export default class AssignedUser extends Model implements AssignedUsersI {
   @Column
   userId: number;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @ForeignKey(() => Projects)
   @Column
   projectId: number

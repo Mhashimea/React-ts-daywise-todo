@@ -1,4 +1,4 @@
-import AssignedUser from '../../model/assignedMember';
+import User from '../../model/users';
 import getUser from '../../util/common/getUser';
 import { errorResponse, successResponse } from '../../util/response';
 
@@ -8,7 +8,7 @@ export default async (req, res) => {
     let where: any = {};
     where.organizationId = userDetails.organization;
 
-    const response = await AssignedUser.findAll({
+    const response = await User.findAll({
       where,
       include: [{ all: true, nested: true }]
     })

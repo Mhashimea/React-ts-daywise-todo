@@ -10,23 +10,13 @@ export default function Teams({ className }: any) {
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'user',
-      key: 'user',
-      render: (user: any) => (
-        <>
-          <span>{user.fullName}</span>
-        </>
-      ),
+      dataIndex: 'fullName',
+      key: 'fullName',
     },
     {
       title: 'Email',
-      dataIndex: 'user',
-      key: 'user',
-      render: (user: any) => (
-        <>
-          <span>{user.email}</span>
-        </>
-      ),
+      dataIndex: 'email',
+      key: 'email',
     },
     {
       title: 'Projects',
@@ -53,12 +43,12 @@ export default function Teams({ className }: any) {
     },
     {
       title: 'Status',
-      dataIndex: 'user',
-      key: 'user',
-      render: (user: any) => (
+      dataIndex: 'active',
+      key: 'active',
+      render: (active: any) => (
         <>
-          <Tag color={user.active ? 'green' : 'red'} key={user.id}>
-            {user.active ? 'Active' : 'Inactive'}
+          <Tag color={active ? 'green' : 'red'} key={active}>
+            {active ? 'Active' : 'Inactive'}
           </Tag>
         </>
       ),
@@ -70,6 +60,7 @@ export default function Teams({ className }: any) {
   const saveData = async (e: Object) => {
     const response = await post('add-team', { payload: e });
     if (response.success) {
+      getData()
       message.success('Team Added Successfully');
       setVisible(false);
     } else {

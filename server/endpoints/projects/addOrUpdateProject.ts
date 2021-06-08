@@ -9,6 +9,7 @@ export default async (req, res) => {
     const { payload } = req.body;
     payload.createdBy = userDetails.user
     payload.organizationId = userDetails.organization
+    payload.active = true
 
     if (payload.id) {
       const response = await Projects.update(payload, {
@@ -18,8 +19,8 @@ export default async (req, res) => {
     }
 
     const response = await Projects.create(payload);
-    if (payload.members && payload.members.length) {
-      payload.members.forEach((member) => {
+    if (payload.team && payload.team.length) {
+      payload.team.forEach((member) => {
         AssignedUser.create({
           projectId: response.id,
           userId: member,
