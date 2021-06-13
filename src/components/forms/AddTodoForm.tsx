@@ -1,11 +1,13 @@
 import { Button, DatePicker, Form, Input, Select } from 'antd';
-import moment from 'moment';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface todoFormProps {
   onSave?: (values: any) => void;
   onCancel?: (values: any) => void;
   initialValues?: any;
+  teams?: string[];
+  projects?: string[];
+  modalState: string
 }
 
 const { Option } = Select;
@@ -15,20 +17,27 @@ const { TextArea } = Input;
 export default function AddTodoForm({
   initialValues,
   onSave,
-  onCancel
+  onCancel,
+  projects,
+  teams,
+  modalState
 }: todoFormProps) {
-
+  const [form] = Form.useForm();
   const onFinish = (values: any) => {
     if (onSave) onSave(values)
   };
-  return (
 
+  useEffect(() => {
+    form.resetFields()
+  }, [modalState])
+  return (
     <div className="todo-form">
       <Form
         name="basic"
         layout="vertical"
         initialValues={initialValues}
         onFinish={onFinish}
+        form={form}
       >
         <Form.Item
           label="Task Name"
@@ -44,7 +53,7 @@ export default function AddTodoForm({
             name="date"
             rules={[{ required: true, message: 'Please input your date!' }]}
           >
-            <DatePicker placeholder="Enter the date" defaultValue={moment()} />
+            <DatePicker placeholder="Enter the date" />
           </Form.Item>
           <Form.Item
             className="w-1/3 mr-2"
@@ -70,9 +79,13 @@ export default function AddTodoForm({
             name="projectId"
           >
             <Select placeholder="Select project" allowClear>
-              <Option value="project1">Project 1</Option>
-              <Option value="project2">Project 2</Option>
-              <Option value="project3">Project 3</Option>
+              {
+                projects?.map((proj: any, index) => {
+                  return (
+                    <Option key={index} value={proj.id}>{proj.name}</Option>
+                  )
+                })
+              }
             </Select>
           </Form.Item>
           <Form.Item
@@ -81,10 +94,14 @@ export default function AddTodoForm({
             rules={[{ required: true }]}
             name="assignedTo"
           >
-            <Select placeholder="Select assignee" allowClear defaultValue="1">
-              <Option value="1">Hashim Ea</Option>
-              <Option value="2">Suhail </Option>
-              <Option value="3">Rahma</Option>
+            <Select placeholder="Select assignee" allowClear >
+              {
+                teams?.map((team: any, index) => {
+                  return (
+                    <Option key={index} value={team.id}>{team.fullName}</Option>
+                  )
+                })
+              }
             </Select>
           </Form.Item>
         </div>

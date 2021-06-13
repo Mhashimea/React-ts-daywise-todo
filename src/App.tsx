@@ -10,14 +10,15 @@ import './assets/css/custom.css';
 import './assets/css/index.css';
 import RouterView from './Router';
 import { GetUsers } from './store/actions';
-import AppStore from './store/index'
-import { Provider } from 'react-redux'
+import { GetProjects, GetTeams } from './store/actions/common';
 
 function App() {
   const dispatch = useDispatch()
 
   const getCurrentProfile = async () => {
     dispatch(GetUsers())
+    dispatch(GetTeams())
+    dispatch(GetProjects())
   }
   useEffect(() => {
     getCurrentProfile()

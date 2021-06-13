@@ -1,6 +1,7 @@
 import { FilterOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Menu, message, Modal } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import ProjectForm from '../../components/forms/ProjectForm';
 import Default from '../../components/layouts/Default';
 import Header from '../../components/ux/Header';
@@ -10,15 +11,8 @@ import { post } from '../../services/http-request';
 export default function Projects({ className }: any) {
   const [status, setStatus] = useState<any>("All")
   const [modalState, setModalState] = useState(false)
-  const [teams, setTeams] = useState([])
-  const [projects, setProjects] = useState([])
-
-  const getTeams = async () => {
-    const response = await post('teams');
-    if (response.success) {
-      setTeams(response.data);
-    }
-  };
+  const teams = useSelector((state: any) => state.CommonReducer.teams)
+  const projects = useSelector((state: any) => state.CommonReducer.projects)
 
   const saveData = async (e: Object) => {
     const response = await post('add-project', { payload: e });
@@ -28,12 +22,6 @@ export default function Projects({ className }: any) {
     } else {
       message.error(response.message)
     }
-  }
-
-  const getProjects = async () => {
-    const response = await post('projects')
-    setProjects(response.data)
-    console.log(response)
   }
 
   const statusMenu = (
@@ -53,10 +41,6 @@ export default function Projects({ className }: any) {
     </Menu>
   );
 
-  useEffect(() => {
-    getTeams()
-    getProjects()
-  }, [])
   return (
     <Default className="projects app-container m-auto w-full">
       <Header title="Projects" buttonText="Add New Project" onClick={() => setModalState(true)} />
@@ -70,9 +54,9 @@ export default function Projects({ className }: any) {
         </Dropdown>
       </div>
       <div className="mt-5 flex items-center flex-wrap">
-        {projects.map((proj, i) => {
+        {projects && projects.map((proj: any, i: number) => {
           return (
-            <ProjectCard data={proj} />
+            <ProjectCard data={proj} key={i} />
           )
         })}
       </div>

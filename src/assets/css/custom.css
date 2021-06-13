@@ -1,3 +1,6 @@
 .slick-slider {
   width: 100%;
 }
+.checkbox-border .ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #1a73e8;
+}

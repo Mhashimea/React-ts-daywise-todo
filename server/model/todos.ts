@@ -1,5 +1,7 @@
-import { AllowNull, AutoIncrement, BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { AllowNull, AutoIncrement, BelongsTo, Column, Default, ForeignKey, HasMany, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import ChildTodo from './childTodo';
 import Organization from './organiZation';
+import Projects from './projects';
 import User from './users';
 
 interface TodosI {
@@ -49,6 +51,7 @@ export default class Todos extends Model implements TodosI {
   @Column
   label: string
 
+  @ForeignKey(() => Projects)
   @AllowNull(true)
   @Column
   projectId: number
@@ -75,4 +78,10 @@ export default class Todos extends Model implements TodosI {
 
   @BelongsTo(() => Organization)
   organization: Organization;
+
+  @BelongsTo(() => Projects)
+  project: Projects;
+
+  @HasMany(() => ChildTodo)
+  childTodo: ChildTodo[]
 }

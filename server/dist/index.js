@@ -25,9 +25,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 io.on('connection', (socket) => {
-    console.log('a user connected');
     socket.on('test-socket', (msg) => {
-        console.log('message: ' + msg);
         io.emit("emit-test-socket", msg);
     });
 });

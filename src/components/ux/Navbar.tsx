@@ -12,8 +12,6 @@ import './style.css';
 
 export default function Navbar() {
   const location = useLocation();
-  const data = useSelector((state: any) => state.AuthReducer.currentUser)
-  console.log(data, "navbar")
 
   return (
     <div className="navbar mb-5">

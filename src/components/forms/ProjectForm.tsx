@@ -70,7 +70,7 @@ export default function ProjectForm({
         >
           <Select placeholder="Select your team" mode="multiple" allowClear>
             {teams?.map((team: any) => {
-              return <Option value={team.userId}>{team.user?.fullName}</Option>;
+              return <Option value={team.id}>{team.fullName}</Option>;
             })}
           </Select>
         </Form.Item>

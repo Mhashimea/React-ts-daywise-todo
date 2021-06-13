@@ -4,7 +4,6 @@ import AddTeamForm from '../../components/forms/AddTeamForm';
 import Default from '../../components/layouts/Default';
 import Header from '../../components/ux/Header';
 import { post } from '../../services/http-request';
-import { get } from 'lodash';
 
 export default function Teams({ className }: any) {
   const columns = [
