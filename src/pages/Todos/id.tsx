@@ -1,22 +1,28 @@
 import { ClockCircleOutlined } from '@ant-design/icons';
-import { Avatar, Checkbox, Input, Progress, Tag } from 'antd';
+import { Avatar, Checkbox, Input, Modal, Progress, Tag } from 'antd';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import Default from '../../components/layouts/Default';
-import Header from '../../components/ux/Header';
-import { useParams } from 'react-router-dom';
-import { post } from '../../services/http-request';
-import DynamicEditForm from '../../components/todos/DynamicEditForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdateTodos } from '../../store/actions/todos';
+import { useParams } from 'react-router-dom';
+import Default from '../../components/layouts/Default';
+import DynamicEditForm from '../../components/todos/DynamicEditForm';
+import Header from '../../components/ux/Header';
+import TodoCard from '../../components/ux/TodoCard';
+import { post } from '../../services/http-request';
+import { AddTodos, UpdateTodos } from '../../store/actions/todos';
+import AddTodoForm from '../../components/forms/AddTodoForm';
 
 export default function TodoView() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   let { id }: any = useParams();
   const [data, setData] = useState<any>({});
   const [editForm, setEditForm] = useState('');
+  const [modal, setModal] = useState(false);
 
-  const teams = useSelector((state: any) => state.CommonReducer.teams)
+  const teams = useSelector((state: any) => state.CommonReducer.teams);
+  const projects = useSelector((state: any) => state.CommonReducer.projects);
+  const priority = useSelector((state: any) => state.CommonReducer.priority);
+  console.log(priority);
 
   const getData = async () => {
     const response = await post('todos', { id: id });
@@ -24,23 +30,43 @@ export default function TodoView() {
   };
 
   const onUpdateData = (e: any) => {
-    Object.keys(e).map(key => {
-      data[key] = e[key]
-    })
-    updateTodo()
-    setEditForm("")
-  }
+    Object.keys(e).map((key) => {
+      data[key] = e[key];
+    });
+    updateTodo();
+    setEditForm('');
+  };
 
   const updateTodo = async () => {
+    await dispatch(UpdateTodos({ payload: data }));
+  };
+
+  const onUpdateTodo = async (evt: any, data: any) => {
+    console.log(evt.target.checked, data)
+    let checked = evt.target.checked
+    data["status"] = checked ? 'COMPLETED' : 'INPROGRESS'
     await dispatch(UpdateTodos({ payload: data }))
   }
+
+  const saveTodo = async (payload: { todoId: null }) => {
+    payload.todoId = data.id;
+    const response: any = await dispatch(AddTodos({ payload: payload }));
+    if (response.success) {
+      setModal(false);
+      getData();
+    }
+  };
 
   useEffect(() => {
     getData();
   }, []);
   return (
     <Default className="todos-view app-container m-auto w-full h-full">
-      <Header title="Todos" />
+      <Header
+        title="Todos"
+        buttonText="Add Child Todo"
+        onClick={() => setModal(true)}
+      />
       <div className="todos-view-wrapper flex mt-5">
         <div className="todos-view__details w-3/4">
           <div className="flex items-center">
@@ -53,7 +79,7 @@ export default function TodoView() {
                   value={data.name}
                   name="name"
                   onSave={onUpdateData}
-                  onCancel={() => setEditForm("")}
+                  onCancel={() => setEditForm('')}
                 />
               ) : (
                 <h1
@@ -74,87 +100,142 @@ export default function TodoView() {
           <div className="flex items-center my-10 justify-between">
             <div className="item-control">
               <span className="text-gray-500 text-sm">Assigned To</span>
-              {
-                editForm === 'assignee' ? (
-                  <DynamicEditForm
-                    fieldType="SELECT"
-                    placeholder="Select assignee"
-                    name="assignedTo"
-                    options={teams}
-                    optionValue={"fullName"}
-                    defaultValue={data.assignedTo}
-                    onSave={onUpdateData}
-                    onCancel={() => setEditForm("")}
-                  />
-                ) : (
-                  <div className="flex items-center mt-2">
-                    <Avatar
-                      src="https://i.pravatar.cc/150?img=32"
-                      className="mr-2"
-                    ></Avatar>
-                    <span className="text-sm font-semibold" onClick={() => setEditForm("assignee")}>
-                      {data.user?.fullName}
-                    </span>
-                  </div>
-                )
-              }
-
+              {editForm === 'assignee' ? (
+                <DynamicEditForm
+                  fieldType="SELECT"
+                  placeholder="Select assignee"
+                  name="assignedTo"
+                  options={teams}
+                  optionValue={'fullName'}
+                  defaultValue={data.assignedTo}
+                  onSave={onUpdateData}
+                  onCancel={() => setEditForm('')}
+                />
+              ) : (
+                <div className="flex items-center mt-2">
+                  <Avatar
+                    src="https://i.pravatar.cc/150?img=32"
+                    className="mr-2"
+                  ></Avatar>
+                  <span
+                    className="text-sm font-semibold"
+                    onClick={() => setEditForm('assignee')}
+                  >
+                    {data.user?.fullName}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="item-control">
               <span className="text-gray-500 text-sm">Due Date</span>
-              <div className="flex items-center mt-2">
-                <ClockCircleOutlined className="mr-1" />
-                <span className="text-sm font-semibold">
-                  {moment(data.date).format('DD-MM-YYYY')}
-                </span>
-              </div>
+              {editForm === 'due' ? (
+                <DynamicEditForm
+                  fieldType="DATE"
+                  placeholder="Select date"
+                  value={data.date}
+                  name="date"
+                  onSave={onUpdateData}
+                  onCancel={() => setEditForm('')}
+                />
+              ) : (
+                <div
+                  className="flex items-center mt-2"
+                  onClick={() => setEditForm('due')}
+                >
+                  <ClockCircleOutlined className="mr-1" />
+                  <span className="text-sm font-semibold">
+                    {moment(data.date).format('DD-MM-YYYY')}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="item-control flex flex-col">
               <span className="text-gray-500 text-sm">Priority</span>
-              <Tag className="mt-2 rounded-md capitalize" color="red">
-                {data.priority}
-              </Tag>
+              {editForm === 'priority' ? (
+                <DynamicEditForm
+                  fieldType="SELECT"
+                  placeholder="Select priority"
+                  name="priority"
+                  options={priority}
+                  optionValue={null}
+                  defaultValue={data.priority}
+                  onSave={onUpdateData}
+                  onCancel={() => setEditForm('')}
+                />
+              ) : (
+                <Tag
+                  className="mt-2 rounded-md capitalize"
+                  color={data.priority == 'High' ? 'red' : data.priority == 'Medium' ? 'yellow' : 'blue'}
+                  onClick={() => setEditForm('priority')}
+                >
+                  {data.priority}
+                </Tag>
+              )}
             </div>
             <div className="item-control flex flex-col">
               <span className="text-gray-500 text-sm">Label</span>
-              <div className="flex flex-wrap">
-                {data.label &&
-                  data.label.split(',').map((item: string) => {
-                    return (
-                      <Tag
-                        className="mt-2 rounded-md"
-                        color="processing"
-                        key={item}
-                      >
-                        {item}
-                      </Tag>
-                    );
-                  })}
-              </div>
-            </div>
-            <div className="item-control w-1/5">
-              <span className="text-gray-500 text-sm">Progress</span>
-              <Progress percent={30} />
+              {
+                editForm === 'label' ? (
+                  <DynamicEditForm
+                    fieldType="INPUT"
+                    placeholder="Input your labels separated by commas "
+                    value={data.label}
+                    name="label"
+                    onSave={onUpdateData}
+                    onCancel={() => setEditForm('')}
+                  />
+                ) : (
+                  <div className="flex flex-wrap">
+                    {data.label &&
+                      data.label.split(',').map((item: string) => {
+                        return (
+                          <Tag
+                            onClick={() => setEditForm('label')}
+                            className="mt-2 rounded-md"
+                            color="processing"
+                            key={item}
+                          >
+                            {item}
+                          </Tag>
+                        );
+                      })}
+                  </div>
+                )
+              }
             </div>
           </div>
           <div className="my-10">
             <div className="item-control">
               <span className="text-gray-500 text-sm">Description</span>
-              {
-                editForm === 'description' ? (
-                  <DynamicEditForm
-                    fieldType="TEXTAREA"
-                    placeholder="Description"
-                    value={data.description}
-                    name="description"
-                    onSave={onUpdateData}
-                    onCancel={() => setEditForm("")}
-                  />
-                ) : (
-                  <p className="cursor-text" onClick={() => setEditForm('description')}>{data.description}</p>
-                )
-              }
+              {editForm === 'description' ? (
+                <DynamicEditForm
+                  fieldType="TEXTAREA"
+                  placeholder="Description"
+                  value={data.description}
+                  name="description"
+                  onSave={onUpdateData}
+                  onCancel={() => setEditForm('')}
+                />
+              ) : (
+                <p
+                  className="cursor-text"
+                  onClick={() => setEditForm('description')}
+                >
+                  {data.description}
+                </p>
+              )}
             </div>
+          </div>
+
+          <div className="my-10">
+            <div className="item-control w-full mb-3">
+              <span className="text-gray-500 text-sm">Child Todos</span>
+              <Progress percent={30} />
+            </div>
+            {data.childTodo &&
+              data.childTodo.map((item: any, key: number) => {
+                return <TodoCard data={item} isChild={true} key={key} onChangeTodo={onUpdateTodo} />;
+              })}
           </div>
           <div className="my-10">
             <span className="text-gray-500 text-sm">Comments</span>
@@ -200,6 +281,20 @@ export default function TodoView() {
           </div>
         </div>
       </div>
-    </Default>
+      <Modal
+        visible={modal}
+        title="Add New Item"
+        footer={null}
+        onCancel={() => setModal(false)}
+      >
+        <AddTodoForm
+          onSave={(e) => saveTodo(e)}
+          onCancel={() => setModal(false)}
+          initialValues={{ date: moment(), priority: 'high' }}
+          teams={teams}
+          projects={projects}
+        />
+      </Modal>
+    </Default >
   );
 }

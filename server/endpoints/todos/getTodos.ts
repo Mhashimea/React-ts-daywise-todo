@@ -8,6 +8,7 @@ export default async (req, res) => {
     const userDetails = await getUser(req)
     let where: any = {}
     where.organizationId = userDetails.organization
+    where.assignedTo = userDetails.user
 
     //filter
     if (id) where.id = id

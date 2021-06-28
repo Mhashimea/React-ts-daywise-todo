@@ -1,4 +1,5 @@
 import Todos from '../../model/todos';
+import ChildTodo from '../../model/childTodo';
 import getUser from '../../util/common/getUser';
 import { successResponse } from '../../util/response';
 
@@ -9,14 +10,17 @@ export default async (req, res) => {
     payload.organizationId = userDetils.organization
     payload.active = true
 
-    // update query
-    if (payload.id) {
-      const response: any = await Todos.update(payload, { where: { id: payload.id } })
+    //Child todo actions
+    if (payload.todoId) {
+      const response = await ChildTodo.update(payload, { where: { id: payload.todoId } })
       return successResponse(res, response)
     }
 
-    // update child todo
-    if (payload.childTodoId) { }
+    // update query
+    if (payload.id) {
+      const response = await Todos.update(payload, { where: { id: payload.id } })
+      return successResponse(res, response)
+    }
 
     const response = await Todos.create(payload);
     const data: any = await GetTodo(response.id)

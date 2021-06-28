@@ -25,8 +25,10 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 io.on('connection', (socket) => {
-    socket.on('test-socket', (msg) => {
-        io.emit("emit-test-socket", msg);
+    socket.on('todo:update', ({ payload }) => {
+        var _a, _b;
+        let userIds = (_b = (_a = payload.project) === null || _a === void 0 ? void 0 : _a.assignedUsers) === null || _b === void 0 ? void 0 : _b.map(a => a.userId);
+        io.emit("emit-todo:update", payload);
     });
 });
 app.use(body_parser_1.default.json({ limit: '50mb' }));

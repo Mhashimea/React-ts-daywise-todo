@@ -79,10 +79,6 @@ export default function Todos() {
     </Menu>
   );
 
-  const testSocket = () => {
-    socket.emit('test-socket', { user: 'Muhammed Hashim' })
-  }
-
   const saveTodo = async (payload: Object) => {
     const response: any = await dispatch(AddTodos({ payload: payload }))
     if (response.success) {
@@ -96,10 +92,16 @@ export default function Todos() {
     await dispatch(UpdateTodos({ payload: data }))
   }
 
+  const emitUpdateTodo = () => {
+    socket.on('emit-todo:update', (data) => {
+      dispatch({ type: 'UPDATE_TODO', payload: data })
+      dispatch(GetTodos())
+    })
+  }
+
   useEffect(() => {
     dispatch(GetTodos())
-    socket.on('emit-test-socket', (data) => {
-    })
+    emitUpdateTodo()
   }, [])
 
   return (
@@ -117,7 +119,7 @@ export default function Todos() {
 
       <div className="mt-5 flex">
         <div className="w-2/3">
-          <DatePicker />
+          <DatePicker emitDate={(e: any) => console.log(e)} />
           <div className="todos-tasks mt-5">
             <div className="flex items-center">
               <h1 className="text-base font-semibold flex-1">Tasks</h1>

@@ -26,7 +26,6 @@ export const TodosReducer = (state = initailState, action: { type: any, payload:
       }
     default:
       return state
-
   }
 }
 

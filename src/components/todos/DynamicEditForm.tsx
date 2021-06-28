@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Select } from 'antd';
+import { Input, Select, DatePicker } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 interface EditDynamicForm {
-  fieldType: 'INPUT' | 'TEXTAREA' | 'SELECT' | 'CHECKBOX' | 'RADIO';
+  fieldType: 'INPUT' | 'TEXTAREA' | 'SELECT' | 'CHECKBOX' | 'RADIO' | "DATE"
   options?: string[];
   placeholder?: string;
   value?: string | number;
@@ -28,6 +29,7 @@ export default function DynamicEditForm({
   onCancel,
   defaultValue,
   optionValue,
+
 }: EditDynamicForm) {
   const [model, setModel] = useState<any>({});
 
@@ -68,8 +70,8 @@ export default function DynamicEditForm({
         >
           {options?.map((opt: any, index) => {
             return (
-              <Option key={index} value={opt.id}>
-                {opt[optionValue]}
+              <Option key={index} value={opt.id ? opt.id : opt} className="capitalize">
+                {optionValue ? opt[optionValue] : opt}
               </Option>
             );
           })}
@@ -84,6 +86,20 @@ export default function DynamicEditForm({
           onChange={(e) => onChangeValue({ e: e.target.value, name })}
         />
       )}
+      {
+        console.log(model)
+      }
+      {
+        fieldType === 'DATE' && (
+          <DatePicker
+            placeholder={placeholder}
+            name={name}
+            value={moment(model[name])}
+            defaultValue={moment(model[name])}
+            onChange={(e) => onChangeValue({ e, name })}
+          />
+        )
+      }
 
       <div className="flex z-20">
         <div

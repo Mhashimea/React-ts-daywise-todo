@@ -1,6 +1,9 @@
 const initialState = {
   teams: [],
-  projects: []
+  projects: [],
+  priority: [
+    "High", "Medium", "Low"
+  ]
 }
 
 export const CommonReducers = (state = initialState, action: any) => {

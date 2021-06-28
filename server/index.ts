@@ -14,8 +14,9 @@ const { Server } = require("socket.io")
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-  socket.on('test-socket', (msg) => {
-    io.emit("emit-test-socket", msg)
+  socket.on('todo:update', ({ payload }) => {
+    let userIds = payload.project?.assignedUsers?.map(a => a.userId)
+    io.emit("emit-todo:update", payload)
   });
 })
 

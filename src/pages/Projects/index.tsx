@@ -53,7 +53,7 @@ export default function Projects({ className }: any) {
           </Button>
         </Dropdown>
       </div>
-      <div className="mt-5 flex items-center flex-wrap">
+      <div className="mt-5 flex items-start flex-wrap">
         {projects && projects.map((proj: any, i: number) => {
           return (
             <ProjectCard data={proj} key={i} />

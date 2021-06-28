@@ -7,7 +7,7 @@ interface todoFormProps {
   initialValues?: any;
   teams?: string[];
   projects?: string[];
-  modalState: string
+  modalState?: string
 }
 
 const { Option } = Select;
