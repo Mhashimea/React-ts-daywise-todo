@@ -1,0 +1,44 @@
+.banner {
+  background: #0f123f;
+  height: 150px;
+  width: 100%;
+  @apply rounded-xl;
+  position: relative;
+  display: flex;
+  color: #fff;
+  align-items: center;
+  margin-top: 53px;
+}
+.banner img {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  right: 30px;
+  bottom: 0;
+}
+
+.dashboard-quick-report {
+  margin-top: 54px;
+}
+.dashboard-quick-report-item:nth-child(odd) {
+  margin-right: 5px;
+}
+.dashboard-quick-report-item {
+  width: 49%;
+  margin-bottom: 5px;
+}
+
+.dashboard-card {
+  @apply bg-white rounded-xl border-gray-100 flex items-center px-4;
+  min-height: 80px;
+}
+
+.dashboard-card img {
+  width: 40px;
+  height: 40px;
+}
+.project-status,
+.todays-tasks {
+  min-height: 300px;
+  max-height: 300px;
+}
