@@ -18,7 +18,11 @@
     "*.spec.js",
     "bundle.js"
   ],
-  "extends": ["eslint:recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "no-self-assign": "off"
   }

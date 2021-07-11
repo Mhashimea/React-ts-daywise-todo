@@ -14,7 +14,7 @@ import AddTodoForm from "../../components/forms/AddTodoForm";
 
 export default function TodoView() {
   const dispatch = useDispatch();
-  let { id }: any = useParams();
+  const { id }: any = useParams();
   const [data, setData] = useState<any>({});
   const [editForm, setEditForm] = useState("");
   const [modal, setModal] = useState(false);
@@ -42,8 +42,7 @@ export default function TodoView() {
   };
 
   const onUpdateTodo = async (evt: any, data: any) => {
-    console.log(evt.target.checked, data);
-    let checked = evt.target.checked;
+    const checked = evt.target.checked;
     data["status"] = checked ? "COMPLETED" : "INPROGRESS";
     await dispatch(UpdateTodos({ payload: data }));
   };

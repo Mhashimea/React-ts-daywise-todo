@@ -3,8 +3,6 @@ import { Button, Dropdown, Input, Menu, message, Modal } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ProjectForm from "../../components/forms/ProjectForm";
-import Default from "../../components/layouts/Default";
-import Header from "../../components/ux/Header";
 import ProjectCard from "../../components/ux/ProjectCard";
 import { post } from "../../services/http-request";
 
@@ -14,7 +12,7 @@ export default function Projects() {
   const teams = useSelector((state: any) => state.CommonReducer.teams);
   const projects = useSelector((state: any) => state.CommonReducer.projects);
 
-  const saveData = async (e: Object) => {
+  const saveData = async (e: any) => {
     const response = await post("add-project", { payload: e });
     if (response.success) {
       message.success("Project addedd successfully");
@@ -42,12 +40,7 @@ export default function Projects() {
   );
 
   return (
-    <Default>
-      <Header
-        title="Projects"
-        buttonText="Add New Project"
-        onClick={() => setModalState(true)}
-      />
+    <div className="projects">
       <div className="projects-filter flex items-center justify-end mt-5">
         <Input placeholder="Search Project..." className="w-1/3 mr-3" />
         <Dropdown overlay={statusMenu} trigger={["click"]}>
@@ -80,6 +73,6 @@ export default function Projects() {
           onSave={saveData}
         />
       </Modal>
-    </Default>
+    </div>
   );
 }

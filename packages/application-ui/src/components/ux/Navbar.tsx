@@ -1,18 +1,18 @@
-import { CalendarOutlined, NotificationOutlined } from "@ant-design/icons"
-import { Dropdown, Input, Menu } from "antd"
-import moment from "moment"
-import React from "react"
-import "./style.css"
+import { CalendarOutlined, NotificationOutlined } from "@ant-design/icons";
+import { Dropdown, Input, Menu } from "antd";
+import moment from "moment";
+import React from "react";
+import "./style.css";
 
 const menu = (
   <Menu>
     <p>Notification Items</p>
   </Menu>
-)
+);
 
 export default function Navbar() {
   return (
-    <div className="navbar flex items-center pt-5 sticky">
+    <div className="navbar flex items-center pt-5 sticky mb-5">
       <h1 className="text-xl font-semibold mr-5">Dashboard</h1>
       <div className="flex-1">
         <Input placeholder="Search..." size="middle" className="rounded-lg" />
@@ -30,5 +30,5 @@ export default function Navbar() {
         </Dropdown>
       </div>
     </div>
-  )
+  );
 }

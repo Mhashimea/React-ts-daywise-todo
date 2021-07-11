@@ -1,37 +1,36 @@
-import { FilterOutlined } from "@ant-design/icons"
-import { Button, Dropdown, Menu, Modal } from "antd"
-import moment from "moment"
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import io from "socket.io-client"
-import DatePicker from "../../components/datepicker"
-import AddMeetingForm from "../../components/forms/AddMeetingForm"
-import AddTodoForm from "../../components/forms/AddTodoForm"
-import Default from "../../components/layouts/Default"
-import TodaysMeeting from "../../components/todos/TodaysMeeting"
-import TodaysPerfomance from "../../components/todos/TodaysPerfomance"
-import Header from "../../components/ux/Header"
-import TodoCard from "../../components/ux/TodoCard"
-import { AddTodos, GetTodos, UpdateTodos } from "../../store/actions/todos"
+import { FilterOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Menu, Modal } from "antd";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import io from "socket.io-client";
+import DatePicker from "../../components/datepicker";
+import AddMeetingForm from "../../components/forms/AddMeetingForm";
+import AddTodoForm from "../../components/forms/AddTodoForm";
+import TodaysMeeting from "../../components/todos/TodaysMeeting";
+import TodaysPerfomance from "../../components/todos/TodaysPerfomance";
+import Header from "../../components/ux/Header";
+import TodoCard from "../../components/ux/TodoCard";
+import { AddTodos, GetTodos, UpdateTodos } from "../../store/actions/todos";
 
 const socket = io("http://localhost:8080", {
   forceNew: true,
   transports: ["websocket"],
-})
+});
 
 export default function Todos() {
-  const dispatch = useDispatch()
-  const [priority, setPriority] = useState<any>("Priority")
-  const [status, setStatus] = useState<any>("All")
-  const [project, setProject] = useState<any>("All")
-  const [modalState, setModalState] = useState<any>(null)
+  const dispatch = useDispatch();
+  const [priority, setPriority] = useState<any>("Priority");
+  const [status, setStatus] = useState<any>("All");
+  const [project, setProject] = useState<any>("All");
+  const [modalState, setModalState] = useState<any>(null);
 
-  const todos = useSelector((state: any) => state.TodosReducer.todos)
-  const teams = useSelector((state: any) => state.CommonReducer.teams)
-  const projects = useSelector((state: any) => state.CommonReducer.projects)
+  const todos = useSelector((state: any) => state.TodosReducer.todos);
+  const teams = useSelector((state: any) => state.CommonReducer.teams);
+  const projects = useSelector((state: any) => state.CommonReducer.projects);
 
   const priorityMenu = (
-    <Menu onClick={e => setPriority(e.key)}>
+    <Menu onClick={(e) => setPriority(e.key)}>
       <Menu.Item key="Priority">
         <span>All</span>
       </Menu.Item>
@@ -41,10 +40,10 @@ export default function Todos() {
       <Menu.Item key="Medium">Medium</Menu.Item>
       <Menu.Item key="Low">Low</Menu.Item>
     </Menu>
-  )
+  );
 
   const statusMenu = (
-    <Menu onClick={e => setStatus(e.key)}>
+    <Menu onClick={(e) => setStatus(e.key)}>
       <Menu.Item key="All">
         <span>All</span>
       </Menu.Item>
@@ -55,10 +54,10 @@ export default function Todos() {
         <span>Pending</span>
       </Menu.Item>
     </Menu>
-  )
+  );
 
   const projectMenu = (
-    <Menu onClick={e => setProject(e.key)}>
+    <Menu onClick={(e) => setProject(e.key)}>
       <Menu.Item key="All">
         <span>All</span>
       </Menu.Item>
@@ -69,10 +68,10 @@ export default function Todos() {
         <span>Project 2</span>
       </Menu.Item>
     </Menu>
-  )
+  );
 
   const buttonMenu = (
-    <Menu onClick={e => setModalState(e.key)}>
+    <Menu onClick={(e) => setModalState(e.key)}>
       <Menu.Item key="todo">
         <span>Todo</span>
       </Menu.Item>
@@ -80,45 +79,43 @@ export default function Todos() {
         <span>Meeting</span>
       </Menu.Item>
     </Menu>
-  )
+  );
 
-  const saveTodo = async (payload: Object) => {
-    const response: any = await dispatch(AddTodos({ payload: payload }))
+  const saveTodo = async (payload: any) => {
+    const response: any = await dispatch(AddTodos({ payload: payload }));
     if (response.success) {
-      setModalState(null)
+      setModalState(null);
     }
-  }
+  };
 
   const onUpdateTodo = async (evt: any, data: any) => {
-    let checked = evt.target.checked
-    data["status"] = checked ? "COMPLETED" : "INPROGRESS"
-    await dispatch(UpdateTodos({ payload: data }))
-  }
+    const checked = evt.target.checked;
+    data["status"] = checked ? "COMPLETED" : "INPROGRESS";
+    await dispatch(UpdateTodos({ payload: data }));
+  };
 
   const emitUpdateTodo = () => {
-    socket.on("emit-todo:update", data => {
-      dispatch({ type: "UPDATE_TODO", payload: data })
-      dispatch(GetTodos())
-    })
-  }
+    socket.on("emit-todo:update", (data) => {
+      dispatch({ type: "UPDATE_TODO", payload: data });
+      dispatch(GetTodos());
+    });
+  };
 
   useEffect(() => {
-    dispatch(GetTodos())
-    emitUpdateTodo()
-  }, [])
+    dispatch(GetTodos());
+    emitUpdateTodo();
+  }, []);
 
   return (
-    <Default className="todos app-container m-auto w-full">
-      <Header title="Todos">
-        <Dropdown.Button
-          overlay={buttonMenu}
-          type="primary"
-          trigger={["click"]}
-          className="rounded-md"
-        >
-          Add New Item
-        </Dropdown.Button>
-      </Header>
+    <div className="todos">
+      <Dropdown.Button
+        overlay={buttonMenu}
+        type="primary"
+        trigger={["click"]}
+        className="rounded-md"
+      >
+        Add New Item
+      </Dropdown.Button>
 
       <div className="mt-5 flex">
         <div className="w-2/3">
@@ -171,7 +168,7 @@ export default function Todos() {
                       data={item}
                       onChangeTodo={onUpdateTodo}
                     />
-                  )
+                  );
                 })}
             </div>
           </div>
@@ -190,7 +187,7 @@ export default function Todos() {
       >
         {modalState === "todo" ? (
           <AddTodoForm
-            onSave={e => saveTodo(e)}
+            onSave={(e) => saveTodo(e)}
             onCancel={() => setModalState(null)}
             initialValues={{ date: moment(), priority: "high" }}
             teams={teams}
@@ -201,6 +198,6 @@ export default function Todos() {
           <AddMeetingForm onCancel={() => setModalState(null)} />
         )}
       </Modal>
-    </Default>
-  )
+    </div>
+  );
 }

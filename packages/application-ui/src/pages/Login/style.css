@@ -1,12 +1,13 @@
 .login {
   background-color: #eeeeee96;
-  background-image: url('https://images.pexels.com/photos/7429470/pexels-photo-7429470.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-image: url("https://images.pexels.com/photos/7429470/pexels-photo-7429470.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: center;
+  @apply h-full w-full;
 }
 .login-brand h1 {
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
   margin-bottom: 50px;
   font-weight: 600;
   font-size: 26px;

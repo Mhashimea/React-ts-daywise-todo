@@ -5,6 +5,24 @@ import "./style.css";
 import Slider from "react-slick";
 import classNames from "classnames";
 
+function DateObject({ date, selectedDate, onClick }: any) {
+  const dateCls = classNames({
+    "font-medium": true,
+    " date-picker__date--active": moment(date).format("DD") === selectedDate,
+  });
+  return (
+    <div
+      className="date-picker__date cursor-pointer justify-center flex items-center flex-col"
+      onClick={onClick}
+    >
+      <span className="text-xs text-gray-500 text-center mb-2">
+        {moment(date).format("ddd")}
+      </span>
+      <h1 className={dateCls}>{moment(date).format("DD")}</h1>
+    </div>
+  );
+}
+
 export default function DatePicker({ emitDate }: any) {
   const [dates, setDates] = useState<any>([]);
   const [currentMonth, setCurrentMonth] = useState(moment().format("MMMM"));
@@ -85,24 +103,6 @@ export default function DatePicker({ emitDate }: any) {
           })}
         </Slider>
       </div>
-    </div>
-  );
-}
-
-function DateObject({ date, selectedDate, onClick }: any) {
-  const dateCls = classNames({
-    "font-medium": true,
-    " date-picker__date--active": moment(date).format("DD") === selectedDate,
-  });
-  return (
-    <div
-      className="date-picker__date cursor-pointer justify-center flex items-center flex-col"
-      onClick={onClick}
-    >
-      <span className="text-xs text-gray-500 text-center mb-2">
-        {moment(date).format("ddd")}
-      </span>
-      <h1 className={dateCls}>{moment(date).format("DD")}</h1>
     </div>
   );
 }

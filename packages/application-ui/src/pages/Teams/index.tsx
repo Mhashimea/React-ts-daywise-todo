@@ -1,8 +1,6 @@
 import { Avatar, message, Modal, Table, Tag, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import AddTeamForm from "../../components/forms/AddTeamForm";
-import Default from "../../components/layouts/Default";
-import Header from "../../components/ux/Header";
 import { post } from "../../services/http-request";
 
 export default function Teams() {
@@ -63,7 +61,7 @@ export default function Teams() {
     }
   };
 
-  const saveData = async (e: Object) => {
+  const saveData = async (e: any) => {
     const response = await post("add-team", { payload: e });
     if (response.success) {
       getData();
@@ -79,12 +77,7 @@ export default function Teams() {
   }, []);
 
   return (
-    <Default>
-      <Header
-        title="Teams"
-        buttonText="Add New Member"
-        onClick={() => setVisible(true)}
-      />
+    <div className="teams">
       <div className="teams-table mt-5">
         <Table columns={columns} dataSource={data} bordered={true} />
       </div>
@@ -97,6 +90,6 @@ export default function Teams() {
       >
         <AddTeamForm onSave={saveData} />
       </Modal>
-    </Default>
+    </div>
   );
 }

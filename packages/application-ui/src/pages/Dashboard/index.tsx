@@ -14,7 +14,7 @@ import "./style.css";
 
 export default function Dashboard() {
   return (
-    <Default className="dashboard">
+    <div className="dashboard">
       <div className="flex">
         <div className="w-2/3">
           <Banner />
@@ -58,6 +58,6 @@ export default function Dashboard() {
         </div>
       </div>
       <ContributionChart />
-    </Default>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
 
-const BASE_URL: string = "http://localhost:8080/api/"
-
+const BaseUrl: any = "http://localhost:8080/api/"
 export interface ServerResponse {
   success: boolean
   records: any[]
@@ -34,14 +33,14 @@ export function doRequest(
 
 export const get = (
   url: string,
-  params?: object,
+  params?: any,
   config?: AxiosRequestConfig
 ): Promise<ServerResponse> =>
-  doRequest({ params, url: BASE_URL + url, method: "GET", ...config })
+  doRequest({ params, url: BaseUrl + url, method: "GET", ...config })
 
 export const post = (
   url: string,
-  data?: object,
+  data?: any,
   config?: AxiosRequestConfig
 ): Promise<ServerResponse> =>
-  doRequest({ data, url: BASE_URL + url, method: "POST", ...config })
+  doRequest({ data, url: BaseUrl + url, method: "POST", ...config })

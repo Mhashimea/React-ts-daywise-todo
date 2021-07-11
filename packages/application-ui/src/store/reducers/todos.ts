@@ -20,7 +20,7 @@ export const TodosReducer = (
         todos: state.todos,
       }
     case 'UPDATE_TODO': {
-      let todosArray = [...state.todos]
+      const todosArray = [...state.todos]
       todosArray.filter(a => a.id === action.payload.id)
       return {
         ...state,
