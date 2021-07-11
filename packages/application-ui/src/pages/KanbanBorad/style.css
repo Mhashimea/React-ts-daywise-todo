@@ -1,0 +1,17 @@
+.kanban-board-header
+  .ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  background-color: transparent;
+  border: none;
+  padding-left: 0;
+  font-size: 18px;
+}
+
+.kanban-board-filter .ant-input-affix-wrapper {
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+.kanban-board-filter input {
+  background-color: transparent;
+}
