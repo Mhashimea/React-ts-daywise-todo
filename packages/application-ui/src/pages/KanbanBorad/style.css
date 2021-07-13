@@ -11,7 +11,45 @@
   background-color: transparent;
   outline: none;
   box-shadow: none;
+  padding-left: 0;
 }
 .kanban-board-filter input {
   background-color: transparent;
+}
+
+/* Kanban Board */
+.board-list {
+  @apply flex mt-3 items-center justify-between;
+}
+.board-list-item {
+  @apply bg-white border border-gray-200 overflow-auto rounded-xl p-3;
+  width: 310px;
+  min-height: 600px;
+}
+.board-list-item h1 {
+  @apply text-lg font-semibold mb-3;
+}
+.board-list-item-data {
+  @apply border border-gray-200 rounded-md mb-2 shadow-md bg-white;
+  max-height: 450px;
+}
+.board-list-item-data h1 {
+  @apply ml-2 text-base font-normal mt-2;
+}
+.board-list-item-data-attach img {
+  max-width: 90%;
+  @apply m-auto rounded-md my-3 object-cover;
+  height: 200px;
+}
+.board-list-item-data-footer {
+  @apply border-t p-3 mt-3;
+}
+.board-list-item-data-footer {
+  @apply flex items-center;
+}
+.board-footer-item {
+  @apply flex items-center text-gray-500 text-sm mr-3;
+}
+.board-footer-item span {
+  @apply mr-1;
 }

@@ -1,5 +1,6 @@
 import {
   AreaChartOutlined,
+  CalendarOutlined,
   CheckCircleOutlined,
   FileTextOutlined,
   LogoutOutlined,
@@ -35,11 +36,13 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          to="/todos"
-          className={location.pathname === "/todos" ? " navbar-active" : ""}
+          to="/kanban-board"
+          className={
+            location.pathname === "/kanban-board" ? " navbar-active" : ""
+          }
         >
           <CheckCircleOutlined className="mr-2 text-sm" />
-          <li>Todos</li>
+          <li>Board</li>
         </Link>
 
         <Link
@@ -57,7 +60,13 @@ export default function Sidebar() {
           <UsergroupAddOutlined className="mr-2 text-sm" />
           <li>Teams</li>
         </Link>
-
+        <Link
+          to="/teams"
+          className={location.pathname === "/events" ? " navbar-active" : ""}
+        >
+          <CalendarOutlined className="mr-2 text-sm" />
+          <li>Events</li>
+        </Link>
         <Link
           to="/reports"
           className={location.pathname === "/reports" ? " navbar-active" : ""}

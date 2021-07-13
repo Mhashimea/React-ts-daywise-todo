@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, Dropdown, Menu } from "antd";
+import { Input, Dropdown, Menu, Button } from "antd";
 import { SearchOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 export default function KanbanBoardFilter() {
@@ -56,6 +56,9 @@ export default function KanbanBoardFilter() {
           <CaretDownOutlined />
         </a>
       </Dropdown>
+      <Button type="primary" className="rounded-md">
+        Add New Item
+      </Button>
     </div>
   );
 }
