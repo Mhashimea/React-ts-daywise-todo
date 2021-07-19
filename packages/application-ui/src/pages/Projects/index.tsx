@@ -3,8 +3,9 @@ import { Button, Dropdown, Input, Menu, message, Modal } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ProjectForm from "../../components/forms/ProjectForm";
-import ProjectCard from "../../components/ux/ProjectCard";
+import ProjectCard from "./ProjectCard";
 import { post } from "../../services/http-request";
+import ProjectFilter from "./ProjectFilter";
 
 export default function Projects() {
   const [status, setStatus] = useState<any>("All");
@@ -41,25 +42,12 @@ export default function Projects() {
 
   return (
     <div className="projects">
-      <div className="projects-filter flex items-center justify-end mt-5">
-        <Input placeholder="Search Project..." className="w-1/3 mr-3" />
-        <Dropdown overlay={statusMenu} trigger={["click"]}>
-          <Button className="rounded-md flex items-center">
-            <FilterOutlined className="text-sm" />
-            {status}
-          </Button>
-        </Dropdown>
-      </div>
+      <ProjectFilter />
       <div className="mt-5 flex items-start flex-wrap">
         {projects &&
           projects.map((proj: any, i: number) => {
             return <ProjectCard data={proj} key={i} />;
           })}
-      </div>
-      <div className="text-center">
-        <Button type="primary" className="rounded-md my-5">
-          Load More
-        </Button>
       </div>
       <Modal
         visible={modalState}

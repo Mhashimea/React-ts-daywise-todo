@@ -7,24 +7,13 @@
   font-size: 18px;
 }
 
-.kanban-board-filter .ant-input-affix-wrapper {
-  background-color: transparent;
-  outline: none;
-  box-shadow: none;
-  padding-left: 0;
-}
-
-.kanban-board-filter input {
-  background-color: transparent;
-}
-
 /* Kanban Board */
 .board-list {
-  @apply flex mt-3 items-center justify-between;
+  @apply flex mt-3 justify-between overflow-auto;
 }
 
 .board-list-item {
-  @apply bg-white border border-gray-200 overflow-auto rounded-xl p-3 w-['310px'] min-h-['600px'];
+  @apply bg-white border border-gray-200 overflow-auto rounded-xl p-3 min-w-[350px] max-w-[350px] min-h-[600px] mr-3;
 }
 
 .board-list-item h1 {
@@ -32,7 +21,7 @@
 }
 
 .board-list-item-data {
-  @apply border border-gray-200 rounded-md mb-2 shadow-md bg-white max-h-['450px'];
+  @apply border border-gray-200 rounded-md mb-2 shadow-md bg-white max-h-[450px];
 }
 
 .board-list-item-data h1 {
@@ -41,7 +30,7 @@
 
 .board-list-item-data-attach img {
   max-width: 90%;
-  @apply m-auto rounded-md my-3 object-cover h-['200px'];
+  @apply m-auto rounded-md my-3 object-cover h-[200px];
 }
 
 .board-list-item-data-footer {
@@ -54,4 +43,25 @@
 
 .board-footer-item span {
   @apply mr-1;
+}
+
+/* Activities */
+.activities {
+  @apply w-full max-w-[300px];
+}
+
+.activities-list-item {
+  @apply mb-3 flex items-start;
+}
+
+.activities-list-item-activity p {
+  @apply text-[13px] mb-0 font-semibold;
+}
+
+.activities-list-item-activity span {
+  @apply text-xs text-gray-500;
+}
+
+.activities-list-item .description {
+  @apply overflow-hidden text-xs text-gray-500 mb-3;
 }

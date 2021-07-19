@@ -60,12 +60,7 @@ export default function TodoView() {
     getData();
   }, []);
   return (
-    <Default>
-      <Header
-        title="Todos"
-        buttonText="Add Child Todo"
-        onClick={() => setModal(true)}
-      />
+    <div>
       <div className="todos-view-wrapper flex mt-5">
         <div className="todos-view__details w-3/4">
           <div className="flex items-center">
@@ -305,6 +300,6 @@ export default function TodoView() {
           projects={projects}
         />
       </Modal>
-    </Default>
+    </div>
   );
 }

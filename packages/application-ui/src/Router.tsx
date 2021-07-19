@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Default from "./components/layouts/Default";
 import Loader from "./components/ux/Loader";
 import Login from "./pages/Login/index";
@@ -17,19 +17,21 @@ const KanbanBoard = lazy(() => import("./pages/KanbanBorad/index"));
 function RouterView() {
   return (
     <Router>
-      <Suspense fallback={<Loader />}>
+      <Switch>
         <Route component={Login} exact path="/" />
         <Route component={Register} exact path="/register" />
         <Default>
-          <Route component={Dashboard} exact path="/dashboard" />
-          <Route component={Todos} exact path="/todos" />
-          <Route component={TodosView} exact path="/todos/:id" />
-          <Route component={Projects} exact path="/projects" />
-          <Route component={Reports} exact path="/reports" />
-          <Route component={Teams} exact path="/teams" />
-          <Route component={KanbanBoard} exact path="/kanban-board" />
+          <Suspense fallback={<Loader />}>
+            <Route component={Dashboard} exact path="/dashboard" />
+            <Route component={Todos} exact path="/todos" />
+            <Route component={TodosView} exact path="/todos/:id" />
+            <Route component={Projects} exact path="/projects" />
+            <Route component={Reports} exact path="/reports" />
+            <Route component={Teams} exact path="/teams" />
+            <Route component={KanbanBoard} exact path="/kanban-board" />
+          </Suspense>
         </Default>
-      </Suspense>
+      </Switch>
     </Router>
   );
 }

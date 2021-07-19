@@ -1,0 +1,20 @@
+.project-card {
+  @apply w-[350px] bg-white mr-3 p-3 rounded-md shadow-md;
+}
+
+.project-card-head h1 {
+  @apply mt-3 text-gray-900 font-semibold text-base;
+}
+
+.project-card-head span {
+  @apply text-xs text-gray-500;
+}
+
+.project-card p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  @apply mb-3 min-h-[61px];
+}

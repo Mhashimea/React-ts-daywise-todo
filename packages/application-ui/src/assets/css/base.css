@@ -7,9 +7,11 @@ body {
   font-family: "Fira Sans", sans-serif;
   background-color: #f4f7fd;
 }
+
 * {
   font-family: "Fira Sans", sans-serif;
 }
+
 #root,
 .App {
   height: 100%;
@@ -19,6 +21,19 @@ body {
 .form-control {
   margin-bottom: 10px;
 }
+
 .app-container {
   max-width: 1200px;
+}
+
+/* Page Filter */
+.page-filter .ant-input-affix-wrapper {
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+  padding-left: 0;
+}
+
+.page-filter input {
+  background-color: transparent;
 }

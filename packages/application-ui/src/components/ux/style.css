@@ -2,6 +2,7 @@
 .navbar input {
   width: 300px;
 }
+
 /* Navbar Ends */
 
 /* Sidebar Starts */
@@ -9,9 +10,11 @@
   width: 8%;
   @apply flex flex-col;
 }
+
 .default-content {
   width: 92%;
 }
+
 .sidebar ul a,
 .sidebar-link {
   height: 70px;
@@ -19,25 +22,23 @@
   color: #fff;
   @apply flex flex-col justify-center items-center text-sm cursor-pointer;
 }
+
 .navbar-active {
   border-left: 4px solid #ee786c;
   background-color: #1b1e4e;
 }
+
 .sidebar ul a:hover,
 .sidebar-link:hover {
   background-color: #1b1e4e;
 }
 /* Sidebar Ends */
 
-/* Project Card Starts */
-.project-card {
-  width: 30.333333%;
-}
-
 /* Todo Card Starts */
 .todo-card {
   box-shadow: 0px ​3px 5px -2px #eee;
 }
+
 .loader,
 .loader:before,
 .loader:after {
@@ -47,6 +48,7 @@
   width: 1em;
   height: 4em;
 }
+
 .loader {
   color: #ffffff;
   text-indent: -9999em;
@@ -59,17 +61,20 @@
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
+
 .loader:before,
 .loader:after {
   position: absolute;
   top: 0;
-  content: '';
+  content: "";
 }
+
 .loader:before {
   left: -1.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
+
 .loader:after {
   left: 1.5em;
 }
