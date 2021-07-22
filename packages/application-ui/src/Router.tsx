@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Default from "./components/layouts/Default";
 import Loader from "./components/ux/Loader";
 import Login from "./pages/Login/index";
-import Register from "./pages/Regster";
+import Register from "./pages/Register";
 
 // lazy loading
 const Dashboard = lazy(() => import("./pages/Dashboard/index"));
@@ -13,6 +13,7 @@ const Reports = lazy(() => import("./pages/Reports/index"));
 const Teams = lazy(() => import("./pages/Teams/index"));
 const TodosView = lazy(() => import("./pages/Todos/id"));
 const KanbanBoard = lazy(() => import("./pages/KanbanBorad/index"));
+const Schedule = lazy(() => import("./pages/Schedule/index"));
 
 function RouterView() {
   return (
@@ -26,8 +27,9 @@ function RouterView() {
             <Route component={Todos} exact path="/todos" />
             <Route component={TodosView} exact path="/todos/:id" />
             <Route component={Projects} exact path="/projects" />
-            <Route component={Reports} exact path="/reports" />
             <Route component={Teams} exact path="/teams" />
+            <Route component={Schedule} exact path="/schedules" />
+            <Route component={Reports} exact path="/reports" />
             <Route component={KanbanBoard} exact path="/kanban-board" />
           </Suspense>
         </Default>

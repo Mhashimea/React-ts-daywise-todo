@@ -14,5 +14,10 @@ export const colors = [
   "#f39c12",
   "#d35400",
   "#c0392b",
-
 ]
+
+export const statusColor = {
+  pending: '#f39c12',
+  success: '#27ae60',
+  danger: '#c0392b'
+}

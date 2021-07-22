@@ -2,6 +2,9 @@ import { Avatar, message, Modal, Table, Tag, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import AddTeamForm from "../../components/forms/AddTeamForm";
 import { post } from "../../services/http-request";
+import TeamCard from "./TeamCard";
+import TeamsFilter from "./TeamsFilter";
+import "./style.css";
 
 export default function Teams() {
   const columns = [
@@ -78,10 +81,12 @@ export default function Teams() {
 
   return (
     <div className="teams">
-      <div className="teams-table mt-5">
-        <Table columns={columns} dataSource={data} bordered={true} />
+      <TeamsFilter />
+      <div className="teams-list">
+        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1].map((item) => {
+          return <TeamCard />;
+        })}
       </div>
-
       <Modal
         visible={visible}
         title="Add Team Member"

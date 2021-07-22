@@ -61,11 +61,11 @@ export default function Sidebar() {
           <li>Teams</li>
         </Link>
         <Link
-          to="/teams"
-          className={location.pathname === "/events" ? " navbar-active" : ""}
+          to="/schedules"
+          className={location.pathname === "/schedules" ? " navbar-active" : ""}
         >
           <CalendarOutlined className="mr-2 text-sm" />
-          <li>Events</li>
+          <li>Schedule</li>
         </Link>
         <Link
           to="/reports"

@@ -7,6 +7,7 @@ import {
 import { Avatar, Tag } from "antd";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import TodoModal from "./TodoModal";
 
 export default function Board() {
   const [workflow, setWorkflow] = useState([
@@ -37,10 +38,18 @@ export default function Board() {
       status: "Closed",
     },
   ]);
+  const [visible, setVisible] = useState(true);
+  const [selectedTodo, setSelectedTodo] = useState();
 
   const onDragEnd = (e: any) => {
     const filtredData = todos.filter((a) => a.id === Number(e.draggableId));
     filtredData[0].status = e.destination.droppableId;
+  };
+
+  const onSelectTodo = (e) => {
+    console.log(e);
+    setSelectedTodo(e);
+    setVisible(true);
   };
   return (
     <div className="board">
@@ -72,6 +81,7 @@ export default function Board() {
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
+                                    onClick={() => onSelectTodo(item)}
                                   >
                                     <div className="flex items-center my-3 mx-2">
                                       <div className="flex items-center flex-1">
@@ -125,6 +135,7 @@ export default function Board() {
           })}
         </DragDropContext>
       </div>
+      <TodoModal visible={visible} data={selectedTodo} />
     </div>
   );
 }

@@ -1,0 +1,47 @@
+.teams-list {
+  @apply flex items-center mt-3 flex-wrap;
+}
+
+.team-card {
+  @apply w-[24%] bg-white mr-2 mb-2 p-3 rounded-md shadow-md;
+}
+
+.team-card-avatar .ant-avatar {
+  @apply rounded-md w-[60px] h-[60px];
+}
+
+.team-card-details {
+  @apply mb-3;
+}
+
+.team-card-details h1 {
+  @apply text-lg mt-2;
+}
+
+.team-card-details span {
+  @apply text-sm text-gray-500;
+}
+
+.team-card-social {
+  @apply flex items-center pb-3 mt-3 border-b;
+}
+
+.team-card-social-item {
+  @apply w-[30px] h-[30px] bg-gray-200 rounded-full flex items-center justify-center mr-2 cursor-pointer;
+}
+
+.team-card-social-item span {
+  @apply text-gray-500 text-base;
+}
+
+.team-card-position {
+  @apply mt-3;
+}
+
+.team-card-position span {
+  @apply text-xs text-gray-500 uppercase;
+}
+
+.team-card-projects {
+  @apply flex items-center;
+}

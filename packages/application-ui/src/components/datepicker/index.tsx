@@ -38,7 +38,7 @@ export default function DatePicker({ emitDate }: any) {
   };
 
   const generateDate = (month: number, year: number) => {
-    const datesArry = [];
+    const datesArry: any = [];
     const nextDate = new Date(year, month - 1, 1);
     while (nextDate.getMonth() === month - 1) {
       datesArry.push(new Date(nextDate));

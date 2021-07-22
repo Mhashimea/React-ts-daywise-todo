@@ -3,14 +3,13 @@ import img4 from "../../assets/images/icons/interview.png";
 import img1 from "../../assets/images/icons/schedule.png";
 import img2 from "../../assets/images/icons/shuttle.png";
 import img3 from "../../assets/images/icons/trophy.png";
-import Banner from "../../components/dashboard/Banner";
-import Default from "../../components/layouts/Default";
 import ActivityChart from "./ActivityChart";
+import Banner from "./Banner";
 import ContributionChart from "./ContributionChart";
 import DashboardCard from "./DashboardCard";
-import TodaysTasks from "./TodaysTasks";
 import ProjectStatus from "./ProjectStatus";
 import "./style.css";
+import TodaysTasks from "./TodaysTasks";
 
 export default function Dashboard() {
   return (
