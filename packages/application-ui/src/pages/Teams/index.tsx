@@ -1,67 +1,36 @@
-import { Avatar, message, Modal, Table, Tag, Tooltip } from "antd";
+import { message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import AddTeamForm from "../../components/forms/AddTeamForm";
+import Loader from "../../components/ux/Loader";
+import NoData from "../../components/ux/Nodata";
 import { post } from "../../services/http-request";
+import "./style.css";
 import TeamCard from "./TeamCard";
 import TeamsFilter from "./TeamsFilter";
-import "./style.css";
 
 export default function Teams() {
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "fullName",
-      key: "fullName",
-    },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Projects",
-      dataIndex: "projects",
-      key: "projects",
-      render: (projects: any) => (
-        <Avatar.Group>
-          {projects &&
-            projects.map((proj: any) => {
-              return (
-                <Tooltip
-                  title={proj.name}
-                  placement="top"
-                  className="cursor-pointer"
-                >
-                  <Avatar>
-                    <span>{proj.name.slice(0, 1)}</span>
-                  </Avatar>
-                </Tooltip>
-              );
-            })}
-        </Avatar.Group>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "active",
-      key: "active",
-      render: (active: any) => (
-        <>
-          <Tag color={active ? "green" : "red"} key={active}>
-            {active ? "Active" : "Inactive"}
-          </Tag>
-        </>
-      ),
-    },
-  ];
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [filter, setFilter] = useState(null);
+  const [designation, setDesignation] = useState<any>([]);
+  const projects = useSelector((state: any) => state.CommonReducer.projects);
 
   const getData = async () => {
-    const response = await post("teams");
+    setLoading(true);
+    const response = await post("teams", {
+      active: filter === "Active" ? true : filter === "Inactive" ? false : null,
+    });
     if (response.success) {
       setData(response.data);
     }
+    setLoading(false);
+  };
+
+  const getDesignation = async () => {
+    const { data } = await post("designation", { active: null });
+    setDesignation(data);
   };
 
   const saveData = async (e: any) => {
@@ -77,23 +46,42 @@ export default function Teams() {
 
   useEffect(() => {
     getData();
+  }, [filter]);
+
+  useEffect(() => {
+    getDesignation();
   }, []);
 
   return (
     <div className="teams">
-      <TeamsFilter />
-      <div className="teams-list">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1].map((item) => {
-          return <TeamCard />;
-        })}
-      </div>
+      <TeamsFilter
+        onChangeStatusFilter={(e) => setFilter(e)}
+        onAddNew={() => setVisible(true)}
+      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="teams-list">
+          {data.map((item) => {
+            return <TeamCard data={item} />;
+          })}
+        </div>
+      )}
+      {!data.length && <NoData />}
+
       <Modal
         visible={visible}
         title="Add Team Member"
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <AddTeamForm onSave={saveData} />
+        <AddTeamForm
+          onSave={saveData}
+          designation={designation}
+          projects={projects}
+          onCancel={() => setVisible(false)}
+          visible={visible}
+        />
       </Modal>
     </div>
   );

@@ -1,7 +1,7 @@
 import io from "socket.io-client"
 import { post } from "../../services/http-request"
 
-const socket = io("http://localhost:8080", {
+const socket = io("http://localhost:7000", {
   forceNew: true,
   transports: ["websocket"],
 })

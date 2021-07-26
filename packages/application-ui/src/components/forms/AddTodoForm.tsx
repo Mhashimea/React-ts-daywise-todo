@@ -1,18 +1,18 @@
-import { Button, DatePicker, Form, Input, Select } from "antd"
-import React, { useEffect } from "react"
+import { Button, DatePicker, Form, Input, Select } from "antd";
+import React, { useEffect } from "react";
 
 interface todoFormProps {
-  onSave?: (values: any) => void
-  onCancel?: (values: any) => void
-  initialValues?: any
-  teams?: string[]
-  projects?: string[]
-  modalState?: string
+  onSave?: (values: any) => void;
+  onCancel?: (values: any) => void;
+  initialValues?: any;
+  teams?: string[];
+  projects?: string[];
+  modalState?: boolean;
 }
 
-const { Option } = Select
+const { Option } = Select;
 
-const { TextArea } = Input
+const { TextArea } = Input;
 
 export default function AddTodoForm({
   initialValues,
@@ -22,14 +22,14 @@ export default function AddTodoForm({
   teams,
   modalState,
 }: todoFormProps) {
-  const [form] = Form.useForm()
+  const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    if (onSave) onSave(values)
-  }
+    if (onSave) onSave(values);
+  };
 
   useEffect(() => {
-    form.resetFields()
-  }, [modalState])
+    form.resetFields();
+  }, [modalState]);
   return (
     <div className="todo-form">
       <Form
@@ -84,7 +84,7 @@ export default function AddTodoForm({
                   <Option key={index} value={proj.id}>
                     {proj.name}
                   </Option>
-                )
+                );
               })}
             </Select>
           </Form.Item>
@@ -100,7 +100,7 @@ export default function AddTodoForm({
                   <Option key={index} value={team.id}>
                     {team.fullName}
                   </Option>
-                )
+                );
               })}
             </Select>
           </Form.Item>
@@ -134,5 +134,5 @@ export default function AddTodoForm({
         </div>
       </Form>
     </div>
-  )
+  );
 }

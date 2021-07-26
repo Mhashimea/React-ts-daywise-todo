@@ -1,24 +1,63 @@
 import {
-  FacebookOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  GithubOutlined,
   InstagramOutlined,
   LinkedinOutlined,
+  MediumOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
-import { Tooltip, Avatar } from "antd";
+import { Avatar, Button, Dropdown, Menu, Tooltip } from "antd";
+import _ from "lodash";
 import React from "react";
+import { generateRandomColor } from "../../util/common";
 
-export default function TeamCard() {
+interface TeamsCardProps {
+  data?: any;
+}
+
+export default function TeamCard({ data }: TeamsCardProps) {
+  const teamMenu = (
+    <Menu>
+      <Menu.Item key="All" className="flex items-center">
+        <EyeOutlined />
+        <span>View</span>
+      </Menu.Item>
+      <Menu.Item key="Inprogress" className="flex items-center">
+        <EditOutlined />
+        <span>Edit</span>
+      </Menu.Item>
+      <Menu.Item key="Completed" className="flex items-center">
+        <DeleteOutlined />
+        <span>Delete</span>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <div className="team-card">
       <div className="team-card-avatar">
-        <Avatar
-          shape="square"
-          src="https://i.pravatar.cc/150?img=43"
-          size="large"
-        ></Avatar>
+        <div className="flex-1">
+          <Avatar shape="square" src={data.avatar} size="large">
+            <img
+              className="h-full w-full"
+              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+              alt=""
+            />
+          </Avatar>
+        </div>
+        <Dropdown overlay={teamMenu} trigger={["click"]}>
+          <Button
+            className="rounded-sm flex items-center border-none"
+            size="small"
+          >
+            <MoreOutlined className="text-sm" />
+          </Button>
+        </Dropdown>
       </div>
       <div className="team-card-details">
-        <h1>Muhammed Hashim Ea</h1>
-        <span>Kerala, India</span>
+        <h1>{data.fullName}</h1>
+        <span>{data.email}</span>
       </div>
       <div className="team-card-social">
         <div className="team-card-social-item">
@@ -28,23 +67,39 @@ export default function TeamCard() {
           <InstagramOutlined />
         </div>
         <div className="team-card-social-item">
-          <FacebookOutlined />
+          <MediumOutlined />
+        </div>
+        <div className="team-card-social-item">
+          <GithubOutlined />
         </div>
       </div>
       <div className="team-card-position">
         <span>Position</span>
-        <h1 className="mb-3">Software Engineer</h1>
+        <h1 className="mb-3">{_.get(data, "designation.name", "---")}</h1>
       </div>
       <div className="team-card-projects">
         <span className="flex-1">Projects</span>
-        <Avatar.Group
-          maxCount={4}
-          maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
-        >
-          {[1, 2, 3, 5, 5, 6].map((item) => {
-            return <Avatar>{`P${item}`}</Avatar>;
-          })}
-        </Avatar.Group>
+        {data.assignedProjects && data.assignedProjects.length > 0 ? (
+          <Avatar.Group
+            maxCount={4}
+            maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
+          >
+            {data.assignedProjects.map((item) => {
+              const projName = _.get(item, "project.name");
+              return (
+                <Tooltip title={projName} placement="top">
+                  <Avatar style={{ backgroundColor: generateRandomColor() }}>
+                    <span>{projName && projName.slice(0, 1)}</span>
+                  </Avatar>
+                </Tooltip>
+              );
+            })}
+          </Avatar.Group>
+        ) : (
+          <span className="text-xs text-gray-500">
+            No Projects Were Assigned
+          </span>
+        )}
       </div>
     </div>
   );

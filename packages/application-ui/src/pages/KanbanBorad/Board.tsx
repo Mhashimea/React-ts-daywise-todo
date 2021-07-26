@@ -38,8 +38,81 @@ export default function Board() {
       status: "Closed",
     },
   ]);
-  const [visible, setVisible] = useState(true);
-  const [selectedTodo, setSelectedTodo] = useState();
+  const [visible, setVisible] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState({
+    id: 1,
+    title: "Complete the app with mock design",
+    subTasks: [
+      {
+        id: 1,
+        title: "Events page design research",
+        status: "Pending",
+        assignee: "Hashim Ea",
+      },
+      {
+        id: 2,
+        title: "Todo single view page UI design",
+        status: "Inprogress",
+        assignee: "Suhail Ea",
+      },
+    ],
+    percentage: 35,
+    assignee: "Muhammed Hashim Ea",
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio eligendi harum impedit dolorem culpa rem vel voluptatibus, dolores aperiam accusantium molestiae totam adipisci velit itaque asperiores fugit, voluptatum inventore similique!tium molestiae totam adipisci velit itaque asperiores fugit, voluptatum inventore similique!",
+    comments: [
+      {
+        id: 1,
+        user: {
+          name: "Hashim Ea",
+          avatar: "https://i.pravatar.cc/150?img=53",
+        },
+        date: "Yesterday at 2:33pm",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum repellat repellendus modi voluptatem atque ad, eos hic totam magnam!Quaerat fugit quis quae incidunt mollitia autem possimus a,voluptate natus?",
+      },
+      {
+        id: 2,
+        user: {
+          name: "Nafeesa Ea",
+          avatar: "https://i.pravatar.cc/150?img=13",
+        },
+        date: "Thursday at 2:33pm",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum repellat repelluptate natus?",
+      },
+      {
+        id: 3,
+        user: {
+          name: "Sinan Ea",
+          avatar: "https://i.pravatar.cc/150?img=3",
+        },
+        date: "Monday at 2:33pm",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum repellat repelluptate natus?",
+      },
+      {
+        id: 3,
+        user: {
+          name: "John doe",
+          avatar: "https://i.pravatar.cc/150?img=55",
+        },
+        date: "Monday at 2:33pm",
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum repellat repelluptate natus?",
+        attachments: [
+          {
+            url: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            name: "Image 1",
+          },
+          {
+            name: "Image 2",
+            url: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          },
+        ],
+      },
+    ],
+    status: "Inprogress",
+  });
 
   const onDragEnd = (e: any) => {
     const filtredData = todos.filter((a) => a.id === Number(e.draggableId));
@@ -47,8 +120,7 @@ export default function Board() {
   };
 
   const onSelectTodo = (e) => {
-    console.log(e);
-    setSelectedTodo(e);
+    // setSelectedTodo(e);
     setVisible(true);
   };
   return (
@@ -135,7 +207,11 @@ export default function Board() {
           })}
         </DragDropContext>
       </div>
-      <TodoModal visible={visible} data={selectedTodo} />
+      <TodoModal
+        visible={visible}
+        data={selectedTodo}
+        onCancel={() => setVisible(false)}
+      />
     </div>
   );
 }

@@ -1,11 +1,13 @@
 import { Button, Form, Input, message } from "antd";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { useLocation } from "react-router-dom";
 import { post } from "../../services/http-request";
 import "./style.css";
 
 export default function Login() {
   const history = useHistory();
+  const location = useLocation();
   const [model] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +16,8 @@ export default function Login() {
     const response = await post("login", values);
     if (response.success) {
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("isAuth", "TRUE");
+      window.location.reload();
       history.push("dashboard");
     } else {
       message.error(response.message);

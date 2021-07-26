@@ -2,6 +2,7 @@ import { CalendarOutlined, NotificationOutlined } from "@ant-design/icons";
 import { Dropdown, Input, Menu } from "antd";
 import moment from "moment";
 import React from "react";
+import { useSelector } from "react-redux";
 import "./style.css";
 
 const menu = (
@@ -11,9 +12,10 @@ const menu = (
 );
 
 export default function Navbar() {
+  const pageTitle = useSelector((state: any) => state.CommonReducer.pageTitle);
   return (
     <div className="navbar flex items-center pt-5 sticky mb-5">
-      <h1 className="text-xl font-semibold mr-5">Dashboard</h1>
+      <h1 className="text-xl font-semibold mr-5 capitalize">{pageTitle}</h1>
       <div className="flex-1">
         <Input placeholder="Search..." size="middle" className="rounded-lg" />
       </div>

@@ -7,27 +7,33 @@ import AssignedUser from "../../model/assignedMember"
 export default async (req, res) => {
   try {
     const { payload } = req.body
-    const currentUser = await getUser(req)
+    const { user, organization } = await getUser(req)
 
     const email = await User.findOne({
-      where: { email: payload.email },
+      where: { email: payload.email, organizationId: organization },
     })
     if (email) return errorResponse(res, "Email Already Exists")
 
     const hashPwd = await bcrypt.hash("123456", 10)
-    payload.organizationId = currentUser.organization
+    payload.organizationId = organization
     payload.active = true
     payload.isAdmin = false
     payload.password = hashPwd
 
     const response = await User.create(payload)
 
-    await AssignedUser.create({
-      organizationId: currentUser.organization,
-      userId: response.id,
-      projectId: payload.projectId ? payload.projectId : null,
-      assignedBy: currentUser.user,
-    })
+    if (payload.projectId && payload.projectId.length > 0) {
+      payload.projectId.map(proj => {
+        AssignedUser.create({
+          organizationId: organization,
+          userId: response.id,
+          projectId: proj,
+          assignedBy: user,
+        })
+      })
+    }
+
+
 
     return successResponse(res, response)
   } catch (e) {

@@ -1,22 +1,45 @@
-import { Button, Form, Input, Select } from "antd"
-import React from "react"
+import { Button, Form, Input, Select } from "antd";
+import React from "react";
+import { useEffect } from "react";
 
 interface todoFormProps {
-  onSave?: (values: any) => void
-  onCancel?: (values: any) => void
-  initialValues?: any
+  onSave?: (values: any) => void;
+  onCancel?: () => void;
+  initialValues?: any;
+  designation?: [];
+  projects?: [];
+  visible: boolean;
 }
 
-const { Option } = Select
+const { Option } = Select;
 
 export default function AddTeamForm({
   initialValues,
   onSave,
   onCancel,
+  designation,
+  projects,
+  visible,
 }: todoFormProps) {
+  const [form] = Form.useForm();
+
+  const resetForm = () => {
+    form.resetFields();
+  };
+
   const onFinish = (values: any) => {
-    if (onSave) onSave(values)
-  }
+    console.log(values);
+    if (onSave) onSave(values);
+  };
+
+  const onCancelForm = () => {
+    resetForm();
+    if (onCancel) onCancel();
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [onCancel, visible]);
 
   return (
     <div className="todo-form">
@@ -25,6 +48,7 @@ export default function AddTeamForm({
         layout="vertical"
         initialValues={initialValues}
         onFinish={onFinish}
+        form={form}
       >
         <Form.Item
           label="Name"
@@ -36,9 +60,22 @@ export default function AddTeamForm({
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: false, message: "Please input the email!" }]}
+          rules={[{ required: true, message: "Please input the email!" }]}
         >
           <Input placeholder="Email address" />
+        </Form.Item>
+        <Form.Item
+          label="Designation"
+          name="designationId"
+          rules={[
+            { required: true, message: "Please select the designation!" },
+          ]}
+        >
+          <Select placeholder="Select Designation" allowClear>
+            {designation?.map((des: any) => {
+              return <Option value={des.id}>{des.name}</Option>;
+            })}
+          </Select>
         </Form.Item>
         <Form.Item
           className="w-full"
@@ -46,10 +83,10 @@ export default function AddTeamForm({
           label="Project"
           rules={[{ required: false }]}
         >
-          <Select placeholder="Select project" allowClear>
-            <Option value="high">Project 1</Option>
-            <Option value="medium">Project 2</Option>
-            <Option value="low">Project 3</Option>
+          <Select placeholder="Select project" allowClear mode="multiple">
+            {projects?.map((proj: any) => {
+              return <Option value={proj.id}>{proj.name}</Option>;
+            })}
           </Select>
         </Form.Item>
         <div className="flex justify-end m-0">
@@ -58,7 +95,7 @@ export default function AddTeamForm({
               type="primary"
               danger
               className="rounded-md mr-2"
-              onClick={onCancel}
+              onClick={onCancelForm}
             >
               Cancel
             </Button>
@@ -73,5 +110,5 @@ export default function AddTeamForm({
         </div>
       </Form>
     </div>
-  )
+  );
 }

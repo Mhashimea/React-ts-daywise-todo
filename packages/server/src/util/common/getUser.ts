@@ -17,6 +17,7 @@ export default async req => {
     return {
       user: user.dataValues.id,
       organization: user.dataValues.organization.dataValues.id,
+      isAdmin: user.dataValues.isAdmin
     }
   }
 }

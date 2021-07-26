@@ -8,8 +8,12 @@ import {
   NotEmpty,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from "sequelize-typescript"
+import AssignedUser from './assignedMember'
+import Designation from './designation'
 import Organization from "./organiZation"
+import Projects from './projects'
 
 export interface UserI {
   id: number | null
@@ -37,6 +41,11 @@ export default class User extends Model implements UserI {
   @AllowNull(false)
   @Column
   organizationId: number
+
+  @ForeignKey(() => Designation)
+  @AllowNull(true)
+  @Column
+  designationId: number
 
   @AllowNull(false)
   @NotEmpty
@@ -75,4 +84,10 @@ export default class User extends Model implements UserI {
 
   @BelongsTo(() => Organization)
   organization: Organization
+
+  @BelongsTo(() => Designation)
+  designation: Designation
+
+  @HasMany(() => AssignedUser)
+  assignedProjects: AssignedUser[]
 }

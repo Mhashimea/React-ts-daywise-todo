@@ -1,3 +1,7 @@
+.projects-list {
+  @apply mt-5 flex items-start flex-wrap;
+}
+
 .project-card {
   @apply w-[350px] bg-white mr-3 p-3 rounded-md shadow-md;
 }

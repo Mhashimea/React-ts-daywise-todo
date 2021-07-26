@@ -4,13 +4,11 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Default from "../../components/layouts/Default";
+import AddTodoForm from "../../components/forms/AddTodoForm";
 import DynamicEditForm from "../../components/todos/DynamicEditForm";
-import Header from "../../components/ux/Header";
 import TodoCard from "../../components/ux/TodoCard";
 import { post } from "../../services/http-request";
 import { AddTodos, UpdateTodos } from "../../store/actions/todos";
-import AddTodoForm from "../../components/forms/AddTodoForm";
 
 export default function TodoView() {
   const dispatch = useDispatch();

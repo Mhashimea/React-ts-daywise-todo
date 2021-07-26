@@ -1,23 +1,36 @@
-import { FilterOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Menu, message, Modal } from "antd";
-import React, { useState } from "react";
+import { Menu, message, Modal } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProjectForm from "../../components/forms/ProjectForm";
-import ProjectCard from "./ProjectCard";
+import Loader from "../../components/ux/Loader";
+import NoData from "../../components/ux/Nodata";
 import { post } from "../../services/http-request";
+import ProjectCard from "./ProjectCard";
 import ProjectFilter from "./ProjectFilter";
 
 export default function Projects() {
+  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<any>("All");
+  const [projects, setProjects] = useState([]);
   const [modalState, setModalState] = useState(false);
+  const [filter, setFilter] = useState(null);
   const teams = useSelector((state: any) => state.CommonReducer.teams);
-  const projects = useSelector((state: any) => state.CommonReducer.projects);
+
+  const getData = async () => {
+    setLoading(true);
+    const { data } = await post("projects", {
+      status: filter === "All" ? null : filter,
+    });
+    setProjects(data);
+    setLoading(false);
+  };
 
   const saveData = async (e: any) => {
     const response = await post("add-project", { payload: e });
     if (response.success) {
       message.success("Project addedd successfully");
       setModalState(false);
+      getData();
     } else {
       message.error(response.message);
     }
@@ -40,15 +53,31 @@ export default function Projects() {
     </Menu>
   );
 
+  useEffect(() => {
+    getData();
+  }, [filter]);
+
   return (
     <div className="projects">
-      <ProjectFilter />
-      <div className="mt-5 flex items-start flex-wrap">
-        {projects &&
-          projects.map((proj: any, i: number) => {
-            return <ProjectCard data={proj} key={i} />;
-          })}
-      </div>
+      <ProjectFilter
+        onAddNew={() => setModalState(true)}
+        onChangeStatusFilter={(e) => setFilter(e)}
+      />
+
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="projects-list">
+          {projects &&
+            projects.length > 0 &&
+            projects.map((proj: any, i: number) => {
+              return <ProjectCard data={proj} key={i} />;
+            })}
+        </div>
+      )}
+
+      {!projects.length && <NoData />}
+
       <Modal
         visible={modalState}
         title="Add New Project"

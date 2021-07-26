@@ -9,11 +9,10 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-    console.log(values);
     setLoading(true);
     const response = await post("register", values);
     if (response.success) {
-      localStorage.setItem("token", response.data.token);
+      history.push("/");
     } else {
       message.error(response.message);
     }

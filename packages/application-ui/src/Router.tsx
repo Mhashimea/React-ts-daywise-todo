@@ -1,5 +1,10 @@
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import Default from "./components/layouts/Default";
 import Loader from "./components/ux/Loader";
 import Login from "./pages/Login/index";
@@ -14,23 +19,66 @@ const Teams = lazy(() => import("./pages/Teams/index"));
 const TodosView = lazy(() => import("./pages/Todos/id"));
 const KanbanBoard = lazy(() => import("./pages/KanbanBorad/index"));
 const Schedule = lazy(() => import("./pages/Schedule/index"));
+const TaskView = lazy(() => import("./pages/KanbanBorad/id"));
+
+//Variables
+const isAuth = localStorage.getItem("isAuth");
+const token = localStorage.getItem("token");
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      isAuth && token ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/",
+          }}
+        />
+      )
+    }
+  />
+);
+
+const NotAuthenticatedRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      !isAuth || !token ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/dashboard",
+          }}
+        />
+      )
+    }
+  />
+);
 
 function RouterView() {
   return (
     <Router>
       <Switch>
-        <Route component={Login} exact path="/" />
-        <Route component={Register} exact path="/register" />
+        <NotAuthenticatedRoute component={Login} exact path="/" />
+        <NotAuthenticatedRoute component={Register} exact path="/register" />
         <Default>
           <Suspense fallback={<Loader />}>
-            <Route component={Dashboard} exact path="/dashboard" />
-            <Route component={Todos} exact path="/todos" />
-            <Route component={TodosView} exact path="/todos/:id" />
-            <Route component={Projects} exact path="/projects" />
-            <Route component={Teams} exact path="/teams" />
-            <Route component={Schedule} exact path="/schedules" />
-            <Route component={Reports} exact path="/reports" />
-            <Route component={KanbanBoard} exact path="/kanban-board" />
+            <PrivateRoute
+              path="/dashboard"
+              component={Dashboard}
+            ></PrivateRoute>
+            <PrivateRoute component={Todos} exact path="/todos" />
+            <PrivateRoute component={TodosView} exact path="/todos/:id" />
+            <PrivateRoute component={Projects} exact path="/projects" />
+            <PrivateRoute component={Teams} exact path="/teams" />
+            <PrivateRoute component={Schedule} exact path="/schedules" />
+            <PrivateRoute component={Reports} exact path="/reports" />
+            <PrivateRoute component={KanbanBoard} exact path="/kanban-board" />
+            <PrivateRoute component={TaskView} exact path="/kanban-board/:id" />
           </Suspense>
         </Default>
       </Switch>

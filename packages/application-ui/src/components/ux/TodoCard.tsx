@@ -2,19 +2,18 @@ import {
   AntDesignOutlined,
   CalendarOutlined,
   UserOutlined,
-} from "@ant-design/icons"
-import { Checkbox, Tag, Tooltip, Avatar, Progress } from "antd"
-import moment from "moment"
-import React from "react"
-import { Link } from "react-router-dom"
+} from "@ant-design/icons";
+import { Checkbox, Tag, Tooltip, Avatar, Progress } from "antd";
+import moment from "moment";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function TodoCard({ data, onChangeTodo, isChild }: any) {
-  console.log(data)
   return (
     <div className="bg-white border  p-4 rounded-md todo-card mb-3">
       <div className="flex items-start">
         <Checkbox
-          onChange={evt => onChangeTodo(evt, data)}
+          onChange={(evt) => onChangeTodo(evt, data)}
           checked={data.status === "COMPLETED"}
         ></Checkbox>
         <div className="flex items-start ml-2 w-full">
@@ -33,7 +32,7 @@ export default function TodoCard({ data, onChangeTodo, isChild }: any) {
                 <Tag className="mt-2 rounded-md" color="#0f123f">
                   {item}
                 </Tag>
-              )
+              );
             })}
             <Tag className="rounded-md capitalize" color="red">
               {data.priority} Priority
@@ -81,5 +80,5 @@ export default function TodoCard({ data, onChangeTodo, isChild }: any) {
         </div>
       )}
     </div>
-  )
+  );
 }

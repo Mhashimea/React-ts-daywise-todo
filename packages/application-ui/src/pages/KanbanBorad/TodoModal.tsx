@@ -2,34 +2,40 @@ import { PaperClipOutlined } from "@ant-design/icons";
 import { Avatar, Modal, Select } from "antd";
 import React from "react";
 import { statusColor } from "../../util/common";
+import ChildTask from "./ChildTasks";
+import CommentBox from "./CommentBox";
 
 const { Option } = Select;
 
 interface TodoModalProps {
   visible: boolean;
-  data?: unknown;
+  data?: any;
   onCancel?: () => void;
 }
 
 export default function TodoModal({ visible, data, onCancel }: TodoModalProps) {
   const generatestatuscolor = (status: string) => {
     const color =
-      status === "Pending"
-        ? statusColor.pending
+      status === "Inprogress"
+        ? statusColor.inProgress
         : status === "Completed"
-        ? statusColor.danger
-        : statusColor.success;
+        ? statusColor.success
+        : status === "Pending"
+        ? statusColor.pending
+        : statusColor.danger;
     return color;
   };
+
+  console.log(data);
   return (
     <div className="todo-modal">
       <Modal visible={visible} width="800px" footer={null} onCancel={onCancel}>
         <div className="todo-modal-header">
-          <h1>Complete the app with mock design</h1>
-          <Select className="mr-3">
+          <h1>{data.title}</h1>
+          <Select className="mr-3" value={data.assignee}>
             <Option
-              key="In Progress"
-              value="Pending"
+              key="Muhammed Hashim Ea"
+              value="Muhammed Hashim Ea"
               className="flex items-center"
             >
               <Avatar
@@ -39,58 +45,29 @@ export default function TodoModal({ visible, data, onCancel }: TodoModalProps) {
               ></Avatar>
               <span>Hashim Ea</span>
             </Option>
-            <Option key="In Progress" value="Inprogress">
-              InProgress
-            </Option>
-            <Option key="In Progress" value="Completed">
-              Completed
-            </Option>
-            <Option key="In Progress" value="Closed">
-              Closed
-            </Option>
           </Select>
-          <Select>
-            <Option key="In Progress" value="Pending">
+          <Select value={data.status}>
+            <Option key="Pending" value="Pending">
               Pending
             </Option>
-            <Option key="In Progress" value="Inprogress">
-              InProgress
+            <Option key="Inprogress" value="Inprogress">
+              Inprogress
             </Option>
-            <Option key="In Progress" value="Completed">
+            <Option key="Completed" value="Completed">
               Completed
             </Option>
-            <Option key="In Progress" value="Closed">
+            <Option key="Closed" value="Closed">
               Closed
             </Option>
           </Select>
         </div>
-        <p className="todo-modal-desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
-          eligendi harum impedit dolorem culpa rem vel voluptatibus, dolores
-          aperiam accusantium molestiae totam adipisci velit itaque asperiores
-          fugit, voluptatum inventore similique!tium molestiae totam adipisci
-          velit itaque asperiores fugit, voluptatum inventore similique!
-        </p>
-        <div className="todo-modal-child">
-          <div className="flex items-center my-5">
-            <PaperClipOutlined className="mr-2 text-gray-500" />{" "}
-            <h1 className="text-base font-medium text-gray-500">
-              Child Tasks (5)
-            </h1>
-          </div>
-          {[1, 1, 1, 1].map((items) => {
-            return (
-              <div className="todo-modal-child-item">
-                <h1>1. Create event page</h1>
-                <Avatar src="https://i.pravatar.cc/150?img=43" className="mr-4">
-                  M
-                </Avatar>
-                <span style={{ color: `${generatestatuscolor("Pending")}` }}>
-                  Pending
-                </span>
-              </div>
-            );
-          })}
+        <p className="todo-modal-desc">{data.desc}</p>
+        {data.subTasks && data.subTasks.length > 0 && (
+          <ChildTask subTasks={data.subTasks} />
+        )}
+
+        <div className="todo-modal-comments">
+          <CommentBox comments={data.comments} />
         </div>
       </Modal>
     </div>

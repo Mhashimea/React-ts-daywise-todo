@@ -1,16 +1,17 @@
-import { Button, DatePicker, Form, Input, Select } from "antd"
-import moment from "moment"
-import React from "react"
+import { Button, DatePicker, Form, Input, Select } from "antd";
+import moment from "moment";
+import React from "react";
+import { projectStatus } from "../../util/common";
 
 interface formProps {
-  onSave?: (values: any) => void
-  onCancel?: (values: any) => void
-  initialValues?: any
-  teams?: string[]
+  onSave?: (values: any) => void;
+  onCancel?: (values: any) => void;
+  initialValues?: any;
+  teams?: string[];
 }
 
-const { Option } = Select
-const { TextArea } = Input
+const { Option } = Select;
+const { TextArea } = Input;
 
 export default function ProjectForm({
   onSave,
@@ -19,8 +20,8 @@ export default function ProjectForm({
   teams,
 }: formProps) {
   const onFinish = (values: any) => {
-    if (onSave) onSave(values)
-  }
+    if (onSave) onSave(values);
+  };
   return (
     <div className="project-form">
       <Form
@@ -56,9 +57,9 @@ export default function ProjectForm({
             name="status"
           >
             <Select placeholder="Select status" allowClear>
-              <Option value="inprogress">In Progress</Option>
-              <Option value="upcoming">Upcoming</Option>
-              <Option value="completed">Completed</Option>
+              {projectStatus.map((status) => {
+                return <Option value={status}>{status}</Option>;
+              })}
             </Select>
           </Form.Item>
         </div>
@@ -70,7 +71,7 @@ export default function ProjectForm({
         >
           <Select placeholder="Select your team" mode="multiple" allowClear>
             {teams?.map((team: any) => {
-              return <Option value={team.id}>{team.fullName}</Option>
+              return <Option value={team.id}>{team.fullName}</Option>;
             })}
           </Select>
         </Form.Item>
@@ -103,5 +104,5 @@ export default function ProjectForm({
         </div>
       </Form>
     </div>
-  )
+  );
 }

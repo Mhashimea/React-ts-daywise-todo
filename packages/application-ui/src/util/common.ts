@@ -19,5 +19,17 @@ export const colors = [
 export const statusColor = {
   pending: '#f39c12',
   success: '#27ae60',
-  danger: '#c0392b'
+  danger: '#c0392b',
+  inProgress: "#0f123f",
+}
+
+export const todoStatus = [
+  "Inprogress", "Pending", "Completed", "Closed"
+]
+
+export const projectStatus = ["Active", "Inactive"]
+
+export const generateRandomColor = () => {
+  const randomColor = Math.floor(Math.random() * colors.length);
+  return colors[randomColor]
 }

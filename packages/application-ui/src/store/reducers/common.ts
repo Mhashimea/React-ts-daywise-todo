@@ -2,6 +2,7 @@ const initialState = {
   teams: [],
   projects: [],
   priority: ["High", "Medium", "Low"],
+  pageTitle: "Dashboard"
 }
 
 export const CommonReducers = (state = initialState, action: any) => {
@@ -15,6 +16,11 @@ export const CommonReducers = (state = initialState, action: any) => {
       return {
         ...state,
         projects: action.payload,
+      }
+    case "SET_PAGE_TITLE":
+      return {
+        ...state,
+        pageTitle: action.title,
       }
     default:
       return state

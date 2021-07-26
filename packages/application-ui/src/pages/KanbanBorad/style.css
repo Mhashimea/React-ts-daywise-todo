@@ -80,13 +80,75 @@
 }
 
 .todo-modal-child-item {
-  @apply flex items-center border rounded-md shadow-sm py-1 mb-2 px-3;
+  @apply flex items-center border rounded-md shadow-sm py-1 mb-2 px-3 cursor-pointer;
 }
 
 .todo-modal-child-item h1 {
-  @apply font-medium flex-1 text-sm text-gray-700;
+  @apply font-medium flex-1 text-sm text-gray-700 mr-2 truncate;
 }
 
 .todo-modal-child-item span {
-  @apply mr-2 font-semibold text-gray-500;
+  @apply mr-2 font-semibold text-gray-500 text-xs;
+}
+
+.todo-comments-item {
+  @apply flex items-start mb-5;
+}
+
+.todo-comments-item-attatchment {
+  @apply mr-3 mt-3 cursor-pointer border-gray-300 border-2 rounded-md;
+}
+
+.todo-comments-item-attatchment img {
+  @apply w-[200px] h-[150px] object-cover  p-1;
+}
+
+.todo-comments-item-attatchment span {
+  @apply text-sm text-gray-500 ml-1;
+}
+
+.todo-comments-controller {
+  @apply flex items-center;
+}
+
+/* Task Single View */
+.task-view {
+  @apply flex;
+}
+
+.task-view-details {
+  @apply w-3/4;
+}
+
+.task-view-quick {
+  @apply w-1/4;
+}
+
+.task-view-header {
+  @apply flex items-center;
+}
+
+.task-view-comments {
+  @apply mb-5;
+}
+
+/* Quick Picks */
+.quick-picks {
+  @apply border bg-white max-h-[600px] h-full ml-3 rounded-md shadow-sm overflow-auto;
+}
+
+.quick-picks h1 {
+  @apply font-semibold p-3 border-b;
+}
+
+.quick-picks-item {
+  @apply p-2 cursor-pointer hover:bg-gray-100 border-b;
+}
+
+.quick-picks-item-header {
+  @apply flex items-center my-2;
+}
+
+.quick-picks-item p {
+  @apply text-sm text-gray-500;
 }

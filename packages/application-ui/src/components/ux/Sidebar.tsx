@@ -1,5 +1,6 @@
 import {
   AreaChartOutlined,
+  BuildOutlined,
   CalendarOutlined,
   CheckCircleOutlined,
   FileTextOutlined,
@@ -9,11 +10,39 @@ import {
 } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { SetPageTitle } from "../../store/actions/common";
 import "./style.css";
 
 export default function Sidebar() {
   const location = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const setPageTitle = (title: string, url?: string) => {
+    dispatch(SetPageTitle(title));
+    if (url) history.push(url);
+  };
+
+  const setInitialPageTitle = () => {
+    const currentRoute = location.pathname.split("/")[1];
+    if (currentRoute === "kanban-board") setPageTitle("Board");
+    else {
+      setPageTitle(currentRoute);
+    }
+  };
+
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("isAuth");
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    setInitialPageTitle();
+  }, []);
 
   return (
     <div className="sidebar bg-primary h-full py-3">
@@ -27,55 +56,64 @@ export default function Sidebar() {
         <span className="text-xs text-gray-200">Software Engineer</span>
       </div>
       <ul className="flex-1">
-        <Link
-          to="/dashboard"
+        <a
           className={location.pathname === "/dashboard" ? " navbar-active" : ""}
+          onClick={() => setPageTitle("Dashboard", "dashboard")}
         >
           <UnorderedListOutlined className="mr-2 text-sm" />
           <li>Dashboard</li>
-        </Link>
+        </a>
 
-        <Link
-          to="/kanban-board"
+        <a
           className={
             location.pathname === "/kanban-board" ? " navbar-active" : ""
           }
+          onClick={() => setPageTitle("Board", "kanban-board")}
         >
           <CheckCircleOutlined className="mr-2 text-sm" />
           <li>Board</li>
-        </Link>
+        </a>
 
-        <Link
-          to="/projects"
+        <a
           className={location.pathname === "/projects" ? "navbar-active" : ""}
+          onClick={() => setPageTitle("Projects", "projects")}
         >
           <FileTextOutlined className="mr-2 text-sm" />
           <li>Projects</li>
-        </Link>
+        </a>
 
-        <Link
-          to="/teams"
+        <a
           className={location.pathname === "/teams" ? " navbar-active" : ""}
+          onClick={() => setPageTitle("Teams", "teams")}
         >
           <UsergroupAddOutlined className="mr-2 text-sm" />
           <li>Teams</li>
-        </Link>
-        <Link
-          to="/schedules"
+        </a>
+        <a
           className={location.pathname === "/schedules" ? " navbar-active" : ""}
+          onClick={() => setPageTitle("Schedules", "schedules")}
         >
           <CalendarOutlined className="mr-2 text-sm" />
-          <li>Schedule</li>
-        </Link>
-        <Link
-          to="/reports"
+          <li>Schedules</li>
+        </a>
+        <a
+          className={
+            location.pathname === "/company-profile" ? " navbar-active" : ""
+          }
+          onClick={() => setPageTitle("Company", "company-profile")}
+        >
+          <BuildOutlined className="mr-2 text-sm" />
+          <li>Company</li>
+        </a>
+        <a
           className={location.pathname === "/reports" ? " navbar-active" : ""}
+          onClick={() => setPageTitle("Reports", "reports")}
         >
           <AreaChartOutlined className="text-sm mr-2" />
-          <li>Report</li>
-        </Link>
+          <li>Reports</li>
+        </a>
       </ul>
-      <div className="sidebar-link">
+      <div className="sidebar-link" onClick={onLogout}>
         <LogoutOutlined />
         Logout
       </div>

@@ -26,6 +26,17 @@ body {
   max-width: 1200px;
 }
 
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ellipse-1 {
+  -webkit-line-clamp: 1 !important;
+}
 /* Page Filter */
 .page-filter .ant-input-affix-wrapper {
   background-color: transparent;

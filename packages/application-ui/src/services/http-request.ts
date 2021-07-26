@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
 
-const BaseUrl: any = "http://localhost:7070/api/"
+const BaseUrl: any = "http://localhost:9090/api/"
 export interface ServerResponse {
   success: boolean
   records: any[]

@@ -55,4 +55,7 @@ export default class AssignedUser extends Model implements AssignedUsersI {
 
   @BelongsTo(() => Organization)
   organization: Organization
+
+  @BelongsTo(() => Projects)
+  project: Projects
 }

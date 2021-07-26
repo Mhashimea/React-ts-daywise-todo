@@ -2,6 +2,8 @@ import middleware from "../util/middleware"
 import login from "./auth/login"
 import me from "./auth/me"
 import register from "./auth/register"
+import addOrUpdateDesignation from './designation/addOrUpdateDesignation'
+import getDesignation from './designation/getDesignation'
 import addOrUpdateProject from "./projects/addOrUpdateProject"
 import getProjects from "./projects/getProjects"
 import addOrUpdatesTeam from "./team/addOrUpdatesTeam"
@@ -28,4 +30,9 @@ export default app => {
   //teams
   app.post(`${BASEURL}/add-team`, addOrUpdatesTeam)
   app.post(`${BASEURL}/teams`, getTeam)
+
+  //designation
+  app.post(`${BASEURL}/designation`, middleware, getDesignation)
+  app.post(`${BASEURL}/add-designation`, middleware, addOrUpdateDesignation)
+
 }

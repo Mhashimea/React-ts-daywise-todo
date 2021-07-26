@@ -3,10 +3,14 @@ import cors from "cors"
 import express from "express"
 import createEndPoints from "./endpoints/index"
 import { sequelize } from "./options"
+import * as dotenv from "dotenv";
+
 const http = require("http")
+dotenv.config();
 
 const app = express()
-const port = process.env.PORT || 7070
+const port = process.env.PORT
+
 
 //Socket IO
 const server = http.createServer(app)
