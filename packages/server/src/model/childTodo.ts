@@ -45,12 +45,12 @@ export default class ChildTodo extends Model implements TodosI {
   @Column
   label: string
 
-  @ForeignKey(() => Todos)
   @AllowNull(true)
+  @ForeignKey(() => Todos)
   @Column
   todoId: number
 
-  @AllowNull(false)
+  @AllowNull(true)
   @ForeignKey(() => User)
   @Column
   assignedTo: number

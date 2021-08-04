@@ -1,3 +1,5 @@
+import path from 'path'
+import multer from 'multer'
 import middleware from "../util/middleware"
 import login from "./auth/login"
 import me from "./auth/me"
@@ -13,6 +15,18 @@ import getTodos from "./todos/getTodos"
 
 const BASEURL = "/api"
 
+const storage = multer.diskStorage({
+  destination: "./public/uploads",
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({ storage: storage })
+
 export default app => {
   //auth
   app.post(`${BASEURL}/login`, login)
@@ -20,7 +34,7 @@ export default app => {
   app.post(`${BASEURL}/me`, me)
 
   //todos
-  app.post(`${BASEURL}/add-todo`, middleware, addOrUpdateTodo)
+  app.post(`${BASEURL}/add-todo`, middleware, upload.single("file"), addOrUpdateTodo)
   app.post(`${BASEURL}/todos`, middleware, getTodos)
 
   //projecs

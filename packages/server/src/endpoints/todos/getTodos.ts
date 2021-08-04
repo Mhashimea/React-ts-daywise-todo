@@ -4,15 +4,16 @@ import { errorResponse, successResponse } from "../../util/response"
 
 export default async (req, res) => {
   try {
-    const { id, date } = req.body
-    const userDetails = await getUser(req)
+    const { id, projectId, priority, status } = req.body
+    const { organization } = await getUser(req)
     let where: any = {}
-    where.organizationId = userDetails.organization
-    where.assignedTo = userDetails.user
+    where.organizationId = organization
 
     //filter
     if (id) where.id = id
-    if (date) where.date = date
+    if (projectId) where.projectId = projectId
+    if (priority && priority !== "All") where.priority = priority
+    if (status && status !== "All") where.status = status
 
     const response = await Todos.findAll({
       where,

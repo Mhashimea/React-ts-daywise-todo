@@ -68,11 +68,19 @@
 
 /* Todo Modal */
 .todo-modal-header {
-  @apply flex items-center mr-5;
+  @apply flex items-end mr-5 justify-end;
 }
 
-.todo-modal-header h1 {
+.ant-modal-content .ant-modal-body {
+  @apply max-h-[600px] overflow-auto;
+}
+
+.todo-modal-name {
   @apply flex-1 font-semibold text-lg;
+}
+
+.todo-modal-link {
+  @apply uppercase cursor-pointer;
 }
 
 .todo-modal-desc {
@@ -80,7 +88,7 @@
 }
 
 .todo-modal-child-item {
-  @apply flex items-center border rounded-md shadow-sm py-1 mb-2 px-3 cursor-pointer;
+  @apply flex items-center border rounded-md shadow-sm py-2 mb-2 px-3 cursor-pointer;
 }
 
 .todo-modal-child-item h1 {
@@ -89,6 +97,11 @@
 
 .todo-modal-child-item span {
   @apply mr-2 font-semibold text-gray-500 text-xs;
+}
+
+.avatar-text {
+  line-height: 1 !important;
+  @apply text-base relative left-1 top-1 text-white !important;
 }
 
 .todo-comments-item {
@@ -120,8 +133,8 @@
   @apply w-3/4;
 }
 
-.task-view-quick {
-  @apply w-1/4;
+.task-view-info {
+  @apply w-1/4 bg-white border border-gray-200 rounded-md ml-3 h-80 px-2 py-5;
 }
 
 .task-view-header {
@@ -132,23 +145,23 @@
   @apply mb-5;
 }
 
-/* Quick Picks */
-.quick-picks {
-  @apply border bg-white max-h-[600px] h-full ml-3 rounded-md shadow-sm overflow-auto;
+/* Attatchments */
+.task-view-attatchments {
+  @apply my-5;
 }
 
-.quick-picks h1 {
-  @apply font-semibold p-3 border-b;
+.attatchments-list {
+  @apply flex items-center flex-wrap mt-5;
 }
 
-.quick-picks-item {
-  @apply p-2 cursor-pointer hover:bg-gray-100 border-b;
+.attatchments-list-item {
+  @apply w-[220px] border border-gray-300 mr-3 rounded-md mb-3 cursor-pointer;
 }
 
-.quick-picks-item-header {
-  @apply flex items-center my-2;
+.attatchments-list-item h1 {
+  @apply truncate m-2 text-sm;
 }
 
-.quick-picks-item p {
-  @apply text-sm text-gray-500;
+.attatchments-list-item p {
+  @apply text-xs text-gray-400 m-2;
 }

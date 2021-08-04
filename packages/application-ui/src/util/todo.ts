@@ -1,6 +1,6 @@
 import { statusColor } from './common';
 
-export const generateStatusColor = (status: string) => {
+export const generatestatuscolor = (status: string) => {
   const color =
     status === "Inprogress"
       ? statusColor.inProgress

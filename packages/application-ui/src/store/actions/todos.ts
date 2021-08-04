@@ -1,20 +1,32 @@
 import io from "socket.io-client"
-import { post } from "../../services/http-request"
+import { formDataPost, post } from "../../services/http-request"
 
 const socket = io("http://localhost:7000", {
   forceNew: true,
   transports: ["websocket"],
 })
 
-export const GetTodos = () => async (dispatch: any) => {
+export const GetTodos = (filter?: any) => async (dispatch: any) => {
   dispatch({ type: "SET_TODOS" })
-  const response = await post("todos")
+  const response = await post("todos", filter)
   dispatch({ type: "SET_TODOS", payload: response.data })
 }
 
 export const AddTodos = (payload: any) => async (dispatch: any) => {
-  const response = await post("add-todo", payload)
-  dispatch({ type: "ADD_TODO", payload: response.data })
+  const formData = new FormData();
+  Object.keys(payload).map((key, index) => {
+    if (key === "attatchments") {
+      if (payload[key])
+        formData.append("file", payload[key].file);
+    } else {
+      formData.append(key, payload[key]);
+    }
+  });
+  const response = await formDataPost("add-todo", formData);
+  if (payload.id)
+    dispatch({ type: "UPDATE_TODO", payload: response.data })
+  else
+    dispatch({ type: "ADD_TODO", payload: response.data })
   return { success: response.success }
 }
 

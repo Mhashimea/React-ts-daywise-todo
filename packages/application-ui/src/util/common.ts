@@ -29,7 +29,11 @@ export const todoStatus = [
 
 export const projectStatus = ["Active", "Inactive"]
 
-export const generateRandomColor = () => {
+export const taskPriority = ["High", "Medium", "Low"]
+
+export const todoWorkflow = ["Todo", "Inprogress", "Completed", "Closed"]
+
+export const generaterandomcolor = () => {
   const randomColor = Math.floor(Math.random() * colors.length);
   return colors[randomColor]
 }

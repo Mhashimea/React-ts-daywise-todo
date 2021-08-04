@@ -3,30 +3,62 @@ import { Input, Dropdown, Menu, Button, Popover } from "antd";
 import { SearchOutlined, CaretDownOutlined } from "@ant-design/icons";
 import Activities from "./Activities";
 
-export default function KanbanBoardFilter() {
+interface KanbanBoardFilterProps {
+  onChangeStatus?: (value: any) => void;
+  onChangePriority?: (value: any) => void;
+  onAddNew?: () => void;
+}
+
+export default function KanbanBoardFilter({
+  onChangePriority,
+  onChangeStatus,
+  onAddNew,
+}: KanbanBoardFilterProps) {
   const [activityVisible, setActivityVisible] = useState(false);
-  const status = (
-    <Menu>
-      <Menu.Item>
-        <a>Completed</a>
+  const [status, setStatus] = useState("All");
+  const [priority, setPriority] = useState("All");
+
+  const changeStatus = (e) => {
+    setStatus(e.key);
+    if (onChangeStatus) onChangeStatus(e.key);
+  };
+
+  const changePriority = (e) => {
+    setPriority(e.key);
+    if (onChangePriority) onChangePriority(e.key);
+  };
+
+  const statusMenu = (
+    <Menu onClick={changeStatus}>
+      <Menu.Item key="All">
+        <a>All</a>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key="Todo">
+        <a>Todo</a>
+      </Menu.Item>
+      <Menu.Item key="Inprogress">
         <a>Inprogress</a>
       </Menu.Item>
-      <Menu.Item>
-        <a>Pending</a>
+      <Menu.Item key="Completed">
+        <a>Completed</a>
+      </Menu.Item>
+      <Menu.Item key="Closed">
+        <a>Closed</a>
       </Menu.Item>
     </Menu>
   );
-  const priority = (
-    <Menu>
-      <Menu.Item>
+  const priorityMenu = (
+    <Menu onClick={changePriority}>
+      <Menu.Item key="All">
+        <a>All</a>
+      </Menu.Item>
+      <Menu.Item key="High">
         <a>High</a>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key="Medium">
         <a>Medium</a>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key="Low">
         <a>Low</a>
       </Menu.Item>
     </Menu>
@@ -40,21 +72,21 @@ export default function KanbanBoardFilter() {
           prefix={<SearchOutlined className="site-form-item-icon" />}
         />
       </div>
-      <Dropdown overlay={status} trigger={["click"]} className="mr-5">
+      <Dropdown overlay={statusMenu} trigger={["click"]} className="mr-5">
         <a
           className="ant-dropdown-link flex items-center text-gray-500 "
           onClick={(e) => e.preventDefault()}
         >
-          <span className="mr-2">Status: </span>
+          <span className="mr-2">{status}: </span>
           <CaretDownOutlined />
         </a>
       </Dropdown>
-      <Dropdown overlay={priority} trigger={["click"]} className="mr-5">
+      <Dropdown overlay={priorityMenu} trigger={["click"]} className="mr-5">
         <a
           className="ant-dropdown-link flex items-center text-gray-500"
           onClick={(e) => e.preventDefault()}
         >
-          <span className="mr-2">Priority: </span>
+          <span className="mr-2">{priority}: </span>
           <CaretDownOutlined />
         </a>
       </Dropdown>
@@ -66,7 +98,7 @@ export default function KanbanBoardFilter() {
       >
         <Button className="rounded-md mr-2">Activities</Button>
       </Popover>
-      <Button type="primary" className="rounded-md">
+      <Button type="primary" className="rounded-md" onClick={onAddNew}>
         Add New Item
       </Button>
     </div>

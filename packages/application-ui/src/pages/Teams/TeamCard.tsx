@@ -11,7 +11,7 @@ import {
 import { Avatar, Button, Dropdown, Menu, Tooltip } from "antd";
 import _ from "lodash";
 import React from "react";
-import { generateRandomColor } from "../../util/common";
+import { generaterandomcolor } from "../../util/common";
 
 interface TeamsCardProps {
   data?: any;
@@ -88,7 +88,7 @@ export default function TeamCard({ data }: TeamsCardProps) {
               const projName = _.get(item, "project.name");
               return (
                 <Tooltip title={projName} placement="top">
-                  <Avatar style={{ backgroundColor: generateRandomColor() }}>
+                  <Avatar style={{ backgroundColor: generaterandomcolor() }}>
                     <span>{projName && projName.slice(0, 1)}</span>
                   </Avatar>
                 </Tooltip>

@@ -295,7 +295,6 @@ export default function TodoView() {
           onCancel={() => setModal(false)}
           initialValues={{ date: moment(), priority: "high" }}
           teams={teams}
-          projects={projects}
         />
       </Modal>
     </div>

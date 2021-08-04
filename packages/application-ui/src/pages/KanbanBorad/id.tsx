@@ -1,5 +1,5 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
-import { Tag, Avatar } from "antd";
+import { Avatar, Tag } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,10 +7,11 @@ import { useParams } from "react-router-dom";
 import DynamicEditForm from "../../components/todos/DynamicEditForm";
 import { post } from "../../services/http-request";
 import { UpdateTodos } from "../../store/actions/todos";
-import { generateStatusColor } from "../../util/todo";
+import { todoStatus } from "../../util/common";
+import { generatestatuscolor } from "../../util/todo";
+import Attachments from "./Attatchments";
 import ChildTask from "./ChildTasks";
 import CommentBox from "./CommentBox";
-import QuickPicks from "./QuickPicks";
 import "./style.css";
 
 export default function TaskView() {
@@ -88,7 +89,7 @@ export default function TaskView() {
   ];
 
   const updateTodo = async () => {
-    await dispatch(UpdateTodos({ payload: data }));
+    await dispatch(UpdateTodos(data));
   };
 
   const onUpdateData = (e: any) => {
@@ -104,6 +105,10 @@ export default function TaskView() {
     if (response.data.length) setData(response.data[0]);
   };
 
+  const saveChildTask = async (payload) => {
+    getData();
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -111,163 +116,27 @@ export default function TaskView() {
   return (
     <div className="task-view">
       <div className="task-view-details">
-        <div className="task-view-header">
-          <div className="item-control flex-1">
-            <span className="text-gray-500 text-sm">Task Name</span>
-            {editForm === "name" ? (
-              <DynamicEditForm
-                fieldType="INPUT"
-                placeholder="Task Name"
-                value={data.name}
-                name="name"
-                onSave={onUpdateData}
-                onCancel={() => setEditForm("")}
-              />
-            ) : (
-              <h1
-                className="font-semibold text-lg cursor-text"
-                onClick={() => setEditForm("name")}
-              >
-                {data.name}
-              </h1>
-            )}
-          </div>
-          <div className="item-control ml-5 flex flex-col">
-            <span className="text-gray-500 text-sm">Status</span>
-            {editForm === "assignee" ? (
-              <DynamicEditForm
-                fieldType="SELECT"
-                placeholder="Select assignee"
-                name="assignedTo"
-                options={teams}
-                optionValue={"fullName"}
-                defaultValue={data.assignedTo}
-                onSave={onUpdateData}
-                onCancel={() => setEditForm("")}
-              />
-            ) : (
-              <Tag
-                onClick={() => setEditForm("assignee")}
-                className="mt-2 rounded-md"
-                color={generateStatusColor(data.status)}
-              >
-                {data.status}
-              </Tag>
-            )}
-          </div>
+        <div className="item-control mb-5 flex-1">
+          <span className="text-gray-500 text-sm">Task Name</span>
+          {editForm === "name" ? (
+            <DynamicEditForm
+              fieldType="INPUT"
+              placeholder="Task Name"
+              value={data.name}
+              name="name"
+              onSave={onUpdateData}
+              onCancel={() => setEditForm("")}
+            />
+          ) : (
+            <h1
+              className="font-semibold text-lg cursor-text"
+              onClick={() => setEditForm("name")}
+            >
+              {data.name}
+            </h1>
+          )}
         </div>
-        <div className="flex items-center my-10 justify-between">
-          <div className="item-control">
-            <span className="text-gray-500 text-sm">Assigned To</span>
-            {editForm === "assignee" ? (
-              <DynamicEditForm
-                fieldType="SELECT"
-                placeholder="Select assignee"
-                name="assignedTo"
-                options={teams}
-                optionValue={"fullName"}
-                defaultValue={data.assignedTo}
-                onSave={onUpdateData}
-                onCancel={() => setEditForm("")}
-              />
-            ) : (
-              <div className="flex items-center mt-2">
-                <Avatar
-                  src="https://i.pravatar.cc/150?img=32"
-                  className="mr-2"
-                ></Avatar>
-                <span
-                  className="text-sm font-semibold"
-                  onClick={() => setEditForm("assignee")}
-                >
-                  {data.user?.fullName}
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="item-control">
-            <span className="text-gray-500 text-sm">Due Date</span>
-            {editForm === "due" ? (
-              <DynamicEditForm
-                fieldType="DATE"
-                placeholder="Select date"
-                value={data.date}
-                name="date"
-                onSave={onUpdateData}
-                onCancel={() => setEditForm("")}
-              />
-            ) : (
-              <div
-                className="flex items-center mt-2"
-                onClick={() => setEditForm("due")}
-              >
-                <ClockCircleOutlined className="mr-1" />
-                <span className="text-sm font-semibold">
-                  {moment(data.date).format("DD-MM-YYYY")}
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="item-control flex flex-col">
-            <span className="text-gray-500 text-sm">Priority</span>
-            {editForm === "priority" ? (
-              <DynamicEditForm
-                fieldType="SELECT"
-                placeholder="Select priority"
-                name="priority"
-                options={priority}
-                optionValue={null}
-                defaultValue={data.priority}
-                onSave={onUpdateData}
-                onCancel={() => setEditForm("")}
-              />
-            ) : (
-              <Tag
-                className="mt-2 rounded-md capitalize"
-                color={
-                  data.priority == "High"
-                    ? "red"
-                    : data.priority == "Medium"
-                    ? "yellow"
-                    : "blue"
-                }
-                onClick={() => setEditForm("priority")}
-              >
-                {data.priority}
-              </Tag>
-            )}
-          </div>
-          <div className="item-control flex flex-col">
-            <span className="text-gray-500 text-sm">Label</span>
-            {editForm === "label" ? (
-              <DynamicEditForm
-                fieldType="INPUT"
-                placeholder="Input your labels separated by commas "
-                value={data.label}
-                name="label"
-                onSave={onUpdateData}
-                onCancel={() => setEditForm("")}
-              />
-            ) : (
-              <div className="flex flex-wrap">
-                {data.label &&
-                  data.label.split(",").map((item: string) => {
-                    return (
-                      <Tag
-                        onClick={() => setEditForm("label")}
-                        className="mt-2 rounded-md"
-                        color="processing"
-                        key={item}
-                      >
-                        {item}
-                      </Tag>
-                    );
-                  })}
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="item-control">
+        <div className="item-control mb-5 mt-5">
           <span className="text-gray-500 text-sm">Description</span>
           {editForm === "description" ? (
             <DynamicEditForm
@@ -288,14 +157,151 @@ export default function TaskView() {
           )}
         </div>
         <div className="task-view-child">
-          <ChildTask subTasks={subTasks} />
+          <ChildTask
+            subTasks={data.childTodo}
+            onSuccess={() => getData()}
+            teams={teams}
+          />
+        </div>
+        <div className="task-view-attatchments">
+          <Attachments />
         </div>
         <div className="task-view-comments">
           <CommentBox comments={comments} />
         </div>
       </div>
-      <div className="task-view-quick">
-        <QuickPicks />
+      <div className="task-view-info">
+        <div className="item-control flex items-center mb-5">
+          <span className="text-gray-500 text-sm flex-1">Status</span>
+          {editForm === "status" ? (
+            <DynamicEditForm
+              fieldType="SELECT"
+              placeholder="Select status"
+              name="status"
+              options={todoStatus}
+              defaultValue={data.status}
+              onSave={onUpdateData}
+              onCancel={() => setEditForm("")}
+            />
+          ) : (
+            <Tag
+              onClick={() => setEditForm("status")}
+              className="mt-2 rounded-md"
+              color={generatestatuscolor(data.status)}
+            >
+              {data.status}
+            </Tag>
+          )}
+        </div>
+        <div className="item-control flex items-center mb-5">
+          <span className="text-gray-500 text-sm flex-1">Assigned To</span>
+          {editForm === "assignee" ? (
+            <DynamicEditForm
+              fieldType="SELECT"
+              placeholder="Select assignee"
+              name="assignedTo"
+              options={teams}
+              optionValue={"fullName"}
+              defaultValue={data.assignedTo}
+              onSave={onUpdateData}
+              onCancel={() => setEditForm("")}
+            />
+          ) : (
+            <div className="flex items-center mt-2">
+              <Avatar
+                src="https://i.pravatar.cc/150?img=32"
+                className="mr-2"
+              ></Avatar>
+              <span
+                className="text-sm font-semibold"
+                onClick={() => setEditForm("assignee")}
+              >
+                {data.user?.fullName}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="item-control flex items-center mb-5">
+          <span className="text-gray-500 text-sm flex-1">Due Date</span>
+          {editForm === "due" ? (
+            <DynamicEditForm
+              fieldType="DATE"
+              placeholder="Select date"
+              value={data.date}
+              name="date"
+              onSave={onUpdateData}
+              onCancel={() => setEditForm("")}
+            />
+          ) : (
+            <div
+              className="flex items-center mt-2"
+              onClick={() => setEditForm("due")}
+            >
+              <ClockCircleOutlined className="mr-1" />
+              <span className="text-sm font-semibold">
+                {moment(data.date).format("DD-MM-YYYY")}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="item-control flex items-center mb-5">
+          <span className="text-gray-500 text-sm flex-1">Priority</span>
+          {editForm === "priority" ? (
+            <DynamicEditForm
+              fieldType="SELECT"
+              placeholder="Select priority"
+              name="priority"
+              options={priority}
+              optionValue={null}
+              defaultValue={data.priority}
+              onSave={onUpdateData}
+              onCancel={() => setEditForm("")}
+            />
+          ) : (
+            <Tag
+              className="mt-2 rounded-md capitalize"
+              color={
+                data.priority == "High"
+                  ? "red"
+                  : data.priority == "Medium"
+                  ? "yellow"
+                  : "blue"
+              }
+              onClick={() => setEditForm("priority")}
+            >
+              {data.priority}
+            </Tag>
+          )}
+        </div>
+        <div className="item-control flex items-center">
+          <span className="text-gray-500 text-sm flex-1">Label</span>
+          {editForm === "label" ? (
+            <DynamicEditForm
+              fieldType="INPUT"
+              placeholder="Input your labels separated by commas "
+              value={data.label}
+              name="label"
+              onSave={onUpdateData}
+              onCancel={() => setEditForm("")}
+            />
+          ) : (
+            <div className="flex flex-wrap">
+              {data.label &&
+                data.label.split(",").map((item: string) => {
+                  return (
+                    <Tag
+                      onClick={() => setEditForm("label")}
+                      className="mt-2 rounded-md"
+                      color="processing"
+                      key={item}
+                    >
+                      {item}
+                    </Tag>
+                  );
+                })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

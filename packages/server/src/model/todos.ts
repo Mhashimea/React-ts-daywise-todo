@@ -10,6 +10,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript"
+import Attatchments from './attatchments'
 import ChildTodo from "./childTodo"
 import Organization from "./organiZation"
 import Projects from "./projects"
@@ -94,4 +95,7 @@ export default class Todos extends Model implements TodosI {
 
   @HasMany(() => ChildTodo)
   childTodo: ChildTodo[]
+
+  @HasMany(() => Attatchments)
+  attachments: Attatchments[]
 }

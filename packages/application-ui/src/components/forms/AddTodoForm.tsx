@@ -1,35 +1,58 @@
-import { Button, DatePicker, Form, Input, Select } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
 import React, { useEffect } from "react";
+import { useState } from "react";
+import { taskPriority } from "../../util/common";
+import DescriptionEditor from "./DescriptionEditor";
 
 interface todoFormProps {
   onSave?: (values: any) => void;
   onCancel?: (values: any) => void;
   initialValues?: any;
   teams?: string[];
-  projects?: string[];
   modalState?: boolean;
+  loading?: boolean;
 }
 
 const { Option } = Select;
-
-const { TextArea } = Input;
 
 export default function AddTodoForm({
   initialValues,
   onSave,
   onCancel,
-  projects,
   teams,
   modalState,
+  loading,
 }: todoFormProps) {
   const [form] = Form.useForm();
+  const [description, setDescription] = useState(null);
+
   const onFinish = (values: any) => {
-    if (onSave) onSave(values);
+    const payload = {
+      ...values,
+      description,
+    };
+    if (onSave) onSave(payload);
+  };
+
+  const onBeforeUpload = (file, fileList) => {
+    const values = {
+      ...form.getFieldValue("attatchments"),
+      file,
+    };
+    form.setFieldsValue({
+      attatchments: values,
+    });
+    return false;
+  };
+
+  const resetForm = () => {
+    form.resetFields();
   };
 
   useEffect(() => {
-    form.resetFields();
-  }, [modalState]);
+    resetForm();
+  }, [onCancel, modalState]);
   return (
     <div className="todo-form">
       <Form
@@ -48,48 +71,27 @@ export default function AddTodoForm({
         </Form.Item>
         <div className="flex">
           <Form.Item
-            className="w-1/3"
-            label="Date"
-            name="date"
-            rules={[{ required: true, message: "Please input your date!" }]}
-          >
-            <DatePicker placeholder="Enter the date" />
-          </Form.Item>
-          <Form.Item
             className="w-1/3 mr-2"
             name="priority"
             label="Priority"
             rules={[{ required: true }]}
           >
             <Select placeholder="Select priority" allowClear>
-              <Option value="high">High</Option>
-              <Option value="medium">Medium</Option>
-              <Option value="low">Low</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Label" name="label" rules={[{ required: false }]}>
-            <Input placeholder="Enter your label" />
-          </Form.Item>
-        </div>
-        <div className="flex">
-          <Form.Item
-            className="w-1/2 mr-2"
-            label="Project"
-            rules={[{ required: true }]}
-            name="projectId"
-          >
-            <Select placeholder="Select project" allowClear>
-              {projects?.map((proj: any, index) => {
-                return (
-                  <Option key={index} value={proj.id}>
-                    {proj.name}
-                  </Option>
-                );
+              {taskPriority.map((pro) => {
+                return <Option value={pro}>{pro}</Option>;
               })}
             </Select>
           </Form.Item>
           <Form.Item
-            className="w-1/2 mr-2"
+            className="w-1/3 mr-2"
+            label="Label"
+            name="label"
+            rules={[{ required: false }]}
+          >
+            <Input placeholder="Enter your label" />
+          </Form.Item>
+          <Form.Item
+            className="w-1/3"
             label="Assigned to"
             rules={[{ required: true }]}
             name="assignedTo"
@@ -105,13 +107,15 @@ export default function AddTodoForm({
             </Select>
           </Form.Item>
         </div>
-        <Form.Item
-          className="w-full"
-          label="Description"
-          rules={[{ required: true }]}
-          name="description"
-        >
-          <TextArea placeholder="Enter your task description" allowClear />
+        <Form.Item label="Description">
+          <DescriptionEditor onChange={(e) => setDescription(e)} />
+        </Form.Item>
+        <Form.Item className="w-1/2" label="Attatchments" name="attatchments">
+          <Upload beforeUpload={onBeforeUpload} action="#" multiple={true}>
+            <Button className="w-full" icon={<UploadOutlined />}>
+              Upload Attatchments
+            </Button>
+          </Upload>
         </Form.Item>
         <div className="flex justify-end m-0">
           <Form.Item className="m-0">
@@ -127,6 +131,7 @@ export default function AddTodoForm({
               type="primary"
               htmlType="submit"
               className="rounded-md mr-2"
+              loading={loading}
             >
               Submit
             </Button>

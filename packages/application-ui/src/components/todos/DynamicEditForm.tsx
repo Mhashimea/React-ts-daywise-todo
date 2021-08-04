@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react"
-import { Input, Select, DatePicker } from "antd"
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons"
-import moment from "moment"
+import React, { useEffect, useState } from "react";
+import { Input, Select, DatePicker } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 interface EditDynamicForm {
-  fieldType: "INPUT" | "TEXTAREA" | "SELECT" | "CHECKBOX" | "RADIO" | "DATE"
-  options?: string[]
-  placeholder?: string
-  value?: string | number
-  name?: any
-  onSave?: (values: any) => void
-  onCancel?: () => void
-  defaultValue?: any
-  optionValue?: any
+  fieldType: "INPUT" | "TEXTAREA" | "SELECT" | "CHECKBOX" | "RADIO" | "DATE";
+  options?: string[];
+  placeholder?: string;
+  value?: string | number;
+  name?: any;
+  onSave?: (values: any) => void;
+  onCancel?: () => void;
+  defaultValue?: any;
+  optionValue?: any;
+  wrapperClass?: string;
 }
 
-const { Option } = Select
+const { Option } = Select;
 
-const { TextArea } = Input
+const { TextArea } = Input;
 
 export default function DynamicEditForm({
   fieldType,
@@ -29,34 +30,33 @@ export default function DynamicEditForm({
   onCancel,
   defaultValue,
   optionValue,
+  wrapperClass,
 }: EditDynamicForm) {
-  const [model, setModel] = useState<any>({})
+  const [model, setModel] = useState<any>({});
 
   const onChangeValue = ({ e, name }: any) => {
-    console.log(e, name)
-    setModel({ [name]: e })
-    console.log(model)
-  }
+    setModel({ [name]: e });
+  };
 
   const onClickSave = () => {
-    if (onSave) onSave(model)
-  }
+    if (onSave) onSave(model);
+  };
 
   const onClickCancel = () => {
-    if (onCancel) onCancel()
-  }
+    if (onCancel) onCancel();
+  };
 
   useEffect(() => {
-    setModel({ ...model, [name]: value })
-  }, [value, name, defaultValue])
+    setModel({ ...model, [name]: value });
+  }, [value, name, defaultValue]);
   return (
-    <div className="todo-edit-form relative flex">
+    <div className={"todo-edit-form relative flex " + wrapperClass}>
       {fieldType === "INPUT" && (
         <Input
           placeholder={placeholder}
           value={model[name]}
           name={name}
-          onChange={e => onChangeValue({ e: e.target.value, name })}
+          onChange={(e) => onChangeValue({ e: e.target.value, name })}
         />
       )}
 
@@ -65,7 +65,7 @@ export default function DynamicEditForm({
           style={{ minWidth: 200 }}
           placeholder={placeholder}
           defaultValue={defaultValue}
-          onChange={e => onChangeValue({ e, name })}
+          onChange={(e) => onChangeValue({ e, name })}
         >
           {options?.map((opt: any, index) => {
             return (
@@ -76,7 +76,7 @@ export default function DynamicEditForm({
               >
                 {optionValue ? opt[optionValue] : opt}
               </Option>
-            )
+            );
           })}
         </Select>
       )}
@@ -86,17 +86,16 @@ export default function DynamicEditForm({
           placeholder={placeholder}
           value={model[name]}
           name={name}
-          onChange={e => onChangeValue({ e: e.target.value, name })}
+          onChange={(e) => onChangeValue({ e: e.target.value, name })}
         />
       )}
-      {console.log(model)}
       {fieldType === "DATE" && (
         <DatePicker
           placeholder={placeholder}
           name={name}
           value={moment(model[name])}
           defaultValue={moment(model[name])}
-          onChange={e => onChangeValue({ e, name })}
+          onChange={(e) => onChangeValue({ e, name })}
         />
       )}
 
@@ -117,5 +116,5 @@ export default function DynamicEditForm({
         </div>
       </div>
     </div>
-  )
+  );
 }

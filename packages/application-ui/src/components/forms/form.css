@@ -1,0 +1,11 @@
+.description-editor-wrapper {
+  @apply min-h-[200px] border-gray-200 border rounded-md;
+}
+
+.description-editor-toolbar {
+  @apply border-none;
+}
+
+.description-editor-editor {
+  @apply pl-2;
+}

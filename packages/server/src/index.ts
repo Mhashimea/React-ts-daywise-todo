@@ -26,6 +26,9 @@ io.on("connection", socket => {
 
 app.use(bodyParser.json({ limit: "50mb" }))
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }))
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded());
+
 app.use(cors())
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")

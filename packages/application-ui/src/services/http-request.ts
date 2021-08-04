@@ -20,9 +20,7 @@ const emptyResponse: any = {
   },
 }
 
-export function doRequest(
-  config: AxiosRequestConfig = {}
-): Promise<ServerResponse> {
+export function doRequest(config: AxiosRequestConfig = {}): Promise<ServerResponse> {
   axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
   axios.defaults.headers.common["Authorization"] = localStorage.getItem("token")
   return axios
@@ -44,3 +42,18 @@ export const post = (
   config?: AxiosRequestConfig
 ): Promise<ServerResponse> =>
   doRequest({ data, url: BaseUrl + url, method: "POST", ...config })
+
+
+export const formDataPost = (url: string, data?: any) => {
+  const headers = {
+    headers: {
+      Accept: "application/json",
+      'Content-Type': `multipart/form-data`,
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+  const apiUrl: string = BaseUrl + url
+  return axios.post(apiUrl, data, headers)
+    .then((response: AxiosResponse) => response.data || {})
+    .catch((error: AxiosError) => (error.response || emptyResponse).data)
+}

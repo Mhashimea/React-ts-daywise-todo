@@ -9,10 +9,10 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Avatar } from "antd";
-import React from "react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import _ from "lodash";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 import { SetPageTitle } from "../../store/actions/common";
 import "./style.css";
 
@@ -20,10 +20,13 @@ export default function Sidebar() {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const currentUser = useSelector(
+    (state: any) => state.AuthReducer.currentUser
+  );
 
   const setPageTitle = (title: string, url?: string) => {
     dispatch(SetPageTitle(title));
-    if (url) history.push(url);
+    if (url) history.push("/" + url);
   };
 
   const setInitialPageTitle = () => {
@@ -52,8 +55,10 @@ export default function Sidebar() {
           size="large"
           className="mb-2"
         />
-        <h1 className="text-white text-sm">Hashim Ea</h1>
-        <span className="text-xs text-gray-200">Software Engineer</span>
+        <h1 className="text-white text-sm">{_.get(currentUser, "fullName")}</h1>
+        <span className="text-xs text-gray-200">
+          {_.get(currentUser, "designation.name")}
+        </span>
       </div>
       <ul className="flex-1">
         <a

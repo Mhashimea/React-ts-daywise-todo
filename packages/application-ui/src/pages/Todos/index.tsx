@@ -190,7 +190,6 @@ export default function Todos() {
             onCancel={() => setModalState(null)}
             initialValues={{ date: moment(), priority: "high" }}
             teams={teams}
-            projects={projects}
             modalState={modalState}
           />
         ) : (

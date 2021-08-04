@@ -1,6 +1,6 @@
 import { Tag } from "antd";
 import React from "react";
-import { generateStatusColor } from "../../util/todo";
+import { generatestatuscolor } from "../../util/todo";
 
 export default function QuickPicks() {
   return (
@@ -13,7 +13,7 @@ export default function QuickPicks() {
               <h2 className="flex-1 font-medium text-base">SRS Creation</h2>
               <Tag
                 className="rounded-md"
-                color={generateStatusColor("Pending")}
+                color={generatestatuscolor("Pending")}
               >
                 Pending
               </Tag>

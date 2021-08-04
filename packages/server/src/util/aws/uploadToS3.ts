@@ -5,6 +5,7 @@ export default async function UploadToS3(file) {
   const bucketName = process.env.BUCKETNAME
   const accessKeyId = process.env.S3ACCESSKEY
   const secretAccessKey = process.env.S3SECRETACCESSKEY
+  console.log(bucketName, accessKeyId, secretAccessKey)
 
   const s3 = new aws.S3({
     accessKeyId: accessKeyId,
@@ -15,8 +16,8 @@ export default async function UploadToS3(file) {
 
   const params: any = {
     Bucket: bucketName,
-    key: Date.now() + file.originalname,
-    Body: readFile
+    Key: Date.now() + file.originalname,
+    Body: readFile,
   }
 
   return new Promise((resolve, reject) => {
