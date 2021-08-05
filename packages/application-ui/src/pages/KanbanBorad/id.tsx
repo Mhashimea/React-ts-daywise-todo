@@ -20,7 +20,7 @@ export default function TaskView() {
   const teams = useSelector((state: any) => state.CommonReducer.teams);
   const priority = useSelector((state: any) => state.CommonReducer.priority);
   const [editForm, setEditForm] = useState("");
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<any>([]);
   const comments = [
     {
       id: 1,
@@ -71,20 +71,6 @@ export default function TaskView() {
           url: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         },
       ],
-    },
-  ];
-  const subTasks = [
-    {
-      id: 1,
-      title: "Events page design research",
-      status: "Pending",
-      assignee: "Hashim Ea",
-    },
-    {
-      id: 2,
-      title: "Todo single view page UI design",
-      status: "Inprogress",
-      assignee: "Suhail Ea",
     },
   ];
 
@@ -164,7 +150,7 @@ export default function TaskView() {
           />
         </div>
         <div className="task-view-attatchments">
-          <Attachments />
+          <Attachments data={data.attachments} />
         </div>
         <div className="task-view-comments">
           <CommentBox comments={comments} />
