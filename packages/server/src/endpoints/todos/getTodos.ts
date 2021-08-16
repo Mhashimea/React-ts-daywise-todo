@@ -1,4 +1,8 @@
+import attachments from '../../model/attatchments'
+import childTodo from '../../model/childTodo'
+import comments from '../../model/comments'
 import Todos from "../../model/todos"
+import User from '../../model/users'
 import getUser from "../../util/common/getUser"
 import { errorResponse, successResponse } from "../../util/response"
 
@@ -17,7 +21,12 @@ export default async (req, res) => {
 
     const response = await Todos.findAll({
       where,
-      include: [{ all: true, nested: true }],
+      include: [
+        { model: User },
+        { model: childTodo, include: ["user"] },
+        { model: attachments, include: ["user"] },
+        { model: comments, include: ["uploaded"] }
+      ],
     })
     return successResponse(res, response)
   } catch (e) {

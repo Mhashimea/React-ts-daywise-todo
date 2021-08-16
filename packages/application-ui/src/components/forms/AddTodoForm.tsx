@@ -1,7 +1,6 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { Button, Form, Input, Select, Upload } from "antd";
+import React, { useEffect, useState } from "react";
 import { taskPriority } from "../../util/common";
 import DescriptionEditor from "./DescriptionEditor";
 
@@ -52,7 +51,7 @@ export default function AddTodoForm({
 
   useEffect(() => {
     resetForm();
-  }, [onCancel, modalState]);
+  }, [modalState]);
   return (
     <div className="todo-form">
       <Form
@@ -108,7 +107,11 @@ export default function AddTodoForm({
           </Form.Item>
         </div>
         <Form.Item label="Description">
-          <DescriptionEditor onChange={(e) => setDescription(e)} />
+          <DescriptionEditor
+            onChange={(e) => setDescription(e)}
+            defaultValue={""}
+            className="add-todo-form-description"
+          />
         </Form.Item>
         <Form.Item className="w-1/2" label="Attatchments" name="attatchments">
           <Upload beforeUpload={onBeforeUpload} action="#" multiple={true}>

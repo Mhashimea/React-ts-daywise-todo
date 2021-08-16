@@ -62,7 +62,6 @@ export default function Board({
 
   const onSelectTodo = (e) => {
     setSelectedTodo(e);
-    // setVisible(true);
     history.push("/kanban-board/" + e.id);
   };
 
@@ -145,7 +144,12 @@ export default function Board({
                                             </div>
                                             <div className="board-footer-item">
                                               <MessageOutlined />
-                                              <span>8</span>
+                                              <span>
+                                                {
+                                                  _.get(item, "comments", [])
+                                                    .length
+                                                }
+                                              </span>
                                             </div>
                                             <div className="board-footer-item">
                                               <ApartmentOutlined />

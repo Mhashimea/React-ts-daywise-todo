@@ -12,6 +12,7 @@ import {
 } from "sequelize-typescript"
 import Attatchments from './attatchments'
 import ChildTodo from "./childTodo"
+import Comments from './comments'
 import Organization from "./organiZation"
 import Projects from "./projects"
 import User from "./users"
@@ -98,4 +99,7 @@ export default class Todos extends Model implements TodosI {
 
   @HasMany(() => Attatchments)
   attachments: Attatchments[]
+
+  @HasMany(() => Comments)
+  comments: Comments[]
 }

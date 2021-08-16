@@ -5,33 +5,25 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import DynamicEditForm from "../../components/todos/DynamicEditForm";
-import { AddTodos } from "../../store/actions/todos";
+import { UpdateTodos } from "../../store/actions/todos";
 import { generaterandomcolor, todoStatus } from "../../util/common";
 import { generatestatuscolor } from "../../util/todo";
 
 interface ChildTasksProps {
   subTasks?: any;
-  onSuccess?: () => void;
   teams?: any[];
 }
 
-export default function ChildTask({
-  subTasks,
-  onSuccess,
-  teams,
-}: ChildTasksProps) {
+export default function ChildTask({ subTasks, teams }: ChildTasksProps) {
+  const dispatch = useDispatch();
   const { id }: any = useParams();
   const [editForm, setEditForm] = useState("");
-  const dispatch = useDispatch();
 
   const onUpdateData = async (e) => {
     const payload = e;
     payload.todoId = Number(id);
-    const response: any = await dispatch(AddTodos(payload));
-    if (response.success && onSuccess) {
-      setEditForm("");
-      onSuccess();
-    }
+    await dispatch(UpdateTodos(e));
+    setEditForm("");
   };
   return (
     <div className="todo-modal-child">
@@ -78,36 +70,6 @@ export default function ChildTask({
               <h1>
                 {index + 1}. {items.name}
               </h1>
-              {editForm === `assignedTo${index}` && (
-                <DynamicEditForm
-                  fieldType="SELECT"
-                  placeholder="Select assignee"
-                  name="assignedTo"
-                  options={teams}
-                  optionValue={"fullName"}
-                  defaultValue={items.assignedTo}
-                  onSave={(data) => onUpdateData({ ...items, ...data })}
-                  onCancel={() => setEditForm("")}
-                />
-              )}
-              {editForm !== `assignedTo${index}` && (
-                <div onClick={() => setEditForm(`assignedTo${index}`)}>
-                  {items.assignedTo ? (
-                    <Avatar
-                      className="mr-4"
-                      src={_.get(items, "user.avatar")}
-                      style={{ backgroundColor: generaterandomcolor() }}
-                    >
-                      <span className="avatar-text text-base relative">
-                        {assignedTo.slice(0, 1)}
-                      </span>
-                    </Avatar>
-                  ) : (
-                    <span>No assignee</span>
-                  )}
-                </div>
-              )}
-
               {editForm === `status${index}` ? (
                 <DynamicEditForm
                   fieldType="SELECT"
@@ -125,6 +87,31 @@ export default function ChildTask({
                 >
                   {items.status}
                 </span>
+              )}
+              {editForm === `assignedTo${index}` && (
+                <DynamicEditForm
+                  fieldType="SELECT"
+                  placeholder="Select assignee"
+                  name="assignedTo"
+                  options={teams}
+                  optionValue={"fullName"}
+                  defaultValue={items.assignedTo}
+                  onSave={(data) => onUpdateData({ ...items, ...data })}
+                  onCancel={() => setEditForm("")}
+                />
+              )}
+              {editForm !== `assignedTo${index}` && (
+                <div onClick={() => setEditForm(`assignedTo${index}`)}>
+                  {items.assignedTo ? (
+                    <Avatar className="mr-4" src={_.get(items, "user.avatar")}>
+                      <span className="avatar-text text-base relative">
+                        {assignedTo && assignedTo.slice(0, 1)}
+                      </span>
+                    </Avatar>
+                  ) : (
+                    <span>No assignee</span>
+                  )}
+                </div>
               )}
             </div>
           );

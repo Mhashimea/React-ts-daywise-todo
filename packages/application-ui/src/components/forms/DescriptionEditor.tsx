@@ -1,23 +1,33 @@
-import { convertToRaw } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import React from "react";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import React, { useEffect, useState } from "react";
+import RichTextEditor from "react-rte";
 import "./form.css";
 
-export default function DescriptionEditor({ onChange }) {
+interface DescriptionEditorProps {
+  onChange?: (values: any) => void;
+  defaultValue: string;
+  className?: string;
+}
+
+export default function DescriptionEditor({
+  onChange,
+  defaultValue,
+  className,
+}: DescriptionEditorProps) {
+  const [value, setValue] = useState(RichTextEditor.createEmptyValue());
+
   const onEditEditor = (e) => {
-    const html = draftToHtml(convertToRaw(e.getCurrentContent()));
-    if (onChange) onChange(html);
+    setValue(e);
+    if (onChange) onChange(value.toString("html"));
   };
+
+  useEffect(() => {
+    console.log(defaultValue);
+    if (defaultValue)
+      setValue(RichTextEditor.createValueFromString(defaultValue, "html"));
+  }, []);
   return (
-    <div className="description-editor">
-      <Editor
-        wrapperClassName="description-editor-wrapper"
-        toolbarClassName="description-editor-toolbar"
-        editorClassName="description-editor-editor"
-        onEditorStateChange={onEditEditor}
-      />
+    <div className={"description-editor " + className}>
+      <RichTextEditor value={value} onChange={onEditEditor} />
     </div>
   );
 }

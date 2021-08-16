@@ -1,12 +1,13 @@
-import { AllowNull, AutoIncrement, Column, Default, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { AllowNull, BelongsTo, AutoIncrement, Column, Default, ForeignKey, HasMany, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import Comments from './comments';
 import Todos from './todos';
 import User from './users';
 interface AttatchmentsI {
-  id: number,
+  id: number
   todoId: number
   location: string
   active: boolean
-  // uploaded: number
+  uploaded: number
 }
 
 @Table({
@@ -25,10 +26,14 @@ export default class Attatchments extends Model implements AttatchmentsI {
   @Column
   todoId: number
 
-  // @ForeignKey(() => User)
-  // @AllowNull(false)
-  // @Column
-  // uploaded: number
+  @ForeignKey(() => User)
+  @AllowNull(false)
+  @Column
+  uploaded: number
+
+  @ForeignKey(() => Comments)
+  @Column
+  commentId: number
 
   @AllowNull(false)
   @Column
@@ -37,4 +42,7 @@ export default class Attatchments extends Model implements AttatchmentsI {
   @Default(true)
   @Column
   active: boolean
+
+  @BelongsTo(() => User)
+  user: User
 }

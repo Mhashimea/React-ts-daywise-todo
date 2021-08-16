@@ -1,15 +1,12 @@
-import io from "socket.io-client"
 import { formDataPost, post } from "../../services/http-request"
 
-const socket = io("http://localhost:7000", {
-  forceNew: true,
-  transports: ["websocket"],
-})
-
 export const GetTodos = (filter?: any) => async (dispatch: any) => {
+  let loading = true
   dispatch({ type: "SET_TODOS" })
   const response = await post("todos", filter)
   dispatch({ type: "SET_TODOS", payload: response.data })
+  loading = false
+  return { loading: loading }
 }
 
 export const AddTodos = (payload: any) => async (dispatch: any) => {
@@ -32,7 +29,6 @@ export const AddTodos = (payload: any) => async (dispatch: any) => {
 
 export const UpdateTodos = (payload: any) => async (dispatch: any) => {
   const response = await post("add-todo", payload)
-  dispatch({ type: "UPDATE_TODO", payload: payload })
-  socket.emit("todo:update", payload)
+  dispatch({ type: "UPDATE_TODO", payload: response.data, actionType: "UPDATE" })
   return { success: response.success }
 }

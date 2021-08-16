@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Input, Select, DatePicker } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { DatePicker, Input, Select } from "antd";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import DescriptionEditor from "../forms/DescriptionEditor";
 
 interface EditDynamicForm {
-  fieldType: "INPUT" | "TEXTAREA" | "SELECT" | "CHECKBOX" | "RADIO" | "DATE";
+  fieldType:
+    | "INPUT"
+    | "TEXTAREA"
+    | "SELECT"
+    | "CHECKBOX"
+    | "RADIO"
+    | "DATE"
+    | "RICHTEXT";
   options?: string[];
   placeholder?: string;
   value?: string | number;
@@ -87,6 +95,12 @@ export default function DynamicEditForm({
           value={model[name]}
           name={name}
           onChange={(e) => onChangeValue({ e: e.target.value, name })}
+        />
+      )}
+      {fieldType === "RICHTEXT" && (
+        <DescriptionEditor
+          onChange={(e) => onChangeValue({ e: e, name })}
+          defaultValue={model[name]}
         />
       )}
       {fieldType === "DATE" && (

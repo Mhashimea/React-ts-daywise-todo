@@ -76,7 +76,7 @@ export default function Projects() {
         </div>
       )}
 
-      {!projects.length && <NoData />}
+      {!projects.length && !loading && <NoData />}
 
       <Modal
         visible={modalState}

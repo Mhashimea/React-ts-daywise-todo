@@ -30,7 +30,6 @@ export default function Attachments({ data }: AttachmentsProps) {
               <div className="attatchments-list-item">
                 <Avatar
                   shape="square"
-                  size={220}
                   icon={
                     fileType[fileType.length - 1] === "pdf" ? (
                       <FilePdfOutlined />

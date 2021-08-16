@@ -102,7 +102,6 @@ export default function Todos() {
 
   useEffect(() => {
     dispatch(GetTodos());
-    emitUpdateTodo();
   }, []);
 
   return (

@@ -130,11 +130,11 @@
 }
 
 .task-view-details {
-  @apply w-3/4;
+  @apply w-3/4 max-h-[630px] overflow-auto pr-3;
 }
 
 .task-view-info {
-  @apply w-1/4 bg-white border border-gray-200 rounded-md ml-3 h-80 px-2 py-5;
+  @apply w-1/4 bg-white border border-gray-200 rounded-md ml-3 px-2 py-5;
 }
 
 .task-view-header {
@@ -155,7 +155,11 @@
 }
 
 .attatchments-list-item {
-  @apply w-[220px] border border-gray-300 mr-3 rounded-md mb-3 cursor-pointer;
+  @apply w-[200px] h-[220px] border border-gray-300 mr-3 rounded-md mb-3 cursor-pointer;
+}
+
+.attatchments-list-item .ant-avatar-square {
+  @apply h-[160px] w-full;
 }
 
 .attatchments-list-item h1 {
@@ -164,4 +168,27 @@
 
 .attatchments-list-item p {
   @apply text-xs text-gray-400 m-2;
+}
+
+/* No Todo Data */
+.notodo-data {
+  @apply flex flex-col items-center justify-center h-[250px];
+}
+
+.notodo-data img {
+  @apply w-[160px] m-auto;
+}
+
+.todo-comments-docs {
+  @apply mb-5 relative;
+
+  display: inline-block;
+}
+
+.todo-comments-docs img {
+  @apply border border-gray-200 rounded-md;
+}
+
+.todo-comments-docs-icon {
+  @apply absolute z-10 right-3 top-3 cursor-pointer text-red-500 bg-white w-[25px] h-[25px] border border-gray-400 flex items-center justify-center rounded-md;
 }

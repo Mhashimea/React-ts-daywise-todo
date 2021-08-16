@@ -12,6 +12,7 @@ import addOrUpdatesTeam from "./team/addOrUpdatesTeam"
 import getTeam from "./team/getTeam"
 import addOrUpdateTodo from "./todos/addOrUpdateTodo"
 import getTodos from "./todos/getTodos"
+import addComment from './todos/addComment'
 
 const BASEURL = "/api"
 
@@ -36,6 +37,7 @@ export default app => {
   //todos
   app.post(`${BASEURL}/add-todo`, middleware, upload.single("file"), addOrUpdateTodo)
   app.post(`${BASEURL}/todos`, middleware, getTodos)
+  app.post(`${BASEURL}/add-comment`, middleware, upload.single("file"), addComment)
 
   //projecs
   app.post(`${BASEURL}/projects`, getProjects)

@@ -67,7 +67,7 @@ export default function Teams() {
           })}
         </div>
       )}
-      {!data.length && <NoData />}
+      {!data.length && !loading && <NoData />}
 
       <Modal
         visible={visible}

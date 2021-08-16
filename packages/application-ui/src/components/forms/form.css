@@ -9,3 +9,15 @@
 .description-editor-editor {
   @apply pl-2;
 }
+
+.description-editor {
+  @apply w-full min-h-[300px];
+}
+
+.RichTextEditor__root___2QXK- {
+  @apply h-full;
+}
+
+.add-todo-form-description .RichTextEditor__root___2QXK- {
+  @apply h-[300px];
+}

@@ -43,10 +43,13 @@ export default function KanbanBoard() {
   }, [projects]);
 
   useEffect(() => {
-    if (filter.projectId) {
-      dispatch(GetTodos(filter));
-      setDataLoading(false);
+    async function getData() {
+      if (filter.projectId) {
+        await dispatch(GetTodos(filter));
+        setDataLoading(false);
+      }
     }
+    getData();
   }, [filter]);
 
   return (
