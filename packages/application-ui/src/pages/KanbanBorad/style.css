@@ -91,6 +91,10 @@
   @apply flex items-center border rounded-md shadow-sm py-2 mb-2 px-3 cursor-pointer;
 }
 
+.todo-modal-child-item:hover {
+  @apply bg-gray-100 shadow-md;
+}
+
 .todo-modal-child-item h1 {
   @apply font-medium flex-1 text-sm text-gray-700 mr-2 truncate;
 }

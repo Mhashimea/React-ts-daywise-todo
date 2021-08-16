@@ -6,9 +6,10 @@ import uploadToS3 from '../../util/aws/uploadToS3'
 import attatchments from '../../model/attatchments'
 import comments from '../../model/comments'
 import User from '../../model/users'
+import addOrUpdateActivites from '../activities/addOrUpdateActivites'
 
 export default async (req, res) => {
-  let { name, priority, label, assignedTo, description, todoId, id, projectId, status } = req.body
+  let { name, priority, label, assignedTo, description, todoId, id, projectId, status, actionType } = req.body
   let payload = {
     name,
     priority,
@@ -26,7 +27,7 @@ export default async (req, res) => {
   try {
     let s3Locations = null
 
-    const { organization, user } = await getUser(req)
+    const { organization, user, fullName } = await getUser(req)
     payload.organizationId = organization
 
     // Upload to S3
@@ -37,15 +38,19 @@ export default async (req, res) => {
     // Child todo actions
     if (payload.todoId) {
       if (payload.todoId && payload.id) {
-        const response = await childTodo.update(payload, {
+        await childTodo.update(payload, {
           where: { id: payload.id },
         })
         const data: any = await GetTodo(payload.todoId)
+        if (actionType)
+          await addOrUpdateActivites(data.dataValues, actionType, user, organization, fullName)
         return successResponse(res, data.dataValues)
       }
       else {
         await childTodo.create({ name, todoId, active: true, status, })
         const data: any = await GetTodo(payload.todoId)
+        if (actionType)
+          await addOrUpdateActivites(data.dataValues, actionType, user, organization, fullName)
         return successResponse(res, data.dataValues)
       }
     }
@@ -55,7 +60,11 @@ export default async (req, res) => {
       await Todos.update(payload, {
         where: { id: payload.id },
       })
+
       const data: any = await GetTodo(payload.id)
+      if (actionType)
+        await addOrUpdateActivites(data.dataValues, actionType, user, organization, fullName)
+
       return successResponse(res, data)
     }
 
@@ -71,6 +80,8 @@ export default async (req, res) => {
     }
 
     const data: any = await GetTodo(response.id)
+    if (actionType)
+      await addOrUpdateActivites(data.dataValues, actionType, user, organization, fullName)
     return successResponse(res, data.dataValues)
   } catch (e) {
     console.log(e)

@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken"
-import Organization from "../../model/organiZation"
 import User from "../../model/users"
 import { JWTSECERET } from "../constants"
 import { errorResponse } from "../response"
@@ -17,7 +16,8 @@ export default async req => {
     return {
       user: user.dataValues.id,
       organization: user.dataValues.organization.dataValues.id,
-      isAdmin: user.dataValues.isAdmin
+      isAdmin: user.dataValues.isAdmin,
+      fullName: user.dataValues.fullName
     }
   }
 }

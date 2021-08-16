@@ -13,6 +13,7 @@ import getTeam from "./team/getTeam"
 import addOrUpdateTodo from "./todos/addOrUpdateTodo"
 import getTodos from "./todos/getTodos"
 import addComment from './todos/addComment'
+import getActivities from './activities/getActivities'
 
 const BASEURL = "/api"
 
@@ -51,4 +52,6 @@ export default app => {
   app.post(`${BASEURL}/designation`, middleware, getDesignation)
   app.post(`${BASEURL}/add-designation`, middleware, addOrUpdateDesignation)
 
+  //activites
+  app.post(`${BASEURL}/activities`, middleware, getActivities)
 }

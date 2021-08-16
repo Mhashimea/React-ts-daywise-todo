@@ -35,10 +35,11 @@ export default function TaskView() {
     await dispatch(UpdateTodos(data));
   };
 
-  const onUpdateData = (e: any) => {
+  const onUpdateData = (e: any, type?: string) => {
     Object.keys(e).map((key) => {
       data[key] = e[key];
     });
+    data["actionType"] = type;
     updateTodo();
     setEditForm("");
   };
@@ -76,7 +77,7 @@ export default function TaskView() {
                   placeholder="Task Name"
                   value={data.name}
                   name="name"
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "UPDATE")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -110,11 +111,9 @@ export default function TaskView() {
             <div className="task-view-child">
               <ChildTask subTasks={data.childTodo} teams={teams} />
             </div>
-            {_.get(data, "attachments", []).length > 0 && (
-              <div className="task-view-attatchments">
-                <Attachments data={data.attachments} />
-              </div>
-            )}
+            <div className="task-view-attatchments">
+              <Attachments data={data.attachments} />
+            </div>
 
             <div className="task-view-comments">
               <CommentBox
