@@ -7,6 +7,7 @@ import {
   LogoutOutlined,
   UnorderedListOutlined,
   UsergroupAddOutlined,
+  VideoCameraAddOutlined,
 } from "@ant-design/icons";
 import { Avatar } from "antd";
 import _ from "lodash";
@@ -35,12 +36,6 @@ export default function Sidebar() {
     else {
       setPageTitle(currentRoute);
     }
-  };
-
-  const onLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isAuth");
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -95,20 +90,11 @@ export default function Sidebar() {
           <li>Teams</li>
         </a>
         <a
-          className={location.pathname === "/schedules" ? " navbar-active" : ""}
-          onClick={() => setPageTitle("Schedules", "schedules")}
+          className={location.pathname === "/connect" ? " navbar-active" : ""}
+          onClick={() => setPageTitle("Connect", "connect")}
         >
-          <CalendarOutlined className="mr-2 text-sm" />
-          <li>Schedules</li>
-        </a>
-        <a
-          className={
-            location.pathname === "/company-profile" ? " navbar-active" : ""
-          }
-          onClick={() => setPageTitle("Company", "company-profile")}
-        >
-          <BuildOutlined className="mr-2 text-sm" />
-          <li>Company</li>
+          <VideoCameraAddOutlined className="mr-2 text-sm" />
+          <li>Connect</li>
         </a>
         <a
           className={location.pathname === "/reports" ? " navbar-active" : ""}
@@ -118,10 +104,6 @@ export default function Sidebar() {
           <li>Reports</li>
         </a>
       </ul>
-      <div className="sidebar-link" onClick={onLogout}>
-        <LogoutOutlined />
-        Logout
-      </div>
     </div>
   );
 }

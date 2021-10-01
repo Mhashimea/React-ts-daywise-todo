@@ -1,0 +1,47 @@
+.project-reports {
+  @apply mb-16;
+}
+
+.project-reports-header {
+  @apply mb-3;
+}
+
+.project-reports-header h1,
+.employee-report-header h1 {
+  @apply text-base font-semibold;
+}
+
+.project-reports-header p,
+.employee-report-header p {
+  @apply text-xs text-gray-500;
+}
+
+.project-reports-details h2 {
+  @apply font-semibold mb-10 mt-5;
+}
+
+.project-reports-details-chart {
+  @apply flex items-center;
+}
+
+.project-reports-details-chart p {
+  @apply text-sm text-gray-500;
+}
+
+.project-reports-details-chart-item {
+  @apply mb-3;
+}
+
+.project-reports-details-chart-item h1,
+.employee-report-data-item span {
+  @apply text-sm text-gray-500 font-medium;
+}
+
+/* Employee Report */
+.employee-report-data {
+  @apply flex items-center flex-wrap mt-5;
+}
+
+.employee-report-data-item {
+  @apply w-[48%] mb-5 mr-3;
+}

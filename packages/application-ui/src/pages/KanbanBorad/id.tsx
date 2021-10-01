@@ -63,7 +63,7 @@ export default function TaskView() {
   }, [todos]);
 
   return (
-    <div className="task-view">
+    <div className="task-view p-3">
       {loading ? (
         <Loader />
       ) : (
@@ -97,7 +97,7 @@ export default function TaskView() {
                   placeholder="Description"
                   value={data.description}
                   name="description"
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "UPDATE")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -132,7 +132,7 @@ export default function TaskView() {
                   name="status"
                   options={todoStatus}
                   defaultValue={data.status}
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "STATUS")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -155,7 +155,7 @@ export default function TaskView() {
                   options={teams}
                   optionValue={"fullName"}
                   defaultValue={data.assignedTo}
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "MENTION")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -181,7 +181,7 @@ export default function TaskView() {
                   placeholder="Select date"
                   value={data.date}
                   name="date"
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "UPDATE")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -206,7 +206,7 @@ export default function TaskView() {
                   options={priority}
                   optionValue={null}
                   defaultValue={data.priority}
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "PRIORITY")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -233,7 +233,7 @@ export default function TaskView() {
                   placeholder="Input your labels separated by commas "
                   value={data.label}
                   name="label"
-                  onSave={onUpdateData}
+                  onSave={(e) => onUpdateData(e, "UPDATE")}
                   onCancel={() => setEditForm("")}
                 />
               ) : (

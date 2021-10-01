@@ -1,0 +1,49 @@
+/* Meeting View  */
+.meeting-view {
+  @apply flex items-start h-full;
+}
+
+.meeting-view-main {
+  @apply w-4/5 border-r h-[90%] flex flex-col;
+}
+
+.meeting-view-header {
+  @apply border-b pb-3 flex items-center pr-3;
+}
+
+.meeting-view-header h1 {
+  @apply text-lg font-semibold;
+}
+
+.meeting-view-header p {
+  @apply text-xs text-gray-500 flex items-center;
+}
+
+.meeting-view-streaming {
+  @apply flex justify-center flex-wrap py-[10px] h-[82%] overflow-x-hidden;
+}
+
+.meeting-view-streaming video {
+  height: 89%;
+  width: 49%;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.meeting-view-chat {
+  @apply w-1/5 p-2;
+}
+
+.meeting-view-controls {
+  @apply fixed bottom-0 w-[71.5%] z-20;
+}
+
+.meeting-control {
+  @apply border-t p-3 flex items-center justify-center;
+}
+
+.meeting-control button {
+  @apply mr-5 min-w-[40px] min-h-[40px] flex items-center justify-center;
+}

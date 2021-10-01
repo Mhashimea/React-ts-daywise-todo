@@ -18,7 +18,6 @@ export default function TodoView() {
   const [modal, setModal] = useState(false);
 
   const teams = useSelector((state: any) => state.CommonReducer.teams);
-  const projects = useSelector((state: any) => state.CommonReducer.projects);
   const priority = useSelector((state: any) => state.CommonReducer.priority);
   console.log(priority);
 

@@ -19,9 +19,10 @@ export default function ChildTask({ subTasks, teams }: ChildTasksProps) {
   const { id }: any = useParams();
   const [editForm, setEditForm] = useState("");
 
-  const onUpdateData = async (e) => {
+  const onUpdateData = async (e, action?: string) => {
     const payload = e;
     payload.todoId = Number(id);
+    payload.actionType = action;
     await dispatch(UpdateTodos(e));
     setEditForm("");
   };
@@ -49,7 +50,7 @@ export default function ChildTask({ subTasks, teams }: ChildTasksProps) {
           placeholder="Task Name"
           value=""
           name="name"
-          onSave={(e) => onUpdateData({ ...e, status: "Inprogress" })}
+          onSave={(e) => onUpdateData({ ...e, status: "Inprogress" }, "UPDATE")}
           onCancel={() => setEditForm("")}
           wrapperClass="mt-6 mb-3"
         />
@@ -77,7 +78,9 @@ export default function ChildTask({ subTasks, teams }: ChildTasksProps) {
                   name="status"
                   options={todoStatus}
                   defaultValue={items.status}
-                  onSave={(data) => onUpdateData({ ...items, ...data })}
+                  onSave={(data) =>
+                    onUpdateData({ ...items, ...data }, "STATUS")
+                  }
                   onCancel={() => setEditForm("")}
                 />
               ) : (
@@ -96,7 +99,9 @@ export default function ChildTask({ subTasks, teams }: ChildTasksProps) {
                   options={teams}
                   optionValue={"fullName"}
                   defaultValue={items.assignedTo}
-                  onSave={(data) => onUpdateData({ ...items, ...data })}
+                  onSave={(data) =>
+                    onUpdateData({ ...items, ...data }, "MENTION")
+                  }
                   onCancel={() => setEditForm("")}
                 />
               )}

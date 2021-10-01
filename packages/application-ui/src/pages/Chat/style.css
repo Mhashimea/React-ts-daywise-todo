@@ -1,0 +1,12 @@
+.chat {
+  @apply flex items-start w-full h-full overflow-hidden;
+}
+
+.chat-sidebar,
+.chat-details {
+  @apply w-1/4;
+}
+
+.chat-action {
+  @apply w-3/4;
+}

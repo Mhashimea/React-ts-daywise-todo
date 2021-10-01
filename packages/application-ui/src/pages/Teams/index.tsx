@@ -53,7 +53,7 @@ export default function Teams() {
   }, []);
 
   return (
-    <div className="teams">
+    <div className="teams p-3">
       <TeamsFilter
         onChangeStatusFilter={(e) => setFilter(e)}
         onAddNew={() => setVisible(true)}

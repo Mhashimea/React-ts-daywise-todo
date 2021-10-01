@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddTodoForm from "../../components/forms/AddTodoForm";
 import Loader from "../../components/ux/Loader";
+import { post } from "../../services/http-request";
 import { AddTodos, GetTodos } from "../../store/actions/todos";
 import Board from "./Board";
 import KanbanBoardFilter from "./KanbanBoardFilter";
@@ -20,6 +21,7 @@ export default function KanbanBoard() {
     priority: null,
     status: null,
   });
+  const [activities, setActivities] = useState([]);
   const teams = useSelector((state: any) => state.CommonReducer.teams);
   const projects = useSelector((state: any) => state.CommonReducer.projects);
   const todos = useSelector((state: any) => state.TodosReducer.todos);
@@ -35,6 +37,13 @@ export default function KanbanBoard() {
     setLoading(false);
   };
 
+  const getActivities = async () => {
+    const { data = [] } = await post("activities", {
+      projectId: filter.projectId,
+    });
+    setActivities(data);
+  };
+
   useEffect(() => {
     if (projects && projects.length > 0) {
       setSelectedProject(projects[0]);
@@ -47,21 +56,27 @@ export default function KanbanBoard() {
       if (filter.projectId) {
         await dispatch(GetTodos(filter));
         setDataLoading(false);
+        getActivities();
       }
     }
     getData();
   }, [filter]);
 
   return (
-    <div className="kanban-board">
+    <div className="kanban-board p-3">
       {projects && projects.length > 0 && (
-        <KanbanBoardHeader projects={projects} selectedProj={projects[0]} />
+        <KanbanBoardHeader
+          projects={projects}
+          selectedProj={projects[0]}
+          onChange={(e) => setFilter({ ...filter, projectId: e })}
+        />
       )}
       <div className="kanban-board-wrapper">
         <KanbanBoardFilter
           onAddNew={() => setVisible(true)}
           onChangePriority={(e) => setFilter({ ...filter, priority: e })}
           onChangeStatus={(e) => setFilter({ ...filter, status: e })}
+          activities={activities}
         />
         {dataLoaing ? (
           <Loader />

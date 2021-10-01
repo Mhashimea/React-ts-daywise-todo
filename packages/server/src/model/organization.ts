@@ -15,6 +15,10 @@ interface OrganizationI {
   address: string
   city: string
   avatar: string
+  coverImage: string
+  linkedinUrl: string
+  twitterUrl: string
+  description: string
   active: boolean
 }
 
@@ -46,6 +50,18 @@ export default class Organization extends Model implements OrganizationI {
 
   @Column
   avatar: string
+
+  @Column
+  coverImage: string
+
+  @Column
+  linkedinUrl: string
+
+  @Column
+  twitterUrl: string
+
+  @Column
+  description: string
 
   @AllowNull(false)
   @Column

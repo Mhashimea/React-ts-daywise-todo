@@ -9,11 +9,13 @@ const { Option } = Select;
 interface KanbanBoardHeaderProps {
   projects: any;
   selectedProj: any;
+  onChange?: (values) => void;
 }
 
 export default function KanbanBoardHeader({
   projects,
   selectedProj,
+  onChange,
 }: KanbanBoardHeaderProps) {
   return (
     <div className="bg-white border border-gray-100 kanban-board-header p-2 rounded-md mb-5 flex items-center">
@@ -24,6 +26,7 @@ export default function KanbanBoardHeader({
           defaultValue={selectedProj.id}
           className="flex-1"
           style={{ width: 300 }}
+          onChange={onChange}
         >
           {projects.map((proj) => {
             return <Option value={proj.id}>{proj.name}</Option>;

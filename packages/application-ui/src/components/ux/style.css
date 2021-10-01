@@ -8,6 +8,19 @@
   background-color: #1b1e4e;
 }
 
+.navbar-icons {
+  @apply flex items-center;
+}
+
+.navbar-icons-item {
+  @apply cursor-pointer mr-3 w-[30px] h-[30px] flex items-center border border-gray-200 rounded-md justify-center relative;
+}
+
+.navbar-icons-item:hover,
+.navbar-icons-item-active {
+  @apply bg-secondary text-white;
+}
+
 /* Navbar Ends */
 
 /* Sidebar Starts */
@@ -60,4 +73,21 @@
 
 .no-data p {
   @apply max-w-[960px] text-sm text-gray-500 text-center mt-3;
+}
+
+/* Construcntion page */
+.construction-page {
+  @apply flex flex-col items-center justify-center;
+}
+
+.construction-page img {
+  @apply w-[500px] h-[500px];
+}
+
+.construction-page h1 {
+  @apply font-semibold;
+}
+
+.construction-page p {
+  @apply text-xs text-center mt-2 max-w-[500px];
 }

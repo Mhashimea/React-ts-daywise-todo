@@ -12,7 +12,7 @@ export default function Default({ children }: LayoutProps) {
       <Sidebar />
       <div className="default-content overflow-hidden h-full">
         <Navbar />
-        <div className="px-5 overflow-auto h-full mb-10">{children}</div>
+        <div className="overflow-auto h-full">{children}</div>
       </div>
     </div>
   );

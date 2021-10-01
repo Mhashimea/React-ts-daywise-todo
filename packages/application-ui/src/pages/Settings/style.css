@@ -1,0 +1,27 @@
+.settings {
+  @apply flex items-start h-full w-full;
+}
+
+.settings-sidebar {
+  @apply w-1/4 bg-white h-full m-3  rounded-md border border-gray-200 shadow-sm;
+}
+
+.settings-sidebar-item {
+  @apply border-b cursor-pointer p-3 hover:bg-gray-100;
+}
+
+.settings-sidebar-item-active {
+  border-right: 5px solid #ee786c;
+}
+
+.settings-sidebar-item h1 {
+  @apply text-sm font-semibold;
+}
+
+.settings-sidebar-item p {
+  @apply text-xs text-gray-500;
+}
+
+.settings-data {
+  @apply w-3/4 p-3;
+}

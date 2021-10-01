@@ -14,6 +14,8 @@ import addOrUpdateTodo from "./todos/addOrUpdateTodo"
 import getTodos from "./todos/getTodos"
 import addComment from './todos/addComment'
 import getActivities from './activities/getActivities'
+import getOrganization from './organization/getOrganization'
+import deleteDesignation from './designation/deleteDesignation'
 
 const BASEURL = "/api"
 
@@ -35,6 +37,9 @@ export default app => {
   app.post(`${BASEURL}/register`, register)
   app.post(`${BASEURL}/me`, me)
 
+  //organization
+  app.post(`${BASEURL}/organization`, middleware, getOrganization)
+
   //todos
   app.post(`${BASEURL}/add-todo`, middleware, upload.single("file"), addOrUpdateTodo)
   app.post(`${BASEURL}/todos`, middleware, getTodos)
@@ -51,6 +56,8 @@ export default app => {
   //designation
   app.post(`${BASEURL}/designation`, middleware, getDesignation)
   app.post(`${BASEURL}/add-designation`, middleware, addOrUpdateDesignation)
+  app.post(`${BASEURL}/delete-designation`, middleware, deleteDesignation)
+
 
   //activites
   app.post(`${BASEURL}/activities`, middleware, getActivities)

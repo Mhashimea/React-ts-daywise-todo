@@ -58,7 +58,7 @@ export default function Projects() {
   }, [filter]);
 
   return (
-    <div className="projects">
+    <div className="projects p-3">
       <ProjectFilter
         onAddNew={() => setModalState(true)}
         onChangeStatusFilter={(e) => setFilter(e)}

@@ -18,8 +18,7 @@ const server = http.createServer(app)
 const { Server } = require("socket.io")
 const io = new Server(server)
 
-io.on("connection", socket => {
-  console.log(socket.id)
+io.on("connection", (socket) => {
   socket.on("todo:update", async ({ id }) => {
     let project = await Projects.findOne({ where: { id }, include: { all: true } })
     let userIds = await project.assignedUsers.map(a => a.userId) || []
@@ -28,12 +27,18 @@ io.on("connection", socket => {
       socket.join('assignedUser:' + id)
     })
 
-    console.log(socket.rooms)
     // userIds.map(a => )
     socket.broadcast.to("6ChR45x2W4bR33x6AAAF").emit('message', {
       user: 'adminX',
     });
     io.to(`6ChR45x2W4bR33x6AAAF`).emit("dljdfg")
+  })
+
+  // Streaming 
+  socket.on('join-room', (roomId, userId) => {
+    console.log(roomId, userId)
+    socket.join(roomId)
+    socket.broadcast.to(roomId).emit('user-connected', userId)
   })
 })
 

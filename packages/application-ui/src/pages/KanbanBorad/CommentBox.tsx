@@ -27,6 +27,7 @@ export default function CommentBox({ comments, sendComment }: CommentBoxProps) {
       todoId: id,
       text: comment,
       file: image,
+      actionType: "COMMENT",
     };
     if (sendComment) await sendComment(payload);
     setComment("");

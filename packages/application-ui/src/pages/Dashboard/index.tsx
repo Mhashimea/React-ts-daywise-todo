@@ -13,7 +13,7 @@ import TodaysTasks from "./TodaysTasks";
 
 export default function Dashboard() {
   return (
-    <div className="dashboard">
+    <div className="dashboard p-3">
       <div className="flex">
         <div className="w-2/3">
           <Banner />

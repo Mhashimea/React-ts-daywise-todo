@@ -27,7 +27,7 @@ function generateActivityText(data, type, fullName) {
   if (type === "UPDATE") text = `${fullName} Updated ${data.name}`
   if (type === "SUB_TASK_CREATE") text = `${fullName} Created a Sub Task`
   if (type === "MENTION") {
-    text = `${fullName} Assigned the task to ${data.assignedTo}`
+    text = `${fullName} Assigned the task to ${data.user.fullName}`
     mentionedUser = data.assignedTo
   }
   if (type === "STATUS") text = `${fullName} updated the task to ${data.status}`

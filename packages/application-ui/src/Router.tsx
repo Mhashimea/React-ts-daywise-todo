@@ -18,8 +18,12 @@ const Reports = lazy(() => import("./pages/Reports/index"));
 const Teams = lazy(() => import("./pages/Teams/index"));
 const TodosView = lazy(() => import("./pages/Todos/id"));
 const KanbanBoard = lazy(() => import("./pages/KanbanBorad/index"));
-const Schedule = lazy(() => import("./pages/Schedule/index"));
 const TaskView = lazy(() => import("./pages/KanbanBorad/id"));
+const Connect = lazy(() => import("./pages/Connect/index"));
+const ConnectView = lazy(() => import("./pages/Connect/id/index"));
+const CompanyProfile = lazy(() => import("./pages/Company-profile/index"));
+const Settings = lazy(() => import("./pages/Settings/index"));
+const Chat = lazy(() => import("./pages/Chat/index"));
 
 //Variables
 const isAuth = localStorage.getItem("isAuth");
@@ -75,10 +79,22 @@ function RouterView() {
             <PrivateRoute component={TodosView} exact path="/todos/:id" />
             <PrivateRoute component={Projects} exact path="/projects" />
             <PrivateRoute component={Teams} exact path="/teams" />
-            <PrivateRoute component={Schedule} exact path="/schedules" />
             <PrivateRoute component={Reports} exact path="/reports" />
             <PrivateRoute component={KanbanBoard} exact path="/kanban-board" />
             <PrivateRoute component={TaskView} exact path="/kanban-board/:id" />
+            <PrivateRoute component={Connect} exact path="/connect" />
+            <PrivateRoute component={ConnectView} exact path="/connect/:id" />
+            <PrivateRoute
+              component={CompanyProfile}
+              exact
+              path="/company-profile"
+            ></PrivateRoute>
+            <PrivateRoute
+              component={Settings}
+              exact
+              path="/settings"
+            ></PrivateRoute>
+            <PrivateRoute component={Chat} exact path="/chat"></PrivateRoute>
           </Suspense>
         </Default>
       </Switch>

@@ -26,7 +26,6 @@ export default function Todos() {
 
   const todos = useSelector((state: any) => state.TodosReducer.todos);
   const teams = useSelector((state: any) => state.CommonReducer.teams);
-  const projects = useSelector((state: any) => state.CommonReducer.projects);
 
   const priorityMenu = (
     <Menu onClick={(e) => setPriority(e.key)}>

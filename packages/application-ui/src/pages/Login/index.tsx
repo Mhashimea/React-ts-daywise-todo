@@ -1,4 +1,5 @@
 import { Button, Form, Input, message } from "antd";
+import _ from "lodash";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { post } from "../../services/http-request";
@@ -13,10 +14,10 @@ export default function Login() {
     setLoading(true);
     const response = await post("login", values);
     if (response.success) {
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", _.get(response, "data.token"));
       localStorage.setItem("isAuth", "TRUE");
-      window.location.reload();
       history.push("dashboard");
+      window.location.reload();
     } else {
       message.error(response.message);
     }

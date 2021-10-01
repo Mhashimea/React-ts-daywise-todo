@@ -7,12 +7,14 @@ interface KanbanBoardFilterProps {
   onChangeStatus?: (value: any) => void;
   onChangePriority?: (value: any) => void;
   onAddNew?: () => void;
+  activities?: any[];
 }
 
 export default function KanbanBoardFilter({
   onChangePriority,
   onChangeStatus,
   onAddNew,
+  activities,
 }: KanbanBoardFilterProps) {
   const [activityVisible, setActivityVisible] = useState(false);
   const [status, setStatus] = useState("All");
@@ -91,7 +93,7 @@ export default function KanbanBoardFilter({
         </a>
       </Dropdown>
       <Popover
-        content={<Activities />}
+        content={<Activities activities={activities} />}
         trigger="click"
         visible={activityVisible}
         onVisibleChange={() => setActivityVisible(!activityVisible)}
