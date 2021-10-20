@@ -1,7 +1,7 @@
 import { AllowNull, AutoIncrement, BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import Organization from '../model/organization'
 import User from '../model/users'
-import Projects from '../model/Projects'
+import Projects from '../model/projects'
 
 interface ActivitiesI {
   id: number

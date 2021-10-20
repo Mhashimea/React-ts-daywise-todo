@@ -1,6 +1,6 @@
 import { Table, Model, PrimaryKey, AutoIncrement, Column, ForeignKey, AllowNull, BelongsTo } from 'sequelize-typescript';
 import User from '../model/users'
-import Organization from './organiZation';
+import Organization from './organization';
 
 interface DesignationI {
   id: number

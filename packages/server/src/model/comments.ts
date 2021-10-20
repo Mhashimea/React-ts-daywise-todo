@@ -1,6 +1,6 @@
 import { Model, AllowNull, AutoIncrement, BelongsTo, Column, ForeignKey, HasMany, Length, PrimaryKey, Table } from 'sequelize-typescript';
 import User from './users'
-import Attatchments from './Attatchments'
+import Attatchments from './attatchments'
 import Todos from './todos'
 
 interface CommentsI {

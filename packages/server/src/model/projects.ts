@@ -10,7 +10,7 @@ import {
   Table,
 } from "sequelize-typescript"
 import AssignedUser from "./assignedMember"
-import Organization from "./organiZation"
+import Organization from "./organization"
 import User from "./users"
 
 interface ProjectsI {

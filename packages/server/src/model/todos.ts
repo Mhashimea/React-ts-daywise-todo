@@ -13,7 +13,7 @@ import {
 import Attatchments from './attatchments'
 import ChildTodo from "./childTodo"
 import Comments from './comments'
-import Organization from "./organiZation"
+import Organization from "./organization"
 import Projects from "./projects"
 import User from "./users"
 

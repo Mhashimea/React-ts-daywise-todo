@@ -8,7 +8,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript"
-import Organization from "./organiZation"
+import Organization from "./organization"
 import Projects from "./projects"
 import User from "./users"
 

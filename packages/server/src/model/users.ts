@@ -12,8 +12,7 @@ import {
 } from "sequelize-typescript"
 import AssignedUser from './assignedMember'
 import Designation from './designation'
-import Organization from "./organiZation"
-import Projects from './projects'
+import Organization from "./organization"
 
 export interface UserI {
   id: number | null
