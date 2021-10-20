@@ -10,6 +10,8 @@
     "dev:ui": "npm run dev --workspace=application-ui",
     "dev:server": "npm run dev --workspace=server",
     "build": "lerna run build",
+    "build:ui": "npm run build --workspace=application-ui",
+    "build:server": "npm run build --workspace=server",
     "lint:eslint": "eslint \"packages/**/*.{ts,tsx,js}\"",
     "lint:prettier": "prettier --check \"packages/**/*.{ts,tsx,js}\"",
     "lint": "npm run lint:eslint && npm run lint:prettier",
